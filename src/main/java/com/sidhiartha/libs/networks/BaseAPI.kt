@@ -18,13 +18,11 @@ import com.sidhiartha.libs.utils.GSONManager
  * Created by sidhiartha on 21/01/18.
  */
 
-enum class APIMethod
-{
+enum class APIMethod {
     GET, DELETE, POST, PUT, HEAD, PATCH
 }
 
-abstract class BaseAPI
-{
+abstract class BaseAPI {
     private val headers: Map<String, String>?
         get() = mapOf(
 
@@ -38,8 +36,7 @@ abstract class BaseAPI
 
     abstract val path: String
 
-    protected fun extract(queryParams: List<Pair<String, String>>): String
-    {
+    protected fun extract(queryParams: List<Pair<String, String>>): String {
         var result = ""
         queryParams.forEach {
             if (!TextUtils.isEmpty(result))
@@ -49,22 +46,18 @@ abstract class BaseAPI
         return result
     }
 
-    fun <T> execute(kelas: Class<T>, handler: (response: T?, errorMessage: String?) -> Unit)
-    {
+    fun <T> execute(kelas: Class<T>, handler: (response: T?, errorMessage: String?) -> Unit) {
         val localHandler = { request: Request, response: Response, result: Result<Json, FuelError> ->
             val (json, error) = result
 
-            if (error != null)
-            {
+            if (error != null) {
                 handler(null, error.localizedMessage)
-            } else
-            {
+            } else {
                 handler(GSONManager.fromJson(json!!.obj(), kelas), null)
             }
         }
 
-        when (method)
-        {
+        when (method) {
             APIMethod.GET -> get(localHandler)
             APIMethod.DELETE -> delete(localHandler)
             APIMethod.POST -> post(localHandler)
@@ -73,23 +66,19 @@ abstract class BaseAPI
         }
     }
 
-    private fun get(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
-    {
+    private fun get(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit) {
         "$basePath$path".httpGet().header(headers).responseJson(handler)
     }
 
-    private fun delete(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
-    {
+    private fun delete(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit) {
         "$basePath$path".httpDelete(params).header(headers).responseJson(handler)
     }
 
-    private fun post(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
-    {
+    private fun post(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit) {
         "$basePath$path".httpPost(params).header(headers).responseJson(handler)
     }
 
-    private fun put(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
-    {
+    private fun put(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit) {
         "$basePath$path".httpPut(params).header(headers).responseJson(handler)
     }
 }
