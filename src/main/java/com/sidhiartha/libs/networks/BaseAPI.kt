@@ -23,10 +23,8 @@ enum class APIMethod {
 }
 
 abstract class BaseAPI {
-    private val headers: Map<String, String>?
-        get() = mapOf(
 
-        )
+    abstract val headers: Map<String, String>?
 
     abstract val basePath: String
 
