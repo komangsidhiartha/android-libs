@@ -12,7 +12,7 @@ import java.util.*
  */
 class GSONManager {
     companion object {
-        val gson: Gson = GsonBuilder()
+        private val gson: Gson = GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .registerTypeAdapter(Date::class.java, DateTypeAdapter()).create()
 
@@ -22,6 +22,11 @@ class GSONManager {
 
         fun <T> fromJson(json: JSONObject, kelas: Class<T>): T {
             return fromJson(json.toString(), kelas)
+        }
+
+        fun <T> toJson(entity: T): String
+        {
+            return gson.toJson(entity)
         }
     }
 }

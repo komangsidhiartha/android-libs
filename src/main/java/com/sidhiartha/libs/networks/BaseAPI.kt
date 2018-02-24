@@ -48,6 +48,7 @@ abstract class BaseAPI {
         val localHandler = { request: Request, response: Response, result: Result<Json, FuelError> ->
             val (json, error) = result
 
+            Log.i("Network Manager", "response $response")
             if (error != null) {
                 handler(null, error.localizedMessage)
             } else {
