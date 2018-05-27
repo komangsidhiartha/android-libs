@@ -24,6 +24,12 @@ abstract class BaseActivity : AppCompatActivity() {
         viewDidLoad()
     }
 
+    override fun onStop()
+    {
+        hideLoadingBar()
+        super.onStop()
+    }
+
     fun showLoadingBar()
     {
         progressBar?.visibility = View.VISIBLE
