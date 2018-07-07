@@ -1,6 +1,7 @@
 package com.sidhiartha.libs.activities
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
@@ -14,17 +15,19 @@ abstract class BaseActivity : AppCompatActivity() {
     var progressBar: ProgressBar? = null
     var toolbar: Toolbar? = null
 
-    protected abstract fun layoutResource(): Int
+    protected abstract val layoutResource: Int
 
     protected abstract fun viewDidLoad()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layoutResource())
+        setContentView(layoutResource)
         progressBar = findViewById(R.id.progressBar)
-        toolbar = findViewById(R.id.toolbars)
+        toolbar = findViewById(R.id.toolbar)
 
-        viewDidLoad()
+        if (toolbar != null) setSupportActionBar(toolbar)
+
+        if (this !is BaseDrawerActivity) viewDidLoad()
     }
 
     override fun onStop()
@@ -41,5 +44,10 @@ abstract class BaseActivity : AppCompatActivity() {
     fun hideLoadingBar()
     {
         progressBar?.visibility = View.GONE
+    }
+
+    fun delayedProcess(callback: () -> Unit)
+    {
+        Handler().postDelayed(callback, 1500)
     }
 }
