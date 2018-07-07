@@ -2,6 +2,7 @@ package com.sidhiartha.libs.activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.ProgressBar
 import com.sidhiartha.libs.R
@@ -11,6 +12,7 @@ import com.sidhiartha.libs.R
  */
 abstract class BaseActivity : AppCompatActivity() {
     var progressBar: ProgressBar? = null
+    var toolbar: Toolbar? = null
 
     protected abstract fun layoutResource(): Int
 
@@ -20,6 +22,7 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(layoutResource())
         progressBar = findViewById(R.id.progressBar)
+        toolbar = findViewById(R.id.toolbars)
 
         viewDidLoad()
     }
