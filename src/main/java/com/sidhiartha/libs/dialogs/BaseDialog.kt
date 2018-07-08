@@ -9,16 +9,19 @@ import android.view.ViewGroup
 /**
  * Created by sidhiartha on 12/02/18.
  */
-abstract class BaseDialog : DialogFragment() {
+abstract class BaseDialog : DialogFragment()
+{
     protected abstract val layoutResource: Int
 
     protected abstract fun viewDidLoad()
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View
+    {
         return inflater!!.inflate(layoutResource, container)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?)
+    {
         super.onViewCreated(view, savedInstanceState)
         viewDidLoad()
     }

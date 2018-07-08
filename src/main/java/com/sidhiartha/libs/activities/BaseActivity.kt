@@ -5,6 +5,7 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import com.sidhiartha.libs.BuildConfig
@@ -13,7 +14,8 @@ import com.sidhiartha.libs.R
 /**
  * Created by sidhiartha on 23/01/18.
  */
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity()
+{
     var progressBar: ProgressBar? = null
     var toolbar: Toolbar? = null
 
@@ -21,7 +23,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected abstract fun viewDidLoad()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         setContentView(layoutResource)
         progressBar = findViewById(R.id.progressBar)
@@ -36,6 +39,21 @@ abstract class BaseActivity : AppCompatActivity() {
     {
         hideLoadingBar()
         super.onStop()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean
+    {
+        if (this is BaseDrawerActivity) return super.onOptionsItemSelected(item)
+
+        return when (item?.itemId)
+        {
+            android.R.id.home, R.id.home ->
+            {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     fun showLoadingBar()

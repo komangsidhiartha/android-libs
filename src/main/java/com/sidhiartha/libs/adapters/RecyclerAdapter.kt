@@ -3,12 +3,11 @@ package com.sidhiartha.libs.adapters
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.view.ViewGroup
 
 /**
  * Created by sidhiartha on 28/02/18.
  */
-abstract class RecyclerAdapter<E, V: RecyclerAdapter<E,V>.BaseViewHolder>(protected val context: Context, protected var items: ArrayList<E>): RecyclerView.Adapter<V>()
+abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(protected val context: Context, protected var items: ArrayList<E>) : RecyclerView.Adapter<V>()
 {
     override fun getItemCount(): Int
     {
