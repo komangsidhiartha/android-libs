@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.ProgressBar
 import com.sidhiartha.libs.BuildConfig
 import com.sidhiartha.libs.R
+import com.sidhiartha.libs.fragments.BaseSupportFragment
 
 /**
  * Created by sidhiartha on 23/01/18.
@@ -64,6 +65,11 @@ abstract class BaseActivity : AppCompatActivity()
     fun hideLoadingBar()
     {
         progressBar?.visibility = View.GONE
+    }
+
+    fun replaceContainerWithFragment(containerId: Int, fragment: BaseSupportFragment)
+    {
+        supportFragmentManager.beginTransaction().replace(containerId, fragment).commit()
     }
 
     fun delayedProcess(callback: () -> Unit)
