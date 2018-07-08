@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
+import com.sidhiartha.libs.BuildConfig
 import com.sidhiartha.libs.R
 
 /**
@@ -49,5 +51,10 @@ abstract class BaseActivity : AppCompatActivity() {
     fun delayedProcess(callback: () -> Unit)
     {
         Handler().postDelayed(callback, 1500)
+    }
+
+    fun logIfDebug(message: String)
+    {
+        if (BuildConfig.DEBUG) Log.w(javaClass.simpleName, message)
     }
 }
