@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "875557906782",
+    "firebase_url": "https://aplikasipelatihantechtalk.firebaseio.com",
+    "project_id": "aplikasipelatihantechtalk",
+    "storage_bucket": "aplikasipelatihantechtalk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875557906782:android:68d4baaa3eaddc3e",
+        "android_client_info": {
+          "package_name": "com.sidhiartha.libs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875557906782-fsij0fec4r1pmcpijgou6c4cndl13afp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1rRME1cv4epjn6CzYNC35xeVkfU6THRA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875557906782:android:53badcc9e5cfeb05",
+        "android_client_info": {
+          "package_name": "techtalk.aplikasipelatihan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875557906782-fsij0fec4r1pmcpijgou6c4cndl13afp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1rRME1cv4epjn6CzYNC35xeVkfU6THRA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
