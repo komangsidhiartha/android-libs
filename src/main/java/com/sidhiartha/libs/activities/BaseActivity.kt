@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
-import com.sidhiartha.libs.BuildConfig
 import com.sidhiartha.libs.R
 import com.sidhiartha.libs.fragments.BaseSupportFragment
 
@@ -17,6 +15,9 @@ import com.sidhiartha.libs.fragments.BaseSupportFragment
  */
 abstract class BaseActivity : AppCompatActivity()
 {
+    private val doubleBackDelay = 2000
+
+    var lastBackPressedTimeInMillis: Long = 0
     var progressBar: ProgressBar? = null
     var toolbar: Toolbar? = null
 
@@ -77,8 +78,8 @@ abstract class BaseActivity : AppCompatActivity()
         Handler().postDelayed(callback, 1500)
     }
 
-    fun logIfDebug(message: String)
+    fun isNeedToShowCloseWarning(): Boolean
     {
-        if (BuildConfig.DEBUG) Log.w(javaClass.simpleName, message)
+        return System.currentTimeMillis() - lastBackPressedTimeInMillis > doubleBackDelay
     }
 }
