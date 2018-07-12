@@ -13,10 +13,10 @@ abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(prot
 {
     var isLoading = false
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView?)
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView)
     {
         super.onAttachedToRecyclerView(recyclerView)
-        recyclerView?.addOnScrollListener(OnScrollListener())
+        recyclerView.addOnScrollListener(OnScrollListener())
     }
 
     override fun getItemCount(): Int
@@ -31,7 +31,7 @@ abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(prot
 
     abstract fun loadMore()
 
-    inner class OnScrollListener: RecyclerView.OnScrollListener()
+    inner class OnScrollListener : RecyclerView.OnScrollListener()
     {
         private val visibleThreshold = 2
 

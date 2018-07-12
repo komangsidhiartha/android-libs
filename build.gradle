@@ -1,24 +1,27 @@
 def fuel_version = '1.12.0'
+def support_version = '27.1.1'
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName '1.8.3'
     }
+
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     productFlavors {
     }
 
@@ -36,10 +39,10 @@ dependencies {
     implementation "com.github.kittinunf.fuel:fuel-android:$fuel_version"
     implementation "com.github.kittinunf.fuel:fuel-gson:$fuel_version"
 
-    api 'com.android.support:appcompat-v7:26.1.0'
-    api 'com.android.support:recyclerview-v7:26.1.0'
-    api 'com.android.support:support-v4:26.1.0'
-    api 'com.android.support:design:26.1.0'
+    api "com.android.support:appcompat-v7:$support_version"
+    api "com.android.support:recyclerview-v7:$support_version"
+    api "com.android.support:support-v4:$support_version"
+    api "com.android.support:design:$support_version"
 
     api 'com.google.firebase:firebase-core:16.0.1'
 
