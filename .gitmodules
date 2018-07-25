@@ -1,0 +1,3 @@
+[submodule "MamiAgent/android-libs"]
+	path = MamiAgent/android-libs
+	url = https://gitlab.com/deepoffice/android-libs.git
