@@ -3,4 +3,97 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="dark_brand_color">#238823</color>
+    <color name="trans_brand_color">#009b4c</color>
+    <color name="accent_brand_color">#27AB27</color>
+    <color name="accent">#27AB27</color>
+    <color name="color_my_location_accuracy">#3627AB27</color>
+    <color name="color_my_location_accuracy_stroke">#9627AB27</color>
+    <color name="background">#ffe5e5e5</color>
+    <color name="red">#ff0000</color>
+    <color name="green">#00ff00</color>
+    <color name="black">#FF000000</color>
+    <color name="color_wa">#27ab27</color>
+    <color name="color_email">#046304</color>
+    <color name="color_line">#00a54f</color>
+    <color name="apptheme_background">#CCF2CB</color>
+
+    <color name="white">#ffffff</color>
+    <color name="transparent_white_2">#73ffffff</color>
+    <color name="transparent_black">#91000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="underline">#ffbbbbbb</color>
+    <color name="btn_owner_register">#007137</color>
+    <color name="btn_owner_login">#92d43b</color>
+    <color name="text_grey">#717171</color>
+    <color name="text_grey_vacancy">#7a7a7a</color>
+    <color name="transparent_vacancy">#99ffffff</color>
+    <color name="transparent_closed">#99404040</color>
+    <color name="detail_closed">#949494</color>
+
+    <color name="darker_gray">#454D58</color>
+    <color name="darker_gray_1">#343a41</color>
+    <color name="gray">#C9CACA</color>
+    <color name="light_gray">#EBECEF</color>
+    <color name="lighter_gray">#EFECEF</color>
+    <color name="gray_app">#EBEBEC</color>
+    <color name="gray_apartment">#8d8c8c</color>
+    <color name="background_readmore">#EBEBEB</color>
+    <color name="textview_readmore">#A1A1A2</color>
+    <color name="orange">#fe522a</color>
+    <color name="apptheme_color">#27ab27</color>
+    <color name="back_owner_profile">#eeefec</color>
+    <color name="txt_claim_color">#871e00</color>
+    <color name="txt_claim_background">#ffae00</color>
+    <color name="yellow">#fde800</color>
+    <color name="owner_balance_background">#d0f6fc</color>
+    <color name="tag_ads_background">#404040</color>
+
+    <color name="bg_owner_premium_off">#aaaaaa</color>
+    <color name="txt_owner_premium_off">#838282</color>
+    <color name="bg_color_chart">#a3d29c</color>
+
+    <color name="cluster_mp_product">#b434b8b6</color>
+    <color name="mp_product">#34b8b6</color>
+    <color name="cluster_mp_service">#b4f8643c</color>
+    <color name="mp_service">#f8643c</color>
+
+    <color name="line_grey_thick">#c2c2c2</color>
+
+    <color name="promote_room_detail">#e0af50</color>
+    <color name="dimBg">#bf000000</color>
+
+    <color name="dark_gray">#9a9a9a</color>
+    <color name="vacancy_statistic_grey">#DDDDDD</color>
+
+    <color name="txt_ads_status">#ffff00</color>
+    <color name="background_ads_status">#009a56</color>
+
+    <color name="txt_color_history_empty">#9a9a9a</color>
+    <!--START Survey Room Activity-->
+    <color name="bg_color_set_date">#ffb0b0b0</color>
+    <!--END Survey Room Activity-->
+
+    <color name="bg_cluster_promoted_mix">#b49b59b6</color>
+    <color name="bg_cluster_promoted_man">#b43498db</color>
+    <color name="bg_cluster_promoted_woman">#b4f26389</color>
+
+    <color name="bg_price_detail_type">#beecc3</color>
+    <!--START Job Item-->
+    <color name="bg_tag_job_full_time">#9f5394</color>
+    <color name="bg_tag_job_part_time">#f18c00</color>
+    <color name="bg_tag_job_freelance">#67aba9</color>
+    <!--END Job Item-->
+    <!--START CompanyProfile-->
+    <color name="txt_company_detail">#6a6a6a</color>
+    <color name="txt_company_tag">#6e6e6e</color>
+    <color name="txt_company_url">#4388af</color>
+    <color name="txt_company_contact">#767676</color>
+    <color name="txt_company_item_available">#888888</color>
+    <color name="bg_company_divider">#f4f4f4</color>
+    <color name="bg_company_follow">#fb541f</color>
+    <color name="cp_header_background">#eafee7</color>
+    <color name="cp_header_txt_color">#2f492b</color>
+    <!--END CompanyProfile-->
 </resources>

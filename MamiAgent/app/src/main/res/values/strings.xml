@@ -1,3 +1,38 @@
 <resources>
     <string name="app_name">Mami Agent</string>
+    <string name="submit_text">Submit</string>
+    <string name="sign_in_title">Agent Checker Dashboard</string>
+    <string name="sign_in_phone_hint">Ketik nomer handphone</string>
+    <string name="sign_int_button_text">Sign In</string>
+    <string name="verify_message_text">A temporary pin code has been sent to the phone number provided via SMS. Please check your phone and enter the pin below.</string>
+    <string name="verify_hint_text">Enter 6 digit code</string>
+    <string name="verify_button_text">Verify</string>
+    <string name="list_kost_data_text">Data</string>
+    <string name="list_kost_edited_text">Edited</string>
+    <string name="kost_item_photo_text">Photo :</string>
+    <string name="kost_item_review_text">Review :</string>
+    <string name="success_submit_title">DATA BERHASIL DISUBMIT !</string>
+    <string name="success_submit_subtitle">data kamu akan segera kami verifikasi</string>
+    <string name="success_submite_next_text">Next</string>
+    <string name="check_in_address_text">Alamat</string>
+    <string name="check_in_phone_text">Telepon</string>
+    <string name="check_in_button_text">Check In</string>
+    <string name="check_in_title">Check In Kost</string>
+    <string name="check_in_subtitle">PENTING !</string>
+    <string name="check_in_message_text">- Pasti</string>
+    <string name="photo_navbar_text">Foto</string>
+    <string name="photo_front_text">Foto Depan</string>
+    <string name="photo_room_text">Foto Kamar</string>
+    <string name="photo_bath_text">Foto Kamar Mandi</string>
+    <string name="photo_speedtest_text">Screen Shoot Speedtest</string>
+    <string name="photo_facility_text">Foto Fasilitas Lainnya</string>
+    <string name="review_cleanup_title">Kebersihan</string>
+    <string name="review_security_title">Keamanan</string>
+    <string name="review_facility_title">Fasilitas Kamar</string>
+    <string name="review_comfort_title">Kenyamanan</string>
+    <string name="review_price_title">Harga</string>
+    <string name="review_facility_general_title">Fasilitas Umum</string>
+    <string name="review_edittext_hint">Tulis review disini</string>
+    <string name="review_photo_text">Foto Review</string>
+
 </resources>
