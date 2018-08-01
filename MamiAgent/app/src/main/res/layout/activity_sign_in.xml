@@ -30,16 +30,20 @@
             />
 
         <EditText
+            android:id="@+id/et_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/sign_in_phone_hint"
             android:background="@drawable/button_color_white"
-            android:padding="10dp"/>
+            android:padding="10dp"
+            android:gravity="center"
+            android:inputType="phone"/>
 
         <Button
+            android:id="@+id/btn_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sign_int_button_text"
+            android:text="@string/sign_in_button_text"
             android:background="@drawable/button_color_white"
             android:layout_margin="10dp"
             android:textColor="@color/accent"

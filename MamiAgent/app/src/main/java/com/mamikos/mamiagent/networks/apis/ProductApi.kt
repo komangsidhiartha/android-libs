@@ -1,5 +1,6 @@
-package com.mamikos.mamiagent.networks
+package com.mamikos.mamiagent.networks.apis
 
+import com.mamikos.mamiagent.networks.MamikosAgentBaseApi
 import com.sidhiartha.libs.networks.APIMethod
 
 open class ProductApi : MamikosAgentBaseApi()
@@ -9,7 +10,7 @@ open class ProductApi : MamikosAgentBaseApi()
     class JeansApi: ProductApi()
 
     override val headers: Map<String, String>?
-        get() = mapOf()
+        get() = generateAuthHeader(path, method)
     override val method: APIMethod
         get() = APIMethod.GET
     override val path: String

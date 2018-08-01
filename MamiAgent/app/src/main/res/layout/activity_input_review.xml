@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_app"/>
+
+    <Button
+        android:id="@+id/btn_submit_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_color_apptheme"
+        android:text="SUBMIT"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+
+    <ScrollView
+        android:id="@+id/sv_review_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btn_submit_review"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <!--START Rating Kebersihan-->
+                <RelativeLayout
+                    android:id="@+id/rl_detail_review_kebersihan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_rating_title_kebersihan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Kebersihan"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <RatingBar
+                        android:id="@+id/rating_kebersihan"
+                        style="?attr/ratingBarStyleIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_rating_title_kebersihan"
+                        android:isIndicator="false"
+                        android:numStars="4"
+                        android:rating="0.0"
+                        android:stepSize="1.0"
+                        android:theme="@style/reviewDetail" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/rating_kebersihan"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@color/gray" />
+                </RelativeLayout>
+                <!--END Rating Kebersihan-->
+                <!--START RATING KENYAMANAN-->
+                <RelativeLayout
+                    android:id="@+id/rl_detail_review_kenyamanan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_detail_review_kebersihan"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_rating_title_kenyamanan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Kenyamanan"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <RatingBar
+                        android:id="@+id/rating_kenyamanan"
+                        style="?attr/ratingBarStyleIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_rating_title_kenyamanan"
+                        android:isIndicator="false"
+                        android:numStars="4"
+                        android:rating="0.0"
+                        android:stepSize="1.0"
+                        android:theme="@style/reviewDetail" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/rating_kenyamanan"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@color/gray" />
+                </RelativeLayout>
+                <!--END RATING KENYAMANAN-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <!--START RATING KEAMANAN-->
+                <RelativeLayout
+                    android:id="@+id/rl_detail_review_keamanan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_detail_review_kenyamanan"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_rating_title_keamanan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Keamanan"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <RatingBar
+                        android:id="@+id/rating_keamanan"
+                        style="?attr/ratingBarStyleIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_rating_title_keamanan"
+                        android:isIndicator="false"
+                        android:numStars="4"
+                        android:rating="0.0"
+                        android:stepSize="1.0"
+                        android:theme="@style/reviewDetail" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/rating_keamanan"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@color/gray" />
+                </RelativeLayout>
+                <!--END RATING KEAMANAN-->
+                <!--START Rating Harga-->
+                <RelativeLayout
+                    android:id="@+id/rl_detail_review_harga"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_detail_review_keamanan"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_rating_title_harga"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Harga"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <RatingBar
+                        android:id="@+id/rating_harga"
+                        style="?attr/ratingBarStyleIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_rating_title_harga"
+                        android:isIndicator="false"
+                        android:numStars="4"
+                        android:rating="0.0"
+                        android:stepSize="1.0"
+                        android:theme="@style/reviewDetail" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/rating_harga"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@color/gray" />
+                </RelativeLayout>
+                <!--END Rating Harga-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <!--START Rating Fasilitas Kamar-->
+                <RelativeLayout
+                    android:id="@+id/rl_detail_review_fasilitas_kamar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_detail_review_harga"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_rating_title_fasilitas_kamar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Fasilitas Kamar"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <RatingBar
+                        android:id="@+id/rating_fasilitas_kamar"
+                        style="?attr/ratingBarStyleIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_rating_title_fasilitas_kamar"
+                        android:isIndicator="false"
+                        android:numStars="4"
+                        android:rating="0.0"
+                        android:stepSize="1.0"
+                        android:theme="@style/reviewDetail" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/rating_fasilitas_kamar"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@color/gray" />
+                </RelativeLayout>
+                <!--END Rating Fasilitas Kamar-->
+                <!--START Rating Fasilitas Umum-->
+                <RelativeLayout
+                    android:id="@+id/rl_detail_review_fasilitas_umum"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_detail_review_fasilitas_kamar"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_rating_title_fasilitas_umum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Fasilitas Umum"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <RatingBar
+                        android:id="@+id/rating_fasilitas_umum"
+                        style="?attr/ratingBarStyleIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_rating_title_fasilitas_umum"
+                        android:isIndicator="false"
+                        android:numStars="4"
+                        android:rating="0.0"
+                        android:stepSize="1.0"
+                        android:theme="@style/reviewDetail" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/rating_fasilitas_umum"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@color/gray" />
+                </RelativeLayout>
+                <!--END Rating Fasilitas Umum-->
+            </LinearLayout>
+            <!--START Rating Message-->
+            <RelativeLayout
+                android:id="@+id/rl_rating_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_detail_review_fasilitas_umum"
+                android:layout_marginTop="5dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <TextView
+                    android:id="@+id/tv_review_title_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Tulis Review : "
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_review_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_below="@id/tv_review_title_message"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_color_white_green"
+                    android:gravity="top"
+                    android:hint="@string/review_edittext_hint"
+                    android:inputType="textMultiLine"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+            <!--END Rating Message-->
+            <!--START Rating Message-->
+            <Button
+                android:id="@+id/btn_photo_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_color_white_green"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/review_photo_text"
+                android:textColor="@color/apptheme_color"
+                android:textSize="15sp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_expand_review_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/btn_photo_review"
+                android:layout_marginBottom="10dp">
+
+                <com.git.dabang.views.ExpandableHeightGridView
+                    android:id="@+id/gv_review_room"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:isScrollContainer="false"
+                    android:numColumns="3"
+                    android:stretchMode="columnWidth" />
+            </RelativeLayout>
+            <!--END Rating Message-->
+        </LinearLayout>
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/fl_touchInterceptor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>

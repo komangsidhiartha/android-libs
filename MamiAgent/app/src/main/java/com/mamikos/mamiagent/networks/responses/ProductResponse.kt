@@ -1,4 +1,4 @@
-package com.mamikos.mamiagent.networks
+package com.mamikos.mamiagent.networks.responses
 
 import com.mamikos.mamiagent.ProductEntity
 

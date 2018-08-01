@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <include layout="@layout/item_room"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"/>
+
+    <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".DetailRoomActivity"
+        android:layout_below="@+id/ll_item_room"
+        android:layout_above="@+id/ll_data_kost"/>
+
+    <LinearLayout
+        android:id="@+id/ll_data_kost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_above="@+id/btn_check_in"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/check_in_address_text"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/check_in_phone_text"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_check_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/check_in_button_text"
+        android:textColor="@color/white"
+        android:background="@color/accent"
+        android:layout_alignParentBottom="true"
+        android:textStyle="bold"/>
+</RelativeLayout>

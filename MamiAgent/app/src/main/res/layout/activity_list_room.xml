@@ -3,12 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/toolbar_app"/>
+
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_list_kost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        style="@style/AppTabLayout">
+        style="@style/AppTabLayout"
+        android:layout_below="@+id/toolbar">
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"

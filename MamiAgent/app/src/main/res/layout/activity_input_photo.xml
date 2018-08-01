@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar_app"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/accent"
+                android:text="@string/photo_cover_text"
+                android:textColor="@color/white"
+                android:padding="10dp"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+
+            <com.mamikos.mamiagent.views.ExpandableHeightGridView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/accent"
+                android:text="@string/photo_front_text"
+                android:textColor="@color/white"
+                android:padding="10dp"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+
+            <com.mamikos.mamiagent.views.ExpandableHeightGridView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/accent"
+                android:text="@string/photo_room_text"
+                android:textColor="@color/white"
+                android:padding="10dp"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+
+            <com.mamikos.mamiagent.views.ExpandableHeightGridView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/accent"
+                android:text="@string/photo_bath_text"
+                android:textColor="@color/white"
+                android:padding="10dp"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+
+            <com.mamikos.mamiagent.views.ExpandableHeightGridView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/accent"
+                android:text="@string/photo_speedtest_text"
+                android:textColor="@color/white"
+                android:padding="10dp"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+
+            <com.mamikos.mamiagent.views.ExpandableHeightGridView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/accent"
+                android:text="@string/photo_facility_text"
+                android:textColor="@color/white"
+                android:padding="10dp"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+
+            <com.mamikos.mamiagent.views.ExpandableHeightGridView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="2"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
