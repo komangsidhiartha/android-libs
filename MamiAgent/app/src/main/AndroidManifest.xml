@@ -9,6 +9,20 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -43,11 +57,23 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignInActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".VerifyPhoneActivity" />
+        <activity android:name=".ListRoomActivity" />
         <activity android:name=".DetailRoomActivity" />
         <activity android:name=".IntroCheckInActivity" />
         <activity android:name=".InputReviewActivity" />
         <activity android:name=".InputPhotoActivity" />
+        <activity android:name=".SuccessInputActivity"></activity>
+
+        <provider
+            android:name=".helpers.GenericFileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_path" />
+        </provider>
     </application>
 
 </manifest>

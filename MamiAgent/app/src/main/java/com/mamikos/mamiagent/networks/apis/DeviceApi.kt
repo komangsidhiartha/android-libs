@@ -3,11 +3,10 @@ package com.mamikos.mamiagent.networks.apis
 import com.mamikos.mamiagent.networks.MamikosAgentBaseApi
 import com.sidhiartha.libs.networks.APIMethod
 
-
 open class DeviceApi : MamikosAgentBaseApi()
 {
     override val headers: Map<String, String>?
-        get() = generateAuthHeader(path, method)
+        get() = generateAuthHeader(path)
     override val method: APIMethod
         get() = APIMethod.POST
     override val path: String

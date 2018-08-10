@@ -13,7 +13,7 @@ import java.util.*
 class MamiApp: BaseApplication()
 {
     companion object {
-        var sessionManager: SessionManager? = null
+        lateinit var sessionManager: SessionManager
         var app = MamiApp()
     }
 

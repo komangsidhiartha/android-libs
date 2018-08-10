@@ -5,10 +5,10 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_app"/>
+    <include layout="@layout/toolbar_app" />
 
     <Button
-        android:id="@+id/btn_submit_review"
+        android:id="@+id/btnSubmitReview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -21,7 +21,7 @@
         android:id="@+id/sv_review_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/btn_submit_review"
+        android:layout_above="@id/btnSubmitReview"
         android:layout_below="@+id/toolbar">
 
         <LinearLayout
@@ -328,42 +328,84 @@
                     android:textSize="13sp" />
             </RelativeLayout>
             <!--END Rating Message-->
-            <!--START Rating Message-->
-            <Button
-                android:id="@+id/btn_photo_review"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/button_color_white_green"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="@string/review_photo_text"
-                android:textColor="@color/apptheme_color"
-                android:textSize="15sp" />
-
             <RelativeLayout
-                android:id="@+id/rl_expand_review_photo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/btn_photo_review"
-                android:layout_marginBottom="10dp">
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_gravity="center"
+                android:layout_margin="15dp">
 
-                <com.git.dabang.views.ExpandableHeightGridView
-                    android:id="@+id/gv_review_room"
+                <RelativeLayout
+                    android:id="@+id/llAddPhotoReview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:isScrollContainer="false"
-                    android:numColumns="3"
-                    android:stretchMode="columnWidth" />
+                    android:background="@drawable/button_color_white_green">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical"
+                        android:padding="2dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@color/white"
+                            android:gravity="center_horizontal"
+                            android:padding="0dp"
+                            android:text="+"
+                            android:textColor="@color/apptheme_color"
+                            android:textSize="25sp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:gravity="center_horizontal"
+                            android:padding="0dp"
+                            android:text="Tambah Foto"
+                            android:textColor="@color/apptheme_color"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPhotoReview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/ivPhotoReview"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_gravity="center"
+                        android:visibility="visible" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/ivDeletePhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/idused"
+                    android:visibility="gone" />
             </RelativeLayout>
-            <!--END Rating Message-->
         </LinearLayout>
     </ScrollView>
 
-    <FrameLayout
-        android:id="@+id/fl_touchInterceptor"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="5dp"
+        android:visibility="gone"/>
 </RelativeLayout>

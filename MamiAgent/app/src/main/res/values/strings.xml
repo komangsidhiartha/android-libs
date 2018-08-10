@@ -21,12 +21,14 @@
     <string name="check_in_subtitle">PENTING !</string>
     <string name="check_in_message_text">- Pastikan anda sudah berada di kos yang dituju\n- Potret selfie CHECK IN di depan bangunan kost,  koridor atau di depan palang "terima kost"\n- Editlah data dengan teliti, karena begitu sudah di submit, tidak bisa diedit kembali\n- Bila ada kesalahan edit, hubungi koordinator</string>
     <string name="photo_navbar_text">Foto</string>
-    <string name="photo_cover_text">Foto Cover</string>
-    <string name="photo_front_text">Foto Depan</string>
-    <string name="photo_room_text">Foto Kamar</string>
-    <string name="photo_bath_text">Foto Kamar Mandi</string>
-    <string name="photo_speedtest_text">Screen Shoot Speedtest</string>
-    <string name="photo_facility_text">Foto Fasilitas Lainnya</string>
+    <string name="room_available_text">Kamar Kosong</string>
+    <string name="hint_room_available_text">Masukan jumlah kamar kosong (wajib)</string>
+    <string name="photo_cover_text">Foto Cover (wajib)</string>
+    <string name="photo_front_text">Foto Depan (wajib)</string>
+    <string name="photo_room_text">Foto Kamar (wajib)</string>
+    <string name="photo_bath_text">Foto Kamar Mandi (wajib)</string>
+    <string name="photo_speedtest_text">Screen Shoot Speedtest (optional)</string>
+    <string name="photo_facility_text">Foto Fasilitas Lainnya (wajib)</string>
     <string name="review_cleanup_title">Kebersihan</string>
     <string name="review_security_title">Keamanan</string>
     <string name="review_facility_title">Fasilitas Kamar</string>
@@ -36,5 +38,8 @@
     <string name="review_edittext_hint">Tulis review disini</string>
     <string name="review_photo_text">Foto Review</string>
     <string name="msg_back_pressed">Klik back sekali lagi untuk keluar!</string>
+    <string name="note_map">Klik marker merah untuk menampilkan tombol rute di kanan bawah</string>
+    <string name="change">Ganti</string>
+    <string name="camera_action_text">Tekan Kamera Untuk Melanjutkan</string>
 
 </resources>

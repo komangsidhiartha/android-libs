@@ -3,29 +3,29 @@ package com.mamikos.mamiagent.networks.apis
 import com.mamikos.mamiagent.networks.MamikosAgentBaseApi
 import com.sidhiartha.libs.networks.APIMethod
 
-open class ProductApi : MamikosAgentBaseApi()
+open class LoginApi : MamikosAgentBaseApi()
 {
-    class HatApi: ProductApi()
-    class ShirtApi: ProductApi()
-    class JeansApi: ProductApi()
+    class ReqVerificationApi: LoginApi()
+    class VerifyPhoneApi: LoginApi()
 
     override val headers: Map<String, String>?
-        get() = generateAuthHeader(path, method)
+        get() = generateAuthHeader(path)
     override val method: APIMethod
-        get() = APIMethod.GET
+        get() = APIMethod.POST
     override val path: String
         get() {
             return when (this)
             {
-                is HatApi -> "list/hat"
-                is ShirtApi -> "list/shirt"
-                is JeansApi -> "list/jeans"
+                is ReqVerificationApi -> "verification"
+                is VerifyPhoneApi -> "login"
                 else -> ""
             }
         }
 
+    var postParam = ""
+
     override fun jsonParams(): String
     {
-        return ""
+        return postParam
     }
 }

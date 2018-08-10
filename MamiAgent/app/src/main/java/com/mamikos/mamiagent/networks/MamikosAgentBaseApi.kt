@@ -4,9 +4,10 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import com.github.kittinunf.fuel.android.core.Json
-import com.github.kittinunf.fuel.core.FuelError
-import com.github.kittinunf.fuel.core.Request
-import com.github.kittinunf.fuel.core.Response
+import com.github.kittinunf.fuel.android.extension.responseJson
+import com.github.kittinunf.fuel.core.*
+import com.github.kittinunf.fuel.httpPost
+import com.github.kittinunf.fuel.httpUpload
 import com.github.kittinunf.result.Result
 import com.mamikos.mamiagent.apps.MamiApp
 import com.mamikos.mamiagent.apps.SessionManager
@@ -17,6 +18,7 @@ import com.sidhiartha.libs.networks.BaseAPI
 import com.sidhiartha.libs.utils.GSONManager
 import org.apache.commons.codec.binary.Hex
 import org.json.JSONException
+import java.io.File
 import java.security.GeneralSecurityException
 import java.util.HashMap
 import javax.crypto.Mac
@@ -24,15 +26,12 @@ import javax.crypto.spec.SecretKeySpec
 
 abstract class MamikosAgentBaseApi : BaseAPI()
 {
-    override val basePath: String = "http://kay.mamikos.com/api/v2/"
+    override val basePath: String = "http://songturu.mamikos.com/api/v1/giant/"
     var context: Context? = null
+    var formData: List<Pair<String, Any?>>? = null
+    var fileUpload: File? = null
 
-//    fun init(context: Context)
-//    {
-//        this.context = context
-//    }
-
-    fun generateAuthHeader(url: String, method: APIMethod): Map<String, String> {
+    fun generateAuthHeader(url: String): Map<String, String> {
         logIfDebug("url before:\n $url")
         var url = url.replace(basePath + "/", "")
 
@@ -46,39 +45,16 @@ abstract class MamikosAgentBaseApi : BaseAPI()
 
         val timeStamp = System.currentTimeMillis() / 1000
 
-        var auth = ""
-        var data = ""
-
-        when (method) {
-            APIMethod.POST -> data += "POST "
-
-            APIMethod.PUT -> data += "PUT "
-
-            APIMethod.GET -> data += "GET "
-
-            APIMethod.DELETE -> data += "DELETE "
-            else -> {
-            }
-        }
-
-        data += url + " " + timeStamp
-
-        Log.d("data", data)
-        Log.d("token", MamiApp.app.getToken())
-//                context?.let { SessionManager(it).agentPhoneNumber })
-//        SessionManager(context).agentPhoneNumber)
-
-        try {
-            auth = ("GIT "
-                    + encodeHeader(Constants.CLIENT_API_KEY, data) + ":" + MamiApp.app.getToken())
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
         val header = HashMap<String, String>()
-        header["Content-Type"] = "application/json"
+        if (method == APIMethod.UPLOAD)
+        {
+            header["Content-Type"] = "multipart/form-data; boundary="+ System.currentTimeMillis()
+        }
+        else {
+            header["Content-Type"] = "application/json"
+        }
         header["X-GIT-Time"] = "" + timeStamp
-        header["Authorization"] = auth
+        header["Authorization"] = "GIT devel:" + MamiApp.sessionManager.agentPhoneNumber
 
         return header
     }
@@ -97,16 +73,16 @@ abstract class MamikosAgentBaseApi : BaseAPI()
                 handler(null, error.localizedMessage)
             } else
             {
-                var decode = ""
+                /* var decode = ""
                 try {
                     decode = GITStringBuilder.de(NetworkEntity().stringUrl(), json!!.obj().get("data").toString())
                 } catch (e: GeneralSecurityException) {
                     e.printStackTrace()
                 } catch (e: JSONException) {
                     e.printStackTrace()
-                }
+                } */
 
-                handler(GSONManager.fromJson(decode, kelas), null)
+                handler(GSONManager.fromJson(json!!.obj(), kelas), null)
             }
         }
 
@@ -116,8 +92,18 @@ abstract class MamikosAgentBaseApi : BaseAPI()
             APIMethod.DELETE -> delete(localHandler)
             APIMethod.POST -> post(localHandler)
             APIMethod.PUT -> put(localHandler)
+            APIMethod.UPLOAD -> upload(localHandler)
             else -> Log.i("TAG", "unsupported $method method")
         }
+    }
+
+    fun upload(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
+    {
+        "$basePath$path".httpUpload(Method.POST, formData).header(headers).
+                dataParts { request, url -> listOf(
+                        DataPart(fileUpload!!, "file", "image/jpeg"))
+                }
+                .responseJson(handler)
     }
 
     @Throws(Exception::class)

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <include layout="@layout/toolbar_app"
         android:layout_width="match_parent"
@@ -10,45 +11,68 @@
     <include layout="@layout/item_room"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"/>
+        android:layout_below="@+id/toolbar"
+        android:layout_marginBottom="10dp"/>
 
-    <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
+    <fragment android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".DetailRoomActivity"
         android:layout_below="@+id/ll_item_room"
-        android:layout_above="@+id/ll_data_kost"/>
+        android:layout_above="@+id/tvNoteMap"/>
+
+    <TextView
+        android:id="@+id/tvNoteMap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/note_map"
+        android:textSize="13sp"
+        android:layout_above="@+id/ll_data_kost"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"/>
 
     <LinearLayout
         android:id="@+id/ll_data_kost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_above="@+id/btn_check_in"
+        android:layout_above="@+id/btnCheckIn"
         android:background="@color/white">
 
         <TextView
+            android:id="@+id/tvOwnerName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"/>
+            android:text="@string/app_name"
+            android:layout_margin="5dp"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/llPhoneOwner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/check_in_address_text"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/check_in_phone_text"/>
+            <TextView
+                android:id="@+id/tvOwnerPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/check_in_phone_text"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/sym_action_call"/>
+        </LinearLayout>
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_check_in"
+        android:id="@+id/btnCheckIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/check_in_button_text"

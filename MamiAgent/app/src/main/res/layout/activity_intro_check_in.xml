@@ -1,58 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/accent">
 
-    <include layout="@layout/toolbar_app"/>
+    <include layout="@layout/toolbar_app" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_below="@+id/toolbar">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/check_in_title"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="26sp"
-            android:gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/check_in_subtitle"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="2dp"
+                    android:text="@string/check_in_message_text"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/check_in_subtitle"
-                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
                 android:gravity="center"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:text="@string/camera_action_text"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/ivCheckIn"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                app:srcCompat="@drawable/ic_camera" />
+
+            <LinearLayout
+                android:id="@+id/llBtnCheckIn"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:text="@string/check_in_message_text"
-                android:lineSpacingExtra="2dp"/>
-        </LinearLayout>
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:srcCompat="@drawable/ic_camera"
-            android:layout_margin="5dp"
-            android:layout_gravity="center"/>
-    </LinearLayout>
+                <Button
+                    android:id="@+id/btnChangePhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_color_white"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/change"
+                    android:textColor="@color/apptheme_color"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnSubmitCheckIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_color_white"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/submit_text"
+                    android:textColor="@color/apptheme_color"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="5dp"
+        android:visibility="gone" />
 </RelativeLayout>
