@@ -162,9 +162,12 @@ class InputPhotoActivity : BaseActivity() {
                             for (media in response.photos)
                             {
                                 media.type?.let {
-                                    if (it.equals(TYPE_COVER))
+                                    if (it.equals(TYPE_COVER)) {
                                         coverMedias.clear()
-                                    getMediaEntities(it).add(getMediaEntities(it).size-1, media)
+                                        getMediaEntities(it).add(media)
+                                    }
+                                    else
+                                        getMediaEntities(it).add(getMediaEntities(it).size-1, media)
                                     getAdapterFromType(it).notifyDataSetChanged() }
                             }
                             etRoomAvailable.setText("${response.data.roomAvailable}")
@@ -494,7 +497,8 @@ class InputPhotoActivity : BaseActivity() {
                 else -> {
                     toast("" + response.message)
                     if (response.status)
-                        if (room.statuses == RoomEntity.STATUS_DEFAULT || room.statuses == RoomEntity.STATUS_CHECKIN)
+                        if (room.statuses == RoomEntity.STATUS_DEFAULT || room.statuses == RoomEntity.STATUS_CHECKIN ||
+                                room.statuses == RoomEntity.STATUS_PHOTO)
                             startActivity<InputReviewActivity>(ListRoomActivity.ROOM_EXTRA to room)
                         else
                             startActivity<InputReviewActivity>(ListRoomActivity.ROOM_EXTRA to room,

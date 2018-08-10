@@ -115,8 +115,11 @@ class InputReviewActivity: BaseActivity()
         {
             toast("Rating fasilitas umum harus diisi")
         }
-        else if ((reviewEntity == null && photoFile == null) ||
-                (reviewEntity != null && reviewEntity?.photo.isNullOrEmpty()))
+        else if (et_review_value.text.toString().isNullOrEmpty())
+        {
+            toast("Deskripsi harus diisi")
+        }
+        else if ((reviewEntity == null && photoFile == null))
         {
             toast("Foto harus diisi")
         }
