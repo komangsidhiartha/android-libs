@@ -127,10 +127,11 @@ class InputPhotoActivity : BaseActivity() {
     fun loadPhotos()
     {
         val api: PhotosApi
-
+        showLoadingBar()
         if (room.statuses == RoomEntity.STATUS_DEFAULT || room.statuses == RoomEntity.STATUS_CHECKIN) {
             api = PhotosApi.ListPhotoApi(room._id)
-            api.execute(ListPhotoResponse::class.java) { response, errorMessage ->
+            api.exec(ListPhotoResponse::class.java) { response, errorMessage ->
+                hideLoadingBar()
                 when (response) {
                     null ->
                         errorMessage?.let { toast(it) }
@@ -152,7 +153,8 @@ class InputPhotoActivity : BaseActivity() {
             }
         } else {
             api = PhotosApi.GetEditPhotoApi(room._id)
-            api.execute(GetDataEditedResponse::class.java) { response, errorMessage ->
+            api.exec(GetDataEditedResponse::class.java) { response, errorMessage ->
+                hideLoadingBar()
                 when (response) {
                     null ->
                         errorMessage?.let { toast(it) }
@@ -339,7 +341,7 @@ class InputPhotoActivity : BaseActivity() {
                 Pair("id", room._id)
         )
 
-        mediaApi.fileUpload = photoFile
+        mediaApi.fileUpload = MediaHelper.compressImage(this, photoFile)
         mediaApi.exec(MediaResponse::class.java) { response: MediaResponse?, errorMessage: String? ->
             hideLoadingBar()
             when (response) {
@@ -496,13 +498,15 @@ class InputPhotoActivity : BaseActivity() {
                     errorMessage?.let { toast(it) }
                 else -> {
                     toast("" + response.message)
-                    if (response.status)
+                    if (response.status) {
                         if (room.statuses == RoomEntity.STATUS_DEFAULT || room.statuses == RoomEntity.STATUS_CHECKIN ||
                                 room.statuses == RoomEntity.STATUS_PHOTO)
                             startActivity<InputReviewActivity>(ListRoomActivity.ROOM_EXTRA to room)
                         else
                             startActivity<InputReviewActivity>(ListRoomActivity.ROOM_EXTRA to room,
                                     REVIEW_DATA to originalDataEditedResponse.review)
+                        finish()
+                    }
                 }
             }
         }

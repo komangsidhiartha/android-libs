@@ -6,8 +6,10 @@ import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
+import com.crashlytics.android.Crashlytics
 import com.mamikos.mamiagent.interfaces.Constants
 import com.sidhiartha.libs.apps.BaseApplication
+import io.fabric.sdk.android.Fabric
 import java.util.*
 
 class MamiApp: BaseApplication()
@@ -19,6 +21,8 @@ class MamiApp: BaseApplication()
 
     override fun onCreate() {
         sessionManager = SessionManager(applicationContext)
+        Fabric.with(this, Crashlytics())
+        Crashlytics.setUserIdentifier(sessionManager.agentPhoneNumber)
         super.onCreate()
     }
 

@@ -1,20 +1,22 @@
 package com.mamikos.mamiagent.entities
 
+import android.os.Parcel
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class ReviewEntity
-    : Parcelable {
-    var id = ""
-    var clean = 0
-    var happy = 0
-    var safe = 0
-    var pricing = 0
-    var roomFacilities = 0
-    var publicFacilities = 0
-    var content = ""
-    var photo = ""
+data class ReviewEntity(
+    var id: Int,
+    var clean: Int,
+    var happy: Int,
+    var safe: Int,
+    var pricing: Int,
+    var roomFacilities: Int,
+    var publicFacilities: Int,
+    var content: String,
+    var photo: String): Parcelable
+{
+    constructor() : this(0, 0, 0, 0, 0, 0, 0, "", "")
 
     fun toListPair(): List<Pair<String, Any>>
     {

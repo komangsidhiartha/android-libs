@@ -38,17 +38,22 @@ class InputReviewActivity: BaseActivity()
     var photoFile: File? = null
     var mCurrentPhotoPath: String? = null
     var photoURI: Uri? = null
+    var isUpdate = false
 
     override fun viewDidLoad() {
         room = intent.extras.getParcelable(ListRoomActivity.ROOM_EXTRA)
         if (intent.hasExtra(InputPhotoActivity.REVIEW_DATA))
             reviewEntity = intent.extras.getParcelable(InputPhotoActivity.REVIEW_DATA)
 
+        isUpdate = (reviewEntity != null)
         if (reviewEntity != null)
             bindView()
 
         setupActionBar()
-        llAddPhotoReview.setOnClickListener  {
+        llAddPhotoReview.onClick {
+            launchCamera()
+        }
+        btnAddPhoto.onClick {
             launchCamera()
         }
 
@@ -72,8 +77,8 @@ class InputReviewActivity: BaseActivity()
                     onBackPressed()
                 }
             })
+            toolbar?.title = "Review ${room.roomTitle}"
         }
-        setTitle("Review ${room.roomTitle}")
     }
 
     private fun bindView()
@@ -117,7 +122,7 @@ class InputReviewActivity: BaseActivity()
         }
         else if (et_review_value.text.toString().isNullOrEmpty())
         {
-            toast("Deskripsi harus diisi")
+            toast("Isi review harus diisi")
         }
         else if ((reviewEntity == null && photoFile == null))
         {
@@ -133,10 +138,8 @@ class InputReviewActivity: BaseActivity()
     {
         showLoadingBar()
         val reviewApi: RoomApi
-        if (reviewEntity == null) {
-            reviewApi = RoomApi.ReviewRoomApi()
-            reviewEntity = ReviewEntity()
-            reviewEntity!!.id = room._id
+        if (isUpdate) {
+            reviewApi = RoomApi.UpdateReviewRoomApi(reviewEntity!!.id.toString())
             reviewEntity!!.clean = rating_kebersihan.rating.toInt()
             reviewEntity!!.happy = rating_kenyamanan.rating.toInt()
             reviewEntity!!.safe = rating_keamanan.rating.toInt()
@@ -146,7 +149,9 @@ class InputReviewActivity: BaseActivity()
             reviewEntity!!.content = et_review_value.text.toString()
         }
         else {
-            reviewApi = RoomApi.UpdateReviewRoomApi(reviewEntity!!.id)
+            reviewApi = RoomApi.ReviewRoomApi()
+            reviewEntity = ReviewEntity()
+            reviewEntity!!.id = room._id.toInt()
             reviewEntity!!.clean = rating_kebersihan.rating.toInt()
             reviewEntity!!.happy = rating_kenyamanan.rating.toInt()
             reviewEntity!!.safe = rating_keamanan.rating.toInt()
@@ -158,7 +163,7 @@ class InputReviewActivity: BaseActivity()
 
         reviewApi.formData = reviewEntity?.toListPair()
         if (photoFile != null)
-            reviewApi.fileUpload = photoFile
+            reviewApi.fileUpload = MediaHelper.compressImage(this, photoFile)
         reviewApi.exec(StatusResponse::class.java) { response: StatusResponse?, errorMessage: String? ->
             hideLoadingBar()
             when (response) {
@@ -166,8 +171,10 @@ class InputReviewActivity: BaseActivity()
                     errorMessage?.let { toast(it) }
                 else -> {
                     toast("" + response.message)
-                    if (response.status)
+                    if (response.status) {
                         startActivity<SuccessInputActivity>()
+                        finish()
+                    }
                 }
             }
         }

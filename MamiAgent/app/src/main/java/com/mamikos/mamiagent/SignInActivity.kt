@@ -30,7 +30,7 @@ class SignInActivity : BaseActivity()
     {
         showLoadingBar()
         MamiApp.sessionManager.agentPhoneNumber = et_phone.text.toString()
-        LoginApi.ReqVerificationApi().execute(StatusResponse::class.java)
+        LoginApi.ReqVerificationApi().exec(StatusResponse::class.java)
         { response: StatusResponse?, errorMessage: String? ->
             hideLoadingBar()
             when (response)

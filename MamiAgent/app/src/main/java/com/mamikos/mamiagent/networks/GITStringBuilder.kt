@@ -83,25 +83,18 @@ object GITStringBuilder
      */
     @Throws(GeneralSecurityException::class)
     fun de(password: String, base64EncodedCipherText: String?): String {
-        var base64EncodedCipherText = base64EncodedCipherText
         if (base64EncodedCipherText == null) {
-            base64EncodedCipherText = ""
-            return base64EncodedCipherText
+            return ""
         }
         try {
             val key = generateKey(password)
-
             log("base64EncodedCipherText", base64EncodedCipherText)
             val decodedCipherText = Base64.decode(base64EncodedCipherText, Base64.NO_WRAP)
             log("decodedCipherText", decodedCipherText)
-
             val decryptedBytes = decrypt(key, ivBytes, decodedCipherText)
-
             log("decryptedBytes", decryptedBytes)
             val message = String(decryptedBytes)
             log("message", message)
-
-
             return message
         } catch (e: UnsupportedEncodingException) {
             logIfDebug("UnsupportedEncodingException " + e)

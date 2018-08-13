@@ -40,7 +40,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
@@ -49,6 +48,7 @@
 
         <activity
             android:name=".SplashActivity"
+            android:screenOrientation="portrait"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,14 +56,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignInActivity" />
-        <activity android:name=".VerifyPhoneActivity" />
-        <activity android:name=".ListRoomActivity" />
-        <activity android:name=".DetailRoomActivity" />
-        <activity android:name=".IntroCheckInActivity" />
-        <activity android:name=".InputReviewActivity" />
-        <activity android:name=".InputPhotoActivity" />
-        <activity android:name=".SuccessInputActivity"></activity>
+        <activity android:name=".SignInActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".VerifyPhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ListRoomActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".DetailRoomActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".IntroCheckInActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".InputReviewActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".InputPhotoActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".SuccessInputActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name=".helpers.GenericFileProvider"
@@ -74,6 +82,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_path" />
         </provider>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="22309a803cf61bd054896081dc9aaf69787fe278"
+            />
     </application>
 
 </manifest>

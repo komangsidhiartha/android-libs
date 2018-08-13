@@ -34,12 +34,4 @@ open class PhotosApi : MamikosAgentBaseApi()
                 else -> ""
             }
         }
-
-    var queryParam: List<Pair<String, String>>? = null
-    var postParam = ""
-
-    override fun jsonParams(): String
-    {
-        return postParam
-    }
 }

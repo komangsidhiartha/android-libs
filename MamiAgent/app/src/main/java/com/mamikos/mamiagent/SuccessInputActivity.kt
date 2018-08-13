@@ -4,7 +4,9 @@ import android.app.Activity
 import android.os.Bundle
 import com.sidhiartha.libs.activities.BaseActivity
 import kotlinx.android.synthetic.main.activity_success_submit.*
+import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.onClick
+import org.jetbrains.anko.singleTop
 import org.jetbrains.anko.startActivity
 
 class SuccessInputActivity : BaseActivity() {
@@ -12,7 +14,11 @@ class SuccessInputActivity : BaseActivity() {
 
     override fun viewDidLoad() {
         btnNextSuccess.onClick {
-            startActivity<ListRoomActivity>(ListRoomActivity.SUCCESS_INPUT to true)
+            startActivity(intentFor<ListRoomActivity>(ListRoomActivity.SUCCESS_INPUT to true).singleTop())
         }
+    }
+
+    override fun onBackPressed() {
+
     }
 }

@@ -26,7 +26,7 @@ class VerifyPhoneActivity : BaseActivity()
         showLoadingBar()
         val api = LoginApi.VerifyPhoneApi()
         api.postParam = JSONObject().put("code", et_verify_code.text.toString()).toString()
-        api.execute(StatusResponse::class.java) { response: StatusResponse?, errorMessage: String? ->
+        api.exec(StatusResponse::class.java) { response: StatusResponse?, errorMessage: String? ->
             hideLoadingBar()
             when (response)
             {
@@ -40,7 +40,7 @@ class VerifyPhoneActivity : BaseActivity()
                         this.finish()
                     }
                     else
-                        toast(response.message)
+                        response.message?.let { toast(it) }
                 }
             }
         }

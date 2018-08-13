@@ -44,13 +44,12 @@ class RoomDataFragment : BaseSupportFragment() {
         rvDataRooms.layoutManager = LinearLayoutManager(this.context)
         rvDataRooms.addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
 
-        roomAdapter = ListDataRoomAdapter(this.context!!, rooms, { getListDataRooms() }) {
+        roomAdapter = ListDataRoomAdapter(this.context!!, rooms, { getListDataRooms() }, {
             openDetailRoom(it)
-        }
+        })
         rvDataRooms.adapter = roomAdapter
         getListDataRooms()
     }
-
 
     fun reload() {
         rooms.clear()

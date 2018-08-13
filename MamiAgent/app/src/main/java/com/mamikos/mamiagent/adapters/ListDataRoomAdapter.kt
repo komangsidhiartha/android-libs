@@ -23,10 +23,10 @@ import kotlinx.android.synthetic.main.item_room.*
 import kotlinx.android.synthetic.main.item_room.view.*
 import org.jetbrains.anko.*
 
-class ListDataRoomAdapter(context: Context, items: ArrayList<RoomEntity>, private val loadMore: () -> Unit, val itemClickListener: (RoomEntity) -> Unit) : RecyclerAdapter<RoomEntity, ListDataRoomAdapter.RoomViewHolder>(context, items) {
+class ListDataRoomAdapter(context: Context, items: ArrayList<RoomEntity>, private val loadNext: () -> Unit, val itemClickListener: (RoomEntity) -> Unit) : RecyclerAdapter<RoomEntity, ListDataRoomAdapter.RoomViewHolder>(context, items) {
 
     override fun loadMore() {
-        loadMore
+        loadNext()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoomViewHolder {

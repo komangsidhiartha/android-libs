@@ -23,7 +23,9 @@
             android:id="@+id/et_verify_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"/>
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:gravity="center"/>
 
         <TextView
             android:layout_width="match_parent"

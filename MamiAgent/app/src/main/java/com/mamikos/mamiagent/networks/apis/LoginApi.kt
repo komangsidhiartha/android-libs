@@ -21,11 +21,4 @@ open class LoginApi : MamikosAgentBaseApi()
                 else -> ""
             }
         }
-
-    var postParam = ""
-
-    override fun jsonParams(): String
-    {
-        return postParam
-    }
 }

@@ -21,11 +21,4 @@ open class CheckInApi : MamikosAgentBaseApi()
                 else -> ""
             }
         }
-
-    var postParam = ""
-
-    override fun jsonParams(): String
-    {
-        return postParam
-    }
 }

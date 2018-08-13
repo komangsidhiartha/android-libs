@@ -42,10 +42,4 @@ open class RoomApi : MamikosAgentBaseApi()
         }
 
     var queryParam: List<Pair<String, String>>? = null
-    var postParam = ""
-
-    override fun jsonParams(): String
-    {
-        return postParam
-    }
 }

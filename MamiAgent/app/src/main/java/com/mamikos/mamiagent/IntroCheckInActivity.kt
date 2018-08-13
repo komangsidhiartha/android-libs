@@ -209,8 +209,9 @@ class IntroCheckInActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
                 Pair("longitude", mLocation!!.longitude),
                 Pair("id", room._id))
 
+
         if (photoFile != null)
-            checkInApi.fileUpload = photoFile
+            checkInApi.fileUpload = MediaHelper.compressImage(this, photoFile)
 
         checkInApi.exec(StatusResponse::class.java) { response: StatusResponse?, errorMessage: String? ->
             hideLoadingBar()

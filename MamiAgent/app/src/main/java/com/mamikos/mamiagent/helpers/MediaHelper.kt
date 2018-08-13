@@ -24,6 +24,7 @@ import android.os.Build
 import android.annotation.TargetApi
 import android.database.Cursor
 import com.sidhiartha.libs.apps.logIfDebug
+import id.zelory.compressor.Compressor
 
 
 object MediaHelper {
@@ -710,4 +711,8 @@ object MediaHelper {
         return rotate
     }
 
+    fun compressImage(context: Context?, fileToCompress: File?) : File
+    {
+        return Compressor(context).setQuality(75).compressToFile(fileToCompress)
+    }
 }

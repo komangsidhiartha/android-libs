@@ -3,39 +3,24 @@ package com.mamikos.mamiagent
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
-import android.provider.Settings
-import android.support.design.widget.TabItem
 import android.support.design.widget.TabLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
-import com.github.kittinunf.fuel.core.Request
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationListener
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.LatLng
-import com.mamikos.mamiagent.adapters.ListDataRoomAdapter
 import com.mamikos.mamiagent.adapters.ListRoomPagerAdapter
-import com.mamikos.mamiagent.entities.RoomEntity
 import com.mamikos.mamiagent.fragments.RoomDataFragment
-import com.mamikos.mamiagent.networks.apis.RoomApi
-import com.mamikos.mamiagent.networks.responses.ListRoomResponse
 import com.sidhiartha.libs.activities.BaseActivity
 import com.sidhiartha.libs.apps.logIfDebug
 import kotlinx.android.synthetic.main.activity_list_room.*
-import org.jetbrains.anko.onClick
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
-
 
 
 class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -78,7 +63,8 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
             override fun onTabSelected(tab: TabLayout.Tab) {
                 ListRoomActivity.currentTabSelected = tab.position
                 vpListRoom.currentItem = tab.position
-                fragmentPagerAdapter.fragments.get(tab.position).reload()
+                if (fragmentPagerAdapter != null)
+                    fragmentPagerAdapter.fragments.get(tab.position).reload()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -89,12 +75,6 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
 
             }
         })
-
-
-
-
-        if (intent.hasExtra(SUCCESS_INPUT))
-            tabListRoom.getTabAt(1)?.select()
 
         mGoogleApiClient = GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -114,6 +94,9 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
                 arrayListOf(availFragment, editedFragment))
         vpListRoom.adapter = fragmentPagerAdapter
         vpListRoom.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabListRoom))
+
+        if (intent.hasExtra(SUCCESS_INPUT))
+            tabListRoom.getTabAt(1)?.select()
     }
 
     override fun onStart() {

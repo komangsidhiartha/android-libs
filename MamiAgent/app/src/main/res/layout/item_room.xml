@@ -9,14 +9,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp">
 
         <ImageView
             android:id="@+id/ivRoom"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_alignParentLeft="true"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:src="@mipmap/ic_launcher" />
 
         <LinearLayout
@@ -92,7 +95,9 @@
         android:id="@+id/tvNoteReject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:visibility="gone" />
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@color/white"
+        android:textStyle="bold"
+        android:visibility="gone"/>
 </LinearLayout>
