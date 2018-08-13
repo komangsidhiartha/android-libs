@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_sign_in.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
+import org.json.JSONObject
 
 class SignInActivity : BaseActivity()
 {
@@ -30,7 +31,9 @@ class SignInActivity : BaseActivity()
     {
         showLoadingBar()
         MamiApp.sessionManager.agentPhoneNumber = et_phone.text.toString()
-        LoginApi.ReqVerificationApi().exec(StatusResponse::class.java)
+        val api = LoginApi.ReqVerificationApi()
+        api.postParam = JSONObject().put("phone", et_phone.text.toString()).toString()
+        api.exec(StatusResponse::class.java)
         { response: StatusResponse?, errorMessage: String? ->
             hideLoadingBar()
             when (response)
