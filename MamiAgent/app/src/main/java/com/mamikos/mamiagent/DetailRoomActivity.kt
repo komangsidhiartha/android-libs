@@ -18,7 +18,6 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.mamikos.mamiagent.entities.RoomEntity
 import com.sidhiartha.libs.activities.BaseActivity
-import com.sidhiartha.libs.apps.logIfDebug
 import kotlinx.android.synthetic.main.activity_detail_room.*
 import kotlinx.android.synthetic.main.item_room.*
 import org.jetbrains.anko.onClick

@@ -21,9 +21,9 @@ class MamiApp: BaseApplication()
 
     override fun onCreate() {
         sessionManager = SessionManager(applicationContext)
-        Fabric.with(this, Crashlytics())
-        Crashlytics.setUserIdentifier(sessionManager.agentPhoneNumber)
         super.onCreate()
+        Fabric.with(this, Crashlytics())
+        Crashlytics.setUserIdentifier(MamiApp.sessionManager.agentPhoneNumber)
     }
 
     fun getToken(): String {
