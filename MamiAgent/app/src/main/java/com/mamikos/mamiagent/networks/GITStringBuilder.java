@@ -1,9 +1,9 @@
-package com.git.template.network;
+package com.mamikos.mamiagent.networks;
 
 import android.util.Base64;
 import android.util.Log;
 
-import com.git.template.app.GITApplication;
+import com.mamikos.mamiagent.BuildConfig;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
@@ -16,282 +16,228 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * Created by foursixseven on 6/15/16.
  */
-public class GITStringBuilder
-{
-	private static final String TAG = "GITStringBuilder";
+public class GITStringBuilder {
+    private static final String TAG = "GITBuilder";
 
-	private static final String AES_MODE_ENCRYPT = "AES/CBC/PKCS7Padding";
-	private static final String AES_MODE_DECRYPT = "AES/CBC/NoPadding";
-	private static final String CHARSET = "UTF-8";
-	//togglable log option (please turn off in live!)
-	public static boolean DEBUG_LOG_ENABLED = false;
-	private static char[] start = new char[]{98, 48, 51, 102, 52};
-	private static char[] top = new char[]{97, 49, 52, 48, 57};
-	private static char[] last = new char[]{52, 100, 55, 48, 101, 98};
-	private static final byte[] ivBytes = (new String(last) + new String(start) + new String(top)).
-			getBytes();
+    private static final String AES_MODE_ENCRYPT = "AES/CBC/PKCS7Padding";
+    private static final String AES_MODE_DECRYPT = "AES/CBC/NoPadding";
+    private static final String CHARSET = "UTF-8";
+    private static char[] start = new char[]{98, 48, 51, 102, 52};
+    private static char[] top = new char[]{97, 49, 52, 48, 57};
+    private static char[] last = new char[]{52, 100, 55, 48, 101, 98};
+    private static final byte[] ivBytes = (new String(last) + new String(start) + new String(top)).
+            getBytes();
 
 
-	private GITStringBuilder()
-	{
+    private GITStringBuilder() {
 
-	}
+    }
 
-	private static SecretKeySpec generateKey(final String password)
-			throws NoSuchAlgorithmException, UnsupportedEncodingException
-	{
-		byte[] key = password.getBytes("UTF-8");
-		log("SHA-256 key ", key);
-		return new SecretKeySpec(key, "AES");
-	}
+    private static SecretKeySpec generateKey(final String password)
+            throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        byte[] key = password.getBytes("UTF-8");
+        log("SHA-256 key ", key);
+        return new SecretKeySpec(key, "AES");
+    }
 
-	public static String en(final String password, String message)
-			throws GeneralSecurityException
-	{
-		if (message == null)
-		{
-			message = "";
-		}
-		try
-		{
-			final SecretKeySpec key = generateKey(password);
+    public static String en(final String password, String message)
+            throws GeneralSecurityException {
+        if (message == null) {
+            message = "";
+        }
+        try {
+            final SecretKeySpec key = generateKey(password);
 
-			log("message", message);
+            log("message", message);
 
-			byte[] cipherText = encrypt(key, ivBytes, message.getBytes(CHARSET));
+            byte[] cipherText = encrypt(key, ivBytes, message.getBytes(CHARSET));
 
-			//NO_WRAP is important as was getting \n at the end
-			String encoded = Base64.encodeToString(cipherText, Base64.NO_WRAP);
-			log("Base64.NO_WRAP", encoded);
-			return encoded;
-		}
-		catch (UnsupportedEncodingException e)
-		{
-			if (GITApplication.DEBUG)
-			{
-				Log.e(TAG, "UnsupportedEncodingException ", e);
-			}
-			throw new GeneralSecurityException(e);
-		}
-	}
+            //NO_WRAP is important as was getting \n at the end
+            String encoded = Base64.encodeToString(cipherText, Base64.NO_WRAP);
+            log("Base64.NO_WRAP", encoded);
+            return encoded;
+        } catch (UnsupportedEncodingException e) {
+            throw new GeneralSecurityException(e);
+        }
+    }
 
-	/**
-	 * More flexible AES en that doesn't encode
-	 *
-	 * @param key     AES key typically 128, 192 or 256 bit
-	 * @param iv      Initiation Vector
-	 * @param message in bytes (assumed it's already been decoded)
-	 * @return Encrypted cipher text (not encoded)
-	 * @throws GeneralSecurityException if something goes wrong during encryption
-	 */
-	private static byte[] encrypt(final SecretKeySpec key, final byte[] iv, final byte[] message)
-			throws GeneralSecurityException
-	{
-		final Cipher cipher = Cipher.getInstance(AES_MODE_ENCRYPT);
-		IvParameterSpec ivSpec = new IvParameterSpec(iv);
-		cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
-		byte[] cipherText = cipher.doFinal(message);
+    /**
+     * More flexible AES en that doesn't encode
+     *
+     * @param key     AES key typically 128, 192 or 256 bit
+     * @param iv      Initiation Vector
+     * @param message in bytes (assumed it's already been decoded)
+     * @return Encrypted cipher text (not encoded)
+     * @throws GeneralSecurityException if something goes wrong during encryption
+     */
+    private static byte[] encrypt(final SecretKeySpec key, final byte[] iv, final byte[] message)
+            throws GeneralSecurityException {
+        final Cipher cipher = Cipher.getInstance(AES_MODE_ENCRYPT);
+        IvParameterSpec ivSpec = new IvParameterSpec(iv);
+        cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
+        byte[] cipherText = cipher.doFinal(message);
 
-		log("cipherText", cipherText);
+        log("cipherText", cipherText);
 
-		return cipherText;
-	}
+        return cipherText;
+    }
 
-	/**
-	 * Decrypt and decode ciphertext using 256-bit AES with key generated from password
-	 *
-	 * @param password                used to generated key
-	 * @param base64EncodedCipherText the encrpyted message encoded with base64
-	 * @return message in Plain text (String UTF-8)
-	 * @throws GeneralSecurityException if there's an issue decrypting
-	 */
-	public static String de(final String password, String base64EncodedCipherText)
-			throws GeneralSecurityException
-	{
-		if (base64EncodedCipherText == null)
-		{
-			base64EncodedCipherText = "";
-			return base64EncodedCipherText;
-		}
-		try
-		{
-			final SecretKeySpec key = generateKey(password);
+    /**
+     * Decrypt and decode ciphertext using 256-bit AES with key generated from password
+     *
+     * @param password                used to generated key
+     * @param base64EncodedCipherText the encrpyted message encoded with base64
+     * @return message in Plain text (String UTF-8)
+     * @throws GeneralSecurityException if there's an issue decrypting
+     */
+    public static String de(final String password, String base64EncodedCipherText)
+            throws GeneralSecurityException {
+        if (base64EncodedCipherText == null) {
+            base64EncodedCipherText = "";
+            return base64EncodedCipherText;
+        }
+        try {
+            final SecretKeySpec key = generateKey(password);
 
-			log("base64EncodedCipherText", base64EncodedCipherText);
-			byte[] decodedCipherText = Base64.decode(base64EncodedCipherText, Base64.NO_WRAP);
-			log("decodedCipherText", decodedCipherText);
+            log("base64EncodedCipherText", base64EncodedCipherText);
+            byte[] decodedCipherText = Base64.decode(base64EncodedCipherText, Base64.NO_WRAP);
+            log("decodedCipherText", decodedCipherText);
 
-			byte[] decryptedBytes = decrypt(key, ivBytes, decodedCipherText);
+            byte[] decryptedBytes = decrypt(key, ivBytes, decodedCipherText);
 
-			log("decryptedBytes", decryptedBytes);
-			String message = new String(decryptedBytes, CHARSET);
-			log("message", message);
+            log("decryptedBytes", decryptedBytes);
+            String message = new String(decryptedBytes, CHARSET);
+            log("message", message);
 
 
-			return message;
-		}
-		catch (UnsupportedEncodingException e)
-		{
-			if (GITApplication.DEBUG)
-			{
-				Log.e(TAG, "UnsupportedEncodingException ", e);
-			}
+            return message;
+        } catch (UnsupportedEncodingException e) {
+            throw new GeneralSecurityException(e);
+        }
+    }
 
-			throw new GeneralSecurityException(e);
-		}
-	}
+    public static String des(final String password, String base64EncodedCipherText)
+            throws GeneralSecurityException {
+        if (base64EncodedCipherText == null) {
+            base64EncodedCipherText = "";
+            return base64EncodedCipherText;
+        }
+        try {
+            final SecretKeySpec key = generateKey(password);
 
-	public static String des(final String password, String base64EncodedCipherText)
-			throws GeneralSecurityException
-	{
-		if (base64EncodedCipherText == null)
-		{
-			base64EncodedCipherText = "";
-			return base64EncodedCipherText;
-		}
-		try
-		{
-			final SecretKeySpec key = generateKey(password);
+            log("base64EncodedCipherText", base64EncodedCipherText);
+            byte[] decodedCipherText = Base64.decode(base64EncodedCipherText, Base64.NO_WRAP);
+            log("decodedCipherText", decodedCipherText);
 
-			log("base64EncodedCipherText", base64EncodedCipherText);
-			byte[] decodedCipherText = Base64.decode(base64EncodedCipherText, Base64.NO_WRAP);
-			log("decodedCipherText", decodedCipherText);
+            byte[] decryptedBytes = decrypt7(key, ivBytes, decodedCipherText);
 
-			byte[] decryptedBytes = decrypt7(key, ivBytes, decodedCipherText);
-
-			log("decryptedBytes", decryptedBytes);
-			String message = new String(decryptedBytes, CHARSET);
-			log("message", message);
+            log("decryptedBytes", decryptedBytes);
+            String message = new String(decryptedBytes, CHARSET);
+            log("message", message);
 
 
-			return message;
-		}
-		catch (UnsupportedEncodingException e)
-		{
-			if (GITApplication.DEBUG)
-			{
-				Log.e(TAG, "UnsupportedEncodingException ", e);
-			}
+            return message;
+        } catch (UnsupportedEncodingException e) {
+            throw new GeneralSecurityException(e);
+        }
+    }
 
-			throw new GeneralSecurityException(e);
-		}
-	}
+    /**
+     * More flexible AES de that doesn't encode
+     *
+     * @param key               AES key typically 128, 192 or 256 bit
+     * @param iv                Initiation Vector
+     * @param decodedCipherText in bytes (assumed it's already been decoded)
+     * @return Decrypted message cipher text (not encoded)
+     * @throws GeneralSecurityException if something goes wrong during encryption
+     */
+    private static byte[] decrypt(final SecretKeySpec key, final byte[] iv,
+                                  final byte[] decodedCipherText)
+            throws GeneralSecurityException {
+        final Cipher cipher = Cipher.getInstance(AES_MODE_DECRYPT);
+        IvParameterSpec ivSpec = new IvParameterSpec(iv);
+        cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
+        byte[] decryptedBytes = cipher.doFinal(decodedCipherText);
 
-	/**
-	 * More flexible AES de that doesn't encode
-	 *
-	 * @param key               AES key typically 128, 192 or 256 bit
-	 * @param iv                Initiation Vector
-	 * @param decodedCipherText in bytes (assumed it's already been decoded)
-	 * @return Decrypted message cipher text (not encoded)
-	 * @throws GeneralSecurityException if something goes wrong during encryption
-	 */
-	private static byte[] decrypt(final SecretKeySpec key, final byte[] iv,
-			final byte[] decodedCipherText)
-			throws GeneralSecurityException
-	{
-		final Cipher cipher = Cipher.getInstance(AES_MODE_DECRYPT);
-		IvParameterSpec ivSpec = new IvParameterSpec(iv);
-		cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
-		byte[] decryptedBytes = cipher.doFinal(decodedCipherText);
+        if (decryptedBytes.length > 0) {
+            int trim = 0;
+            for (int i = decryptedBytes.length - 1; i >= 0; i--) {
+                if (decryptedBytes[i] == 0) {
+                    trim++;
+                }
+            }
 
-		if (decryptedBytes.length > 0)
-		{
-			int trim = 0;
-			for (int i = decryptedBytes.length - 1; i >= 0; i--)
-			{
-				if (decryptedBytes[i] == 0)
-				{
-					trim++;
-				}
-			}
+            if (trim > 0) {
+                byte[] newArray = new byte[decryptedBytes.length - trim];
+                System.arraycopy(decryptedBytes, 0, newArray, 0, decryptedBytes.length - trim);
+                decryptedBytes = newArray;
+            }
+        }
+        log("decryptedBytes", decryptedBytes);
 
-			if (trim > 0)
-			{
-				byte[] newArray = new byte[decryptedBytes.length - trim];
-				System.arraycopy(decryptedBytes, 0, newArray, 0, decryptedBytes.length - trim);
-				decryptedBytes = newArray;
-			}
-		}
-		log("decryptedBytes", decryptedBytes);
+        return decryptedBytes;
+    }
 
-		return decryptedBytes;
-	}
+    private static byte[] decrypt7(final SecretKeySpec key, final byte[] iv,
+                                   final byte[] decodedCipherText)
+            throws GeneralSecurityException {
+        final Cipher cipher = Cipher.getInstance(AES_MODE_ENCRYPT);
+        IvParameterSpec ivSpec = new IvParameterSpec(iv);
+        cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
+        byte[] decryptedBytes = cipher.doFinal(decodedCipherText);
 
-	private static byte[] decrypt7(final SecretKeySpec key, final byte[] iv,
-			final byte[] decodedCipherText)
-			throws GeneralSecurityException
-	{
-		final Cipher cipher = Cipher.getInstance(AES_MODE_ENCRYPT);
-		IvParameterSpec ivSpec = new IvParameterSpec(iv);
-		cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
-		byte[] decryptedBytes = cipher.doFinal(decodedCipherText);
+        if (decryptedBytes.length > 0) {
+            int trim = 0;
+            for (int i = decryptedBytes.length - 1; i >= 0; i--) {
+                if (decryptedBytes[i] == 0) {
+                    trim++;
+                }
+            }
 
-		if (decryptedBytes.length > 0)
-		{
-			int trim = 0;
-			for (int i = decryptedBytes.length - 1; i >= 0; i--)
-			{
-				if (decryptedBytes[i] == 0)
-				{
-					trim++;
-				}
-			}
+            if (trim > 0) {
+                byte[] newArray = new byte[decryptedBytes.length - trim];
+                System.arraycopy(decryptedBytes, 0, newArray, 0, decryptedBytes.length - trim);
+                decryptedBytes = newArray;
+            }
+        }
+        log("decryptedBytes", decryptedBytes);
 
-			if (trim > 0)
-			{
-				byte[] newArray = new byte[decryptedBytes.length - trim];
-				System.arraycopy(decryptedBytes, 0, newArray, 0, decryptedBytes.length - trim);
-				decryptedBytes = newArray;
-			}
-		}
-		log("decryptedBytes", decryptedBytes);
+        return decryptedBytes;
+    }
 
-		return decryptedBytes;
-	}
+    private static void log(String what, byte[] bytes) {
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, what + "[" + bytes.length + "] [" + bytesToHex(bytes) + "]");
+        }
+    }
 
-	private static void log(String what, byte[] bytes)
-	{
-		if (GITApplication.DEBUG)
-		{
-			Log.d(TAG, what + "[" + bytes.length + "] [" + bytesToHex(bytes) + "]");
-		}
-	}
+    private static void log(String what, String value) {
+        if (BuildConfig.DEBUG) {
+            if (value.length() > 4000) {
+                Log.d(TAG + what, value.substring(0, 4000));
+                log(what, value.substring(4000));
+            } else {
+                Log.d(TAG + what, value);
+            }
+        }
+    }
 
-	private static void log(String what, String value)
-	{
-		if (GITApplication.DEBUG)
-		{
-			if (value.length() > 4000)
-			{
-				Log.d(TAG + what, value.substring(0, 4000));
-				log(what, value.substring(4000));
-			}
-			else
-			{
-				Log.d(TAG + what, value);
-			}
-		}
-	}
-
-	/**
-	 * Converts byte array to hexidecimal useful for logging and fault finding
-	 *
-	 * @param bytes
-	 * @return
-	 */
-	private static String bytesToHex(byte[] bytes)
-	{
-		final char[] hexArray = {'0', '1', '2', '3', '4', '5', '6', '7', '8',
-				'9', 'A', 'B', 'C', 'D', 'E', 'F'};
-		char[] hexChars = new char[bytes.length * 2];
-		int v;
-		for (int j = 0; j < bytes.length; j++)
-		{
-			v = bytes[j] & 0xFF;
-			hexChars[j * 2] = hexArray[v >>> 4];
-			hexChars[j * 2 + 1] = hexArray[v & 0x0F];
-		}
-		return new String(hexChars);
-	}
+    /**
+     * Converts byte array to hexidecimal useful for logging and fault finding
+     *
+     * @param bytes
+     * @return
+     */
+    private static String bytesToHex(byte[] bytes) {
+        final char[] hexArray = {'0', '1', '2', '3', '4', '5', '6', '7', '8',
+                '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        char[] hexChars = new char[bytes.length * 2];
+        int v;
+        for (int j = 0; j < bytes.length; j++) {
+            v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
 }

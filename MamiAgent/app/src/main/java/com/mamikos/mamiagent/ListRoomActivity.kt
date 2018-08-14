@@ -1,21 +1,28 @@
 package com.mamikos.mamiagent
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.location.LocationListener
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.mamikos.mamiagent.adapters.ListRoomPagerAdapter
 import com.mamikos.mamiagent.fragments.RoomDataFragment
 import com.sidhiartha.libs.activities.BaseActivity
@@ -29,6 +36,7 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
 
     companion object {
         val SETTING_LOCATION = 100
+        val REQUEST_GPS_SETTINGS = 101
         val ROOM_EXTRA = "room"
         val SUCCESS_INPUT = "success_input"
         var currentTabSelected = 0
@@ -182,12 +190,15 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
     private fun showAlertLocation() {
         val dialog = AlertDialog.Builder(this)
         dialog.setTitle("Enable Location")
-                .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " + "use this app")
-                .setPositiveButton("Location Settings") { paramDialogInterface, paramInt ->
-                    ActivityCompat.requestPermissions(this,
+                .setMessage("Untuk menggunakan App ini silahkan hidupkan GPS Anda dan beri akses untuk App ini")
+                .setPositiveButton("OKE") { paramDialogInterface, paramInt ->
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                        ActivityCompat.requestPermissions(this,
                             arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION,
                                 android.Manifest.permission.ACCESS_COARSE_LOCATION),
                             SETTING_LOCATION);
+                    else
+                        showSettingLocationDialog()
                 }.setCancelable(false)
         dialog.show()
     }
@@ -206,5 +217,46 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
             super.onBackPressed()
         }
         lastBackPressedTimeInMillis = System.currentTimeMillis()
+    }
+
+    private fun showSettingLocationDialog() {
+        if (mLocationRequest == null)
+            mLocationRequest = LocationRequest.create().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+
+        val builder = LocationSettingsRequest.Builder()
+                .addLocationRequest(mLocationRequest!!)
+        builder.setAlwaysShow(true)
+        val result = LocationServices.getSettingsClient(this).checkLocationSettings(builder.build())
+        result.addOnCompleteListener { task ->
+            try {
+                task.getResult(ApiException::class.java)
+                startLocationUpdates()
+            } catch (exception: ApiException) {
+                when (exception.statusCode) {
+                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
+                        /*Gps On, state Another High Accuracy*/
+                        val resolvable = exception as ResolvableApiException
+                        resolvable.startResolutionForResult(this, REQUEST_GPS_SETTINGS)
+                    } catch (e: IntentSender.SendIntentException) {
+                        logIfDebug(e.localizedMessage)
+                    } catch (e: ClassCastException) {
+                        logIfDebug(e.localizedMessage)
+                    }
+
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_GPS_SETTINGS && resultCode == RESULT_OK) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission location denied...", Toast.LENGTH_SHORT).show()
+                return
+            }
+            startLocationUpdates()
+        }
+        else
+            super.onActivityResult(requestCode, resultCode, data)
     }
 }

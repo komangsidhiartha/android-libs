@@ -1,5 +1,6 @@
 package com.mamikos.mamiagent
 
+import android.app.Activity
 import com.mamikos.mamiagent.apps.MamiApp
 import com.mamikos.mamiagent.networks.apis.LoginApi
 import com.mamikos.mamiagent.networks.responses.StatusResponse
@@ -36,7 +37,7 @@ class VerifyPhoneActivity : BaseActivity()
                     logIfDebug("response " + response.toString())
                     if (response.status) {
                         MamiApp.sessionManager.isLogin = true
-                        startActivity<ListRoomActivity>()
+                        setResult(Activity.RESULT_OK)
                         this.finish()
                     }
                     else
