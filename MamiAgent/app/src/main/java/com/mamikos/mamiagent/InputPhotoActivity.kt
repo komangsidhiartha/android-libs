@@ -45,11 +45,12 @@ class InputPhotoActivity : BaseActivity() {
         var STORAGE_PERMISSION_CODE = 301
         var IMAGE_FROM_GALLERY = 21
         var REVIEW_DATA = "review_data"
+        val TAKE_PHOTO_REQ = 222
     }
 
     lateinit var room: RoomEntity
     lateinit var photoFile: File
-    private lateinit var mCurrentPhotoPath: String
+    var mCurrentPhotoPath: String? = null
     private lateinit var photoURI: Uri
 
     lateinit var originalPhotosResponse: ListPhotoResponse
@@ -250,7 +251,7 @@ class InputPhotoActivity : BaseActivity() {
                 mCurrentPhotoPath = photoFile.absolutePath
                 photoURI = FileProvider.getUriForFile(this, "com.mamikos.mamiagent.provider", photoFile)
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                startActivityForResult(takePictureIntent, IntroCheckInActivity.TAKE_PHOTO_REQUEST)
+                startActivityForResult(takePictureIntent, TAKE_PHOTO_REQ)
             } catch (ex: Exception) {
                 // Error occurred while creating the File
                 toast("Capture Image Bug: " + ex.message.toString())
@@ -283,14 +284,17 @@ class InputPhotoActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int,
                                   data: Intent?) {
         if (resultCode == Activity.RESULT_OK
-                && requestCode == IntroCheckInActivity.TAKE_PHOTO_REQUEST) {
-            logIfDebug("DATA " + data)
-            photoFile = File(mCurrentPhotoPath)
-            logIfDebug("PHOTO " + photoFile)
-            if (MediaHelper.isPhotoLandscape(this, photoURI, mCurrentPhotoPath))
-                uploadImage()
+                && requestCode == TAKE_PHOTO_REQ) {
+            if (mCurrentPhotoPath != null) {
+                photoFile = File(mCurrentPhotoPath)
+                logIfDebug("PHOTO " + photoFile)
+                if (MediaHelper.isPhotoLandscape(this, photoURI, mCurrentPhotoPath!!))
+                    uploadImage()
+                else
+                    toast("Foto Harus Landscape.")
+            }
             else
-                toast("Foto Harus Landscape.")
+                toast("Ambil foto gagal.")
         }
         else if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_FROM_GALLERY && data != null) {
             if (data.data != null) {

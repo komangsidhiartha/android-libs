@@ -22,7 +22,7 @@ import javax.crypto.spec.SecretKeySpec
 
 abstract class MamikosAgentBaseApi : BaseAPI()
 {
-    override val basePath: String = "http://kay.mamikos.com/api/agent/giant/"
+    override val basePath: String = "http://songturu2.mamikos.com/api/agent/giant/"
     var formData: List<Pair<String, Any?>>? = null
     var fileUpload: File? = null
     var postParam = ""
@@ -77,7 +77,6 @@ abstract class MamikosAgentBaseApi : BaseAPI()
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
-//                handler(GSONManager.fromJson(json!!.obj(), kelas), null)
             }
         }
 

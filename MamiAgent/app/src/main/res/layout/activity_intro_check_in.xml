@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:background="@color/white"
+                android:background="@drawable/button_color_white"
                 android:orientation="vertical"
                 android:padding="10dp">
 
@@ -105,5 +105,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_margin="5dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:theme="@style/ProgressBarOrange" />
 </RelativeLayout>

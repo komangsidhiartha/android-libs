@@ -7,6 +7,17 @@
 
     <include layout="@layout/toolbar_app"/>
 
+    <Button
+        android:id="@+id/btnStatistic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/statistic_title"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:textStyle="bold"
+        android:textColor="@color/apptheme_color"
+        android:background="@drawable/button_color_white"/>
+
     <android.support.design.widget.TabLayout
         android:id="@+id/tabListRoom"
         android:layout_width="match_parent"
@@ -43,5 +54,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_margin="5dp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:theme="@style/ProgressBarOrange"/>
 </RelativeLayout>

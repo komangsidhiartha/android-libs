@@ -14,20 +14,19 @@ import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.mamikos.mamiagent.adapters.ListRoomPagerAdapter
 import com.mamikos.mamiagent.fragments.RoomDataFragment
 import com.sidhiartha.libs.activities.BaseActivity
 import com.sidhiartha.libs.apps.logIfDebug
 import kotlinx.android.synthetic.main.activity_list_room.*
+import org.jetbrains.anko.onClick
+import org.jetbrains.anko.startActivity
 
 
 class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -44,7 +43,7 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
         var TYPE_EDITED = "edited"
     }
 
-    lateinit var fragmentPagerAdapter: ListRoomPagerAdapter
+    var fragmentPagerAdapter: ListRoomPagerAdapter? = null
 
     private var mGoogleApiClient: GoogleApiClient? = null
     var mLocation: Location? = null
@@ -72,7 +71,7 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
                 ListRoomActivity.currentTabSelected = tab.position
                 vpListRoom.currentItem = tab.position
                 if (fragmentPagerAdapter != null)
-                    fragmentPagerAdapter.fragments.get(tab.position).reload()
+                    fragmentPagerAdapter?.fragments?.get(tab.position)?.reload()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -83,6 +82,8 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
 
             }
         })
+
+        btnStatistic.onClick { this.openStatistic() }
 
         mGoogleApiClient = GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -258,5 +259,10 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
         }
         else
             super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun openStatistic()
+    {
+        startActivity<StatisticActivity>()
     }
 }

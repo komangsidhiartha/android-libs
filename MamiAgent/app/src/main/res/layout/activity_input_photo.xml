@@ -163,5 +163,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_margin="5dp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:theme="@style/ProgressBarOrange"/>
 </RelativeLayout>

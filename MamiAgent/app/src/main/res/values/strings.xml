@@ -41,5 +41,9 @@
     <string name="note_map">Klik marker merah untuk menampilkan tombol rute di kanan bawah</string>
     <string name="change">Ganti</string>
     <string name="camera_action_text">Tekan Kamera Untuk Melanjutkan</string>
+    <string name="statistic_title">Statistik</string>
+    <string name="start_date">Start date</string>
+    <string name="end_date">End date</string>
+    <string name="search">Search</string>
 
 </resources>

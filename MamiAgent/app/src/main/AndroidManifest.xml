@@ -73,7 +73,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".SuccessInputActivity"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".StatisticActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name=".helpers.GenericFileProvider"
             android:authorities="${applicationId}.provider"
