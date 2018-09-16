@@ -12,6 +12,7 @@ import android.view.View
 abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(protected val context: Context, protected var items: List<E>) : RecyclerView.Adapter<V>()
 {
     var isLoading = false
+    var needToLoadMore = true
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView)
     {
@@ -31,6 +32,12 @@ abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(prot
 
     public fun addItems(newItems : List<E>)
     {
+        if (newItems.isEmpty())
+        {
+            needToLoadMore = false
+            return
+        }
+
         val tempItem = arrayListOf<E>()
         tempItem.addAll(items)
         tempItem.addAll(newItems)
@@ -53,7 +60,8 @@ abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(prot
         {
             super.onScrolled(recyclerView, dx, dy)
 
-            if (isLoading) return
+            if (isLoading || !needToLoadMore)
+                return
 
             val totalItemCount = recyclerView?.layoutManager?.itemCount ?: 0
             val lastVisibleItemPosition = when
