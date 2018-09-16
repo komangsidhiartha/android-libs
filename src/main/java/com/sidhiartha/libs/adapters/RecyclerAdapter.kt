@@ -30,7 +30,7 @@ abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(prot
         holder.bind(items[position])
     }
 
-    public fun addItems(newItems : List<E>)
+    open fun addItems(newItems : List<E>)
     {
         if (newItems.isEmpty())
         {
