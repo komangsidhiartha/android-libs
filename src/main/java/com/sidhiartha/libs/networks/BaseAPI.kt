@@ -34,7 +34,7 @@ abstract class BaseAPI
 
     abstract val path: String
 
-    abstract fun jsonParams() : String
+    abstract val params : String
 
     protected fun extract(queryParams: List<Pair<String, String>>): String
     {
@@ -77,21 +77,38 @@ abstract class BaseAPI
 
     fun get(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
-        "$basePath$path".httpGet().header(headers).responseJson(handler)
+        appendHeaderWithAcceptJson()
+        "$basePath/$path".httpGet().header(headers).responseJson(handler)
     }
 
     fun delete(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
-        "$basePath$path".httpPost().body(jsonParams()).header(headers).responseJson(handler)
+        appendHeaderWithJsonSpecific()
+        "$basePath/$path".httpDelete().body(params).header(headers).responseJson(handler)
     }
 
     fun post(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
-        "$basePath$path".httpPost().body(jsonParams()).header(headers).responseJson(handler)
+        appendHeaderWithJsonSpecific()
+        "$basePath/$path".httpPost().body(params).header(headers).responseJson(handler)
     }
 
     fun put(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
-        "$basePath$path".httpPost().body(jsonParams()).header(headers).responseJson(handler)
+        appendHeaderWithJsonSpecific()
+        "$basePath/$path".httpPut().body(params).header(headers).responseJson(handler)
+    }
+
+    private fun appendHeaderWithJsonSpecific() {
+        appendHeaderWithJsonContentType()
+        appendHeaderWithAcceptJson()
+    }
+
+    private fun appendHeaderWithJsonContentType() {
+        headers?.plus(mapOf("Content-Type" to "application/json"))
+    }
+
+    private fun appendHeaderWithAcceptJson() {
+        headers?.plus(mapOf("Accept" to "application/json"))
     }
 }
