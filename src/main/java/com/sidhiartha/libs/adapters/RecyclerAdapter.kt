@@ -9,9 +9,10 @@ import android.view.View
 /**
  * Created by sidhiartha on 28/02/18.
  */
-abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(protected val context: Context, protected var items: ArrayList<E>) : RecyclerView.Adapter<V>()
+abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(protected val context: Context, protected var items: List<E>) : RecyclerView.Adapter<V>()
 {
     var isLoading = false
+    var needToLoadMore = true
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView)
     {
@@ -29,6 +30,21 @@ abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(prot
         holder.bind(items[position])
     }
 
+    open fun addItems(newItems : List<E>)
+    {
+        if (newItems.isEmpty())
+        {
+            needToLoadMore = false
+            return
+        }
+
+        val tempItem = arrayListOf<E>()
+        tempItem.addAll(items)
+        tempItem.addAll(newItems)
+        items = tempItem
+        notifyDataSetChanged()
+    }
+
     abstract fun loadMore()
 
     inner class OnScrollListener : RecyclerView.OnScrollListener()
@@ -44,7 +60,8 @@ abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(prot
         {
             super.onScrolled(recyclerView, dx, dy)
 
-            if (isLoading) return
+            if (isLoading || !needToLoadMore)
+                return
 
             val totalItemCount = recyclerView?.layoutManager?.itemCount ?: 0
             val lastVisibleItemPosition = when

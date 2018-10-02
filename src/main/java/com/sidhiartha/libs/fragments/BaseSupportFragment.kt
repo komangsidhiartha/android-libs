@@ -11,7 +11,6 @@ import android.view.ViewGroup
  */
 abstract class BaseSupportFragment : Fragment()
 {
-
     protected abstract val layoutResource: Int
 
     protected abstract fun viewDidLoad()
@@ -26,5 +25,10 @@ abstract class BaseSupportFragment : Fragment()
         super.onViewCreated(view, savedInstanceState)
 
         viewDidLoad()
+    }
+
+    fun replaceContainerWithFragment(containerId: Int, fragment: BaseSupportFragment)
+    {
+        childFragmentManager.beginTransaction().replace(containerId, fragment).commit()
     }
 }
