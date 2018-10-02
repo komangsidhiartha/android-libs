@@ -119,19 +119,20 @@ abstract class MamikosAgentBaseApi : BaseAPI()
         return listOf(Pair("data", encrypt))
     }
 
-    override fun jsonParams(): String {
-        var encrypt = postParam
-        try {
-            encrypt = GITStringBuilder.en(NetworkEntity().stringUrl(), postParam)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Log.e(javaClass.simpleName, "build: en ex error ", e)
-        }
+    override val params: String
+        get() {
+            var encrypt = postParam
+            try {
+                encrypt = GITStringBuilder.en(NetworkEntity().stringUrl(), postParam)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.e(javaClass.simpleName, "build: en ex error ", e)
+            }
 
-        val data = JSONObject()
-        data.put("data", encrypt)
-        return data.toString()
-    }
+            val data = JSONObject()
+            data.put("data", encrypt)
+            return data.toString()
+        }
 
     @Throws(Exception::class)
     fun encodeHeader(key: String, data: String): String {
