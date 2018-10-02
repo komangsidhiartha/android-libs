@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 
 
-class BaseApplication : Application()
+open class BaseApplication : Application()
 {
     private var firebaseAnalytics: FirebaseAnalytics? = null
 
