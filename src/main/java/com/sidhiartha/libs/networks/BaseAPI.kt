@@ -20,7 +20,7 @@ import com.sidhiartha.libs.utils.GSONManager
 
 enum class APIMethod
 {
-    GET, DELETE, POST, PUT, HEAD, PATCH
+    GET, DELETE, POST, PUT, HEAD, PATCH, UPLOAD
 }
 
 abstract class BaseAPI
@@ -75,22 +75,22 @@ abstract class BaseAPI
         }
     }
 
-    private fun get(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
+    fun get(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
         "$basePath$path".httpGet().header(headers).responseJson(handler)
     }
 
-    private fun delete(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
+    fun delete(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
         "$basePath$path".httpPost().body(jsonParams()).header(headers).responseJson(handler)
     }
 
-    private fun post(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
+    fun post(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
         "$basePath$path".httpPost().body(jsonParams()).header(headers).responseJson(handler)
     }
 
-    private fun put(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
+    fun put(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
         "$basePath$path".httpPost().body(jsonParams()).header(headers).responseJson(handler)
     }
