@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <include layout="@layout/toolbar_app"/>
+    <include layout="@layout/toolbar_app" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,31 +21,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/accent"
+                android:padding="10dp"
                 android:text="@string/room_available_text"
                 android:textColor="@color/white"
-                android:padding="10dp"
-                android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/etRoomAvailable"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="@string/hint_room_available_text"
-                android:inputType="number"
-                android:imeOptions="actionDone"
-                android:focusableInTouchMode="true"/>
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/etRoomAvailable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:focusableInTouchMode="true"
+                    android:hint="@string/hint_room_available_text"
+                    android:imeOptions="actionDone"
+                    android:inputType="number" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/accent"
+                android:padding="10dp"
                 android:text="@string/photo_cover_text"
                 android:textColor="@color/white"
-                android:padding="10dp"
-                android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <com.mamikos.mamiagent.views.ExpandableHeightGridView
                 android:id="@+id/gvCover"
@@ -53,17 +59,17 @@
                 android:layout_height="wrap_content"
                 android:numColumns="2"
                 android:padding="10dp"
-                android:verticalSpacing="5dp"/>
+                android:verticalSpacing="5dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/accent"
+                android:padding="10dp"
                 android:text="@string/photo_front_text"
                 android:textColor="@color/white"
-                android:padding="10dp"
-                android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <com.mamikos.mamiagent.views.ExpandableHeightGridView
                 android:id="@+id/gvBuilding"
@@ -71,17 +77,17 @@
                 android:layout_height="wrap_content"
                 android:numColumns="2"
                 android:padding="10dp"
-                android:verticalSpacing="5dp"/>
+                android:verticalSpacing="5dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/accent"
+                android:padding="10dp"
                 android:text="@string/photo_room_text"
                 android:textColor="@color/white"
-                android:padding="10dp"
-                android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <com.mamikos.mamiagent.views.ExpandableHeightGridView
                 android:id="@+id/gvRoom"
@@ -89,17 +95,17 @@
                 android:layout_height="wrap_content"
                 android:numColumns="2"
                 android:padding="10dp"
-                android:verticalSpacing="5dp"/>
+                android:verticalSpacing="5dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/accent"
+                android:padding="10dp"
                 android:text="@string/photo_bath_text"
                 android:textColor="@color/white"
-                android:padding="10dp"
-                android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <com.mamikos.mamiagent.views.ExpandableHeightGridView
                 android:id="@+id/gvBathRoom"
@@ -107,17 +113,17 @@
                 android:layout_height="wrap_content"
                 android:numColumns="2"
                 android:padding="10dp"
-                android:verticalSpacing="5dp"/>
+                android:verticalSpacing="5dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/accent"
+                android:padding="10dp"
                 android:text="@string/photo_speedtest_text"
                 android:textColor="@color/white"
-                android:padding="10dp"
-                android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <com.mamikos.mamiagent.views.ExpandableHeightGridView
                 android:id="@+id/gvSpeed"
@@ -125,17 +131,17 @@
                 android:layout_height="wrap_content"
                 android:numColumns="2"
                 android:padding="10dp"
-                android:verticalSpacing="5dp"/>
+                android:verticalSpacing="5dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/accent"
+                android:padding="10dp"
                 android:text="@string/photo_facility_text"
                 android:textColor="@color/white"
-                android:padding="10dp"
-                android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <com.mamikos.mamiagent.views.ExpandableHeightGridView
                 android:id="@+id/gvOther"
@@ -143,17 +149,46 @@
                 android:layout_height="wrap_content"
                 android:numColumns="2"
                 android:padding="10dp"
-                android:verticalSpacing="5dp"/>
+                android:verticalSpacing="5dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/accent"
+                android:padding="10dp"
+                android:text="@string/comment"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/etComment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:focusableInTouchMode="true"
+                    android:gravity="top"
+                    android:hint="@string/hint_comment"
+                    android:imeOptions="actionDone"
+                    android:inputType="textMultiLine"
+                    android:maxLines="8"
+                    android:minLines="3" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/btnNextPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_color_apptheme"
                 android:layout_margin="10dp"
+                android:background="@drawable/button_color_apptheme"
                 android:text="@string/success_submite_next_text"
                 android:textColor="@color/white"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
 
@@ -163,6 +198,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_margin="5dp"
-        android:visibility="gone"
-        android:theme="@style/ProgressBarOrange"/>
+        android:theme="@style/ProgressBarOrange"
+        android:visibility="gone" />
 </RelativeLayout>

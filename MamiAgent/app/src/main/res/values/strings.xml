@@ -23,6 +23,7 @@
     <string name="photo_navbar_text">Foto</string>
     <string name="room_available_text">Kamar Kosong</string>
     <string name="hint_room_available_text">Masukan jumlah kamar kosong (wajib)</string>
+    <string name="hint_comment">Masukan komentar</string>
     <string name="photo_cover_text">Foto Cover (wajib)</string>
     <string name="photo_front_text">Foto Depan (wajib)</string>
     <string name="photo_room_text">Foto Kamar (wajib)</string>
@@ -45,5 +46,6 @@
     <string name="start_date">Start date</string>
     <string name="end_date">End date</string>
     <string name="search">Search</string>
+    <string name="comment">Komentar</string>
 
 </resources>

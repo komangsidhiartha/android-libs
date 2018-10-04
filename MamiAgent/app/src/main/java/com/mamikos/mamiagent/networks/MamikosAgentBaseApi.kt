@@ -22,7 +22,7 @@ import javax.crypto.spec.SecretKeySpec
 
 abstract class MamikosAgentBaseApi : BaseAPI()
 {
-    override val basePath: String = "http://songturu2.mamikos.com/api/agent/giant/"
+    override val basePath: String = "http://songturu2.mamikos.com/api/agent/giant"
     var formData: List<Pair<String, Any?>>? = null
     var fileUpload: File? = null
     var postParam = ""
@@ -96,7 +96,7 @@ abstract class MamikosAgentBaseApi : BaseAPI()
         val files: ArrayList<DataPart> = arrayListOf()
         fileUpload?.let { files.add(DataPart(it, "file", "image/jpeg")) }
 
-        "$basePath$path".httpUpload(Method.POST, formData()).header(headers).
+        "$basePath/$path".httpUpload(Method.POST, formData()).header(headers).
                 dataParts { request, url -> files }
                 .responseJson(handler)
     }
