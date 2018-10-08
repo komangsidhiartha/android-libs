@@ -28,6 +28,14 @@ data class RoomEntity(@SerializedName("_id") val _id: String,
                       val ownerName: String,
                       val ownerPhone: String,
                       val statuses: String,
+                      val facRoom: List<String>,
+                      val facShare: List<String>,
+                      val facBath: List<String>,
+                      val facNear: List<String>,
+                      val facPark: List<String>,
+                      val facPrice: List<String>,
+                      val facRoomOther: String,
+                      val facBathOther: String,
                       val note: String?)
     : Parcelable {
     companion object {

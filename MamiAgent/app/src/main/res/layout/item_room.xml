@@ -9,8 +9,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/ivRoom"
@@ -25,11 +25,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/ivRoom"
-            android:orientation="vertical"
-            android:layout_marginBottom="10dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvRoomName"
@@ -54,6 +54,16 @@
                     android:textColor="@color/darker_gray" />
 
                 <TextView
+                    android:id="@+id/tvFac"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/app_name"
+                    android:textColor="@color/darker_gray"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
+                <TextView
                     android:id="@+id/tvDistance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -65,8 +75,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/tvPhotoCount"
@@ -77,9 +87,9 @@
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/black"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"/>
+                        android:layout_marginRight="5dp"
+                        android:background="@color/black" />
 
                     <TextView
                         android:id="@+id/tvReviewCount"
@@ -96,8 +106,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:padding="10dp"
         android:background="@color/white"
+        android:padding="10dp"
         android:textStyle="bold"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </LinearLayout>

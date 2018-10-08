@@ -47,6 +47,7 @@ class ListDataRoomAdapter(context: Context, items: ArrayList<RoomEntity>, privat
             val tvPhotoCount = itemView.find<TextView>(R.id.tvPhotoCount)
             val tvReviewCount = itemView.find<TextView>(R.id.tvReviewCount)
             val tvNoteReject = itemView.find<TextView>(R.id.tvNoteReject)
+            val tvFac = itemView.find<TextView>(R.id.tvFac)
 
             Glide.with(itemView).load(item.photoUrl.small)
                     .apply(RequestOptions().override(100, 100).transform(CenterInside()).transform(RoundedCorners(10)))
@@ -80,6 +81,43 @@ class ListDataRoomAdapter(context: Context, items: ArrayList<RoomEntity>, privat
                 }
                 setItemBgColor(item, itemView)
             }
+
+            /*var fac  = ""
+
+            for (newData in item.facRoom.indices){
+                fac += item.facRoom[newData]+", "
+            }
+
+            for (newData in item.facShare.indices){
+                fac += item.facShare[newData]+", "
+            }
+
+            for (newData in item.facBath.indices){
+                fac += item.facBath[newData]+", "
+            }
+
+            for (newData in item.facNear.indices){
+                fac += item.facNear[newData]+", "
+            }
+
+            for (newData in item.facPark.indices){
+                fac += item.facPark[newData]+", "
+            }
+
+            for (newData in item.facPrice.indices){
+                fac += item.facPrice[newData]+", "
+            }
+
+            fac += item.facRoomOther+", "
+            fac += item.facBathOther+", "
+
+            val re2 = Regex("[^A-Za-z,,]")
+            val re3 = Regex("[^A-Za-z,,,]")
+            fac = re2.replace(fac, " ")
+            fac = re3.replace(fac, " ")*/
+
+            //tvFac.text = fac
+
         }
 
         fun setItemBgColor(roomEntity: RoomEntity, view: View)
