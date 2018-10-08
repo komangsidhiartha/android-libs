@@ -489,6 +489,7 @@ class InputPhotoActivity : BaseActivity() {
         val saveDataRoomEntity = SaveDataRoomEntity()
         saveDataRoomEntity.id = room._id
         saveDataRoomEntity.roomAvailable = etRoomAvailable.text.toString().toInt()
+        saveDataRoomEntity.agentDescription = etComment.text.toString()
         if (room.statuses == RoomEntity.STATUS_DEFAULT || room.statuses == RoomEntity.STATUS_CHECKIN)
             saveDataRoomEntity.cardDelete = getOriginalPhotoDeleted()
         else

@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:gravity="center_horizontal"
-                android:padding="0dp"
+                android:padding="10dp"
                 android:text="Tambah Foto"
                 android:textColor="@color/apptheme_color"
                 android:textSize="13sp"
