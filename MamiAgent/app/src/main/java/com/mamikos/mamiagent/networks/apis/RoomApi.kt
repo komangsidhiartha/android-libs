@@ -11,6 +11,7 @@ open class RoomApi : MamikosAgentBaseApi()
     class ReviewRoomApi: RoomApi()
     class UpdateReviewRoomApi(val id: String): RoomApi()
     class SaveDataRoomApi: RoomApi()
+    class DetailRoom(val roomID: String): RoomApi()
 
     override val headers: Map<String, String>?
         get() = generateAuthHeader(path)
@@ -21,6 +22,7 @@ open class RoomApi : MamikosAgentBaseApi()
                 is DataRoomApi -> APIMethod.GET
                 is ListDataRoomApi -> APIMethod.GET
                 is ListEditedRoomApi -> APIMethod.GET
+                is DetailRoom -> APIMethod.GET
                 is ReviewRoomApi -> APIMethod.UPLOAD
                 is UpdateReviewRoomApi -> APIMethod.UPLOAD
                 is SaveDataRoomApi -> APIMethod.POST
@@ -37,6 +39,7 @@ open class RoomApi : MamikosAgentBaseApi()
                 is ReviewRoomApi -> "review"
                 is UpdateReviewRoomApi -> "update/review/$id"
                 is SaveDataRoomApi -> "data"
+                is DetailRoom -> "room/$roomID"
                 else -> ""
             }
         }

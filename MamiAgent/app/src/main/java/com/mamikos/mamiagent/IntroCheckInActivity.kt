@@ -14,6 +14,7 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
@@ -165,9 +166,12 @@ class IntroCheckInActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
                                   data: Intent?) {
         if (requestCode == TAKE_PHOTO_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                photoFile = File(mCurrentPhotoPath)
-                logIfDebug("PHOTO " + photoFile)
-                processCapturedPhoto()
+                val handler  = Handler()
+                handler.postDelayed({
+                    photoFile = File(mCurrentPhotoPath)
+                    logIfDebug("PHOTO " + photoFile)
+                    processCapturedPhoto()
+                },1000)
             } else {
                 photoFile = null
             }

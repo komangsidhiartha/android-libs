@@ -47,5 +47,6 @@
     <string name="end_date">End date</string>
     <string name="search">Search</string>
     <string name="comment">Komentar</string>
+    <string name="facility">Fasilitas</string>
 
 </resources>

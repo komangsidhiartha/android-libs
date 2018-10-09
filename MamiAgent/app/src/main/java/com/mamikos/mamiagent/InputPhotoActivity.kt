@@ -11,6 +11,11 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
 import com.mamikos.mamiagent.adapters.AddPhotoAdapter
 import com.mamikos.mamiagent.entities.MediaEntity
 import com.mamikos.mamiagent.entities.RoomEntity
@@ -18,20 +23,15 @@ import com.mamikos.mamiagent.entities.SaveDataRoomEntity
 import com.mamikos.mamiagent.helpers.MediaHelper
 import com.mamikos.mamiagent.networks.apis.PhotosApi
 import com.mamikos.mamiagent.networks.apis.RoomApi
-import com.mamikos.mamiagent.networks.responses.GetDataEditedResponse
-import com.mamikos.mamiagent.networks.responses.ListPhotoResponse
-import com.mamikos.mamiagent.networks.responses.MediaResponse
-import com.mamikos.mamiagent.networks.responses.StatusResponse
+import com.mamikos.mamiagent.networks.responses.*
+import com.mamikos.mamiagent.views.TextViewCustom
 import com.sidhiartha.libs.activities.BaseActivity
 import com.sidhiartha.libs.apps.logIfDebug
 import com.sidhiartha.libs.utils.GSONManager
 import kotlinx.android.synthetic.main.activity_input_photo.*
-import org.jetbrains.anko.onClick
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
-import org.json.JSONObject
+import kotlinx.android.synthetic.main.text_view_custom.view.*
+import org.jetbrains.anko.*
 import java.io.File
-import java.util.stream.IntStream
 
 class InputPhotoActivity : BaseActivity() {
     override val layoutResource: Int = R.layout.activity_input_photo
@@ -91,6 +91,83 @@ class InputPhotoActivity : BaseActivity() {
         }
         setGridView()
         loadPhotos()
+
+        getRoomDetail()
+    }
+
+    private fun getRoomDetail() {
+        val roomAPI =  RoomApi.DetailRoom(room._id)
+        roomAPI.exec(RoomDetailData::class.java){
+            response: RoomDetailData?, errorMessage: String? ->
+            if(response?.meta?.code == 200) {
+                room = response.data
+                setData()
+            }
+        }
+    }
+
+    private fun setData() {
+
+        for (newData in room.facRoom.indices){
+            val txtView  = TextViewCustom(this)
+            txtView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            txtView.txtViewCustom.text = room.facRoom[newData]
+            layoutFac.addView(txtView)
+        }
+
+        for (newData in room.facShare.indices){
+            val txtView  = TextViewCustom(this)
+            txtView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            txtView.txtViewCustom.text = room.facShare[newData]
+            layoutFac.addView(txtView)
+        }
+
+        for (newData in room.facBath.indices){
+            val txtView  = TextViewCustom(this)
+            txtView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            txtView.txtViewCustom.text  = room.facBath[newData]
+            layoutFac.addView(txtView)
+        }
+
+        for (newData in room.facNear.indices){
+            val txtView  = TextViewCustom(this)
+            txtView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            txtView.txtViewCustom.text  = room.facNear[newData]
+            layoutFac.addView(txtView)
+        }
+
+        for (newData in room.facPark.indices){
+            val txtView  = TextViewCustom(this)
+            txtView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            txtView.txtViewCustom.text  = room.facPark[newData]
+            layoutFac.addView(txtView)
+        }
+
+        for (newData in room.facPrice.indices){
+            val txtView  = TextViewCustom(this)
+            txtView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            txtView.txtViewCustom.text  = room.facPrice[newData]
+            layoutFac.addView(txtView)
+        }
+
+        room.facRoomOther?.let {
+            if(room.facRoomOther.isNotEmpty()) {
+                val txtView = TextViewCustom(this)
+                txtView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                txtView.txtViewCustom.text = room.facRoomOther
+                layoutFac.addView(txtView)
+            }
+        }
+
+        room.facBathOther?.let {
+            if(room.facBathOther.isNotEmpty()) {
+                val txtView2 = TextViewCustom(this)
+                txtView2.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                txtView2.txtViewCustom.text = room.facBathOther
+                layoutFac.addView(txtView2)
+            }
+        }
+
     }
 
     private fun setupActionBar() {

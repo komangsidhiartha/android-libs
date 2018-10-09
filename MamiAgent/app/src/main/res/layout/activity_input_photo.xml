@@ -157,6 +157,22 @@
                 android:layout_height="wrap_content"
                 android:background="@color/accent"
                 android:padding="10dp"
+                android:text="@string/facility"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <com.mamikos.mamiagent.views.FlowLayout
+                android:id="@+id/layoutFac"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/accent"
+                android:padding="10dp"
                 android:text="@string/comment"
                 android:textColor="@color/white"
                 android:textSize="16sp"

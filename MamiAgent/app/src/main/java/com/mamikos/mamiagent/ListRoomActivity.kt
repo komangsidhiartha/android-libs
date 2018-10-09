@@ -93,6 +93,7 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
 
         mLocationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         checkLocation()
+
     }
 
     fun setAdapter()
