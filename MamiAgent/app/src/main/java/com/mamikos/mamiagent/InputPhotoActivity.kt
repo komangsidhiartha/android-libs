@@ -12,10 +12,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
 import com.mamikos.mamiagent.adapters.AddPhotoAdapter
 import com.mamikos.mamiagent.entities.MediaEntity
 import com.mamikos.mamiagent.entities.RoomEntity
