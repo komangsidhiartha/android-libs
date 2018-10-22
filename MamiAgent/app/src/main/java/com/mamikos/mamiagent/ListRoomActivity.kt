@@ -11,6 +11,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.support.design.widget.TabLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
@@ -94,6 +95,12 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
         mLocationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         checkLocation()
 
+        deleteFolderPictures()
+    }
+
+    private fun deleteFolderPictures() {
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        storageDir.deleteRecursively()
     }
 
     fun setAdapter()
