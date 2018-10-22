@@ -98,7 +98,7 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
         deleteFolderPictures()
     }
 
-    private fun deleteFolderPictures() {
+    private fun deleteFolderPictures() {//
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         storageDir.deleteRecursively()
     }
