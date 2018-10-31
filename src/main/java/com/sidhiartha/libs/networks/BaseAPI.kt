@@ -129,16 +129,19 @@ abstract class BaseAPI
 
     private fun appendHeaderWithJsonContentType(): Map<String, String>
     {
-        return headers?.plus(mapOf("Content-Type" to "application/json")) ?: mapOf()
+        val jsonSpecificMap = mapOf("Content-Type" to "application/json")
+        return headers?.plus(jsonSpecificMap) ?: jsonSpecificMap
     }
 
     private fun appendHeaderWithAcceptJson(): Map<String, String>
     {
-        return headers?.plus(mapOf("Accept" to "application/json")) ?: mapOf()
+        val acceptJsonMap = mapOf("Accept" to "application/json")
+        return headers?.plus(acceptJsonMap) ?: acceptJsonMap
     }
 
     private fun appendHeaderWithMultipartFormType(): Map<String, String>
     {
-        return headers?.plus(mapOf("Content-Type" to "multipart/form-data; boundary=${System.currentTimeMillis()}")) ?: mapOf()
+        val multipartFormSpecificMap = mapOf("Content-Type" to "multipart/form-data; boundary=${System.currentTimeMillis()}")
+        return headers?.plus(multipartFormSpecificMap) ?: multipartFormSpecificMap
     }
 }
