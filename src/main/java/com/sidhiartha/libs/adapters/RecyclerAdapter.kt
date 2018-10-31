@@ -51,23 +51,23 @@ abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(prot
     {
         private val visibleThreshold = 2
 
-        override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int)
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int)
         {
             super.onScrollStateChanged(recyclerView, newState)
         }
 
-        override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int)
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int)
         {
             super.onScrolled(recyclerView, dx, dy)
 
             if (isLoading || !needToLoadMore)
                 return
 
-            val totalItemCount = recyclerView?.layoutManager?.itemCount ?: 0
+            val totalItemCount = recyclerView.layoutManager?.itemCount ?: 0
             val lastVisibleItemPosition = when
             {
-                recyclerView?.layoutManager is LinearLayoutManager -> (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-                recyclerView?.layoutManager is GridLayoutManager -> (recyclerView.layoutManager as GridLayoutManager).findLastVisibleItemPosition()
+                recyclerView.layoutManager is LinearLayoutManager -> (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                recyclerView.layoutManager is GridLayoutManager -> (recyclerView.layoutManager as GridLayoutManager).findLastVisibleItemPosition()
                 else -> 0
             }
 
@@ -76,7 +76,7 @@ abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(prot
         }
     }
 
-    abstract inner class BaseViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)
+    abstract inner class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
         abstract fun bind(item: E);
     }
