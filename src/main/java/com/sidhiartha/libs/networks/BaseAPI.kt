@@ -2,17 +2,15 @@ package com.sidhiartha.libs.networks
 
 import android.text.TextUtils
 import android.util.Log
+import com.github.kittinunf.fuel.*
 import com.github.kittinunf.fuel.android.core.Json
 import com.github.kittinunf.fuel.android.extension.responseJson
-import com.github.kittinunf.fuel.core.FuelError
-import com.github.kittinunf.fuel.core.Request
-import com.github.kittinunf.fuel.core.Response
-import com.github.kittinunf.fuel.httpDelete
-import com.github.kittinunf.fuel.httpGet
-import com.github.kittinunf.fuel.httpPost
-import com.github.kittinunf.fuel.httpPut
+import com.github.kittinunf.fuel.core.*
 import com.github.kittinunf.result.Result
+import com.sidhiartha.libs.apps.logIfDebug
 import com.sidhiartha.libs.utils.GSONManager
+import java.io.File
+import java.util.ArrayList
 
 /**
  * Created by sidhiartha on 21/01/18.
@@ -36,6 +34,10 @@ abstract class BaseAPI
 
     abstract val params : String
 
+    open var formData: List<Pair<String, Any?>>? = null
+
+    open val filesToUpload: ArrayList<DataPart> = arrayListOf()
+
     protected fun extract(queryParams: List<Pair<String, String>>): String
     {
         var result = ""
@@ -56,13 +58,7 @@ abstract class BaseAPI
             Log.w("Network Manager", "response $response")
             Log.w("Network Manager", "json $json")
             Log.w("Network Manager", "error $error")
-            if (error != null)
-            {
-                handler(null, error.localizedMessage)
-            } else
-            {
-                handler(GSONManager.fromJson(json!!.obj(), kelas), null)
-            }
+            handleResponse(json, error, kelas, handler)
         }
 
         when (method)
@@ -71,44 +67,78 @@ abstract class BaseAPI
             APIMethod.DELETE -> delete(localHandler)
             APIMethod.POST -> post(localHandler)
             APIMethod.PUT -> put(localHandler)
+            APIMethod.UPLOAD -> upload(localHandler)
             else -> Log.i("TAG", "unsupported $method method")
         }
     }
 
+    open fun <T> handleResponse(json: Json?, error: FuelError?, kelas: Class<T>, handler: (response: T?, errorMessage: String?) -> Unit)
+    {
+        if (error != null)
+            handler(null, error.localizedMessage)
+        else
+            handler(GSONManager.fromJson(json!!.obj(), kelas), null)
+    }
+
     fun get(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
-        appendHeaderWithAcceptJson()
-        "$basePath/$path".httpGet().header(headers).responseJson(handler)
+        "$basePath/$path".httpGet().header(generateHeader()).responseJson(handler)
     }
 
     fun delete(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
-        appendHeaderWithJsonSpecific()
-        "$basePath/$path".httpDelete().body(params).header(headers).responseJson(handler)
+        "$basePath/$path".httpDelete().body(params).header(generateHeader()).responseJson(handler)
     }
 
     fun post(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
-        appendHeaderWithJsonSpecific()
-        "$basePath/$path".httpPost().body(params).header(headers).responseJson(handler)
+        "$basePath/$path".httpPost().body(params).header(generateHeader()).responseJson(handler)
     }
 
     fun put(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
-        appendHeaderWithJsonSpecific()
-        "$basePath/$path".httpPut().body(params).header(headers).responseJson(handler)
+        "$basePath/$path".httpPut().body(params).header(generateHeader()).responseJson(handler)
     }
 
-    private fun appendHeaderWithJsonSpecific() {
-        appendHeaderWithJsonContentType()
-        appendHeaderWithAcceptJson()
+    fun upload(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
+    {
+        "$basePath/$path".httpUpload(Method.POST, formData).header(generateHeader()).
+                dataParts { _, _ -> filesToUpload }
+                .responseJson(handler)
     }
 
-    private fun appendHeaderWithJsonContentType() {
-        headers?.plus(mapOf("Content-Type" to "application/json"))
+    private fun generateHeader(): Map<String, String>
+    {
+        when (method)
+        {
+            APIMethod.GET -> return appendHeaderWithAcceptJson()
+            APIMethod.DELETE -> return appendHeaderWithJsonSpecific()
+            APIMethod.POST -> return appendHeaderWithJsonSpecific()
+            APIMethod.PUT -> return appendHeaderWithJsonSpecific()
+            APIMethod.UPLOAD -> return appendHeaderWithMultipartFormType()
+            else -> return mapOf()
+        }
     }
 
-    private fun appendHeaderWithAcceptJson() {
-        headers?.plus(mapOf("Accept" to "application/json"))
+    private fun appendHeaderWithJsonSpecific(): Map<String, String>
+    {
+        val newHeader = appendHeaderWithJsonContentType()
+        newHeader.plus(appendHeaderWithAcceptJson())
+        return newHeader
+    }
+
+    private fun appendHeaderWithJsonContentType(): Map<String, String>
+    {
+        return headers?.plus(mapOf("Content-Type" to "application/json")) ?: mapOf()
+    }
+
+    private fun appendHeaderWithAcceptJson(): Map<String, String>
+    {
+        return headers?.plus(mapOf("Accept" to "application/json")) ?: mapOf()
+    }
+
+    private fun appendHeaderWithMultipartFormType(): Map<String, String>
+    {
+        return headers?.plus(mapOf("Content-Type" to "multipart/form-data; boundary=${System.currentTimeMillis()}")) ?: mapOf()
     }
 }
