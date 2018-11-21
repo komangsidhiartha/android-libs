@@ -95,5 +95,8 @@
     <color name="bg_company_follow">#fb541f</color>
     <color name="cp_header_background">#eafee7</color>
     <color name="cp_header_txt_color">#2f492b</color>
+    <color name="alto_solid">#dbdbdb</color>
+    <color name="gallery_solid">#efefef</color>
+    <color name="scorpion_approx">#595959</color>
     <!--END CompanyProfile-->
 </resources>

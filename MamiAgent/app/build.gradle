@@ -28,6 +28,8 @@ android {
         versionName "1.1.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        buildConfigField("boolean", "SHOW_LOG", "false")
+        buildConfigField("boolean", "SHOW_FABRIC", "true")
     }
     buildTypes {
         release {
@@ -35,6 +37,28 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "v1"
+
+    productFlavors {
+        devel {
+            dimension "v1"
+            versionName "1.1.3"
+            buildConfigField("boolean", "SHOW_LOG", "true")
+            buildConfigField("boolean", "SHOW_FABRIC", "false")
+        }
+    }
+
+    signingConfigs {
+        debug {}
+        release {
+            keyAlias 'mamikos'
+            keyPassword 'gongsin123'
+            storeFile file('C:/Users/Dedi Dot/Videos/mamikos_agent_keystore/mamikos.keystore')
+            storePassword 'gongsin123'
+        }
+    }
+
 }
 
 androidExtensions {
@@ -48,7 +72,7 @@ repositories {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':android-libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'

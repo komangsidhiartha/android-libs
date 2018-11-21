@@ -48,5 +48,10 @@
     <string name="search">Search</string>
     <string name="comment">Komentar</string>
     <string name="facility">Fasilitas</string>
+    <string name="msg_add_data_ads">Tambah data iklan</string>
+    <string name="msg_data_location">Data lokasi</string>
+    <string name="msg_data_kos">Data kos</string>
+    <string name="msg_data_facility_kos">Fasilitas kos</string>
+    <string name="msg_data_owner_kos">Data pemilik</string>
 
 </resources>

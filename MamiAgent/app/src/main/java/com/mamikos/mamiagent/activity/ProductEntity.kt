@@ -1,4 +1,4 @@
-package com.mamikos.mamiagent
+package com.mamikos.mamiagent.activity
 
 data class ProductEntity(var id: Int, var name: String, var brand: String, var imageUrl: String, var description: String, var price: String)
 {

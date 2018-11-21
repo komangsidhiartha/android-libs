@@ -3,8 +3,8 @@ package com.mamikos.mamiagent.fragments
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import com.mamikos.mamiagent.DetailRoomActivity
-import com.mamikos.mamiagent.ListRoomActivity
+import com.mamikos.mamiagent.activity.DetailRoomActivity
+import com.mamikos.mamiagent.activity.ListRoomActivity
 import com.mamikos.mamiagent.R
 import com.mamikos.mamiagent.adapters.ListDataRoomAdapter
 import com.mamikos.mamiagent.entities.RoomEntity
@@ -15,7 +15,6 @@ import com.sidhiartha.libs.fragments.BaseSupportFragment
 import kotlinx.android.synthetic.main.fragment_room_data.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.toast
 
 class RoomDataFragment : BaseSupportFragment() {
     companion object {

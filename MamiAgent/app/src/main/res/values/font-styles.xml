@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Regular">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/font_regular</item>
+    </style>
+
+    <style name="RegularBold">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/font_bold</item>
+    </style>
+
+    <style name="Semibold">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/font_semi_bold</item>
+    </style>
+
+    <style name="Italic">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/font_italic</item>
+    </style>
+
+</resources>

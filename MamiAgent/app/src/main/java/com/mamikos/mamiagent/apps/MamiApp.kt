@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
 import com.crashlytics.android.Crashlytics
+import com.mamikos.mamiagent.BuildConfig
 import com.mamikos.mamiagent.interfaces.Constants
 import com.sidhiartha.libs.apps.BaseApplication
 import io.fabric.sdk.android.Fabric
@@ -22,8 +23,11 @@ class MamiApp: BaseApplication()
     override fun onCreate() {
         sessionManager = SessionManager(applicationContext)
         super.onCreate()
-        Fabric.with(this, Crashlytics())
-        Crashlytics.setUserIdentifier(MamiApp.sessionManager.agentPhoneNumber)
+
+        if(BuildConfig.SHOW_FABRIC) {
+            Fabric.with(this, Crashlytics())
+            Crashlytics.setUserIdentifier(MamiApp.sessionManager.agentPhoneNumber)
+        }
     }
 
     fun getToken(): String {

@@ -1,8 +1,9 @@
-package com.mamikos.mamiagent
+package com.mamikos.mamiagent.activity
 
 import android.app.DatePickerDialog
 import android.view.View
 import android.widget.Button
+import com.mamikos.mamiagent.R
 import com.mamikos.mamiagent.apps.MamiApp
 import com.mamikos.mamiagent.networks.apis.StatisticApi
 import com.mamikos.mamiagent.networks.responses.StatisticResponse

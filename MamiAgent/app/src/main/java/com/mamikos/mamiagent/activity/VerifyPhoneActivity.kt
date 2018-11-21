@@ -1,6 +1,7 @@
-package com.mamikos.mamiagent
+package com.mamikos.mamiagent.activity
 
 import android.app.Activity
+import com.mamikos.mamiagent.R
 import com.mamikos.mamiagent.apps.MamiApp
 import com.mamikos.mamiagent.networks.apis.LoginApi
 import com.mamikos.mamiagent.networks.responses.StatusResponse
@@ -8,7 +9,6 @@ import com.sidhiartha.libs.activities.BaseActivity
 import com.sidhiartha.libs.apps.logIfDebug
 import kotlinx.android.synthetic.main.activity_verify_phone.*
 import org.jetbrains.anko.onClick
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.json.JSONObject
 

@@ -1,4 +1,4 @@
-package com.mamikos.mamiagent
+package com.mamikos.mamiagent.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -21,6 +21,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
+import com.mamikos.mamiagent.R
 import com.mamikos.mamiagent.adapters.ListRoomPagerAdapter
 import com.mamikos.mamiagent.fragments.RoomDataFragment
 import com.sidhiartha.libs.activities.BaseActivity
@@ -69,7 +70,7 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
         setTitle("Agen Kost Mamikos")
         tabListRoom.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                ListRoomActivity.currentTabSelected = tab.position
+                currentTabSelected = tab.position
                 vpListRoom.currentItem = tab.position
                 if (fragmentPagerAdapter != null)
                     fragmentPagerAdapter?.fragments?.get(tab.position)?.reload()
@@ -204,8 +205,7 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                         ActivityCompat.requestPermissions(this,
                             arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION,
-                                android.Manifest.permission.ACCESS_COARSE_LOCATION),
-                            SETTING_LOCATION);
+                                android.Manifest.permission.ACCESS_COARSE_LOCATION), SETTING_LOCATION);
                     else
                         showSettingLocationDialog()
                 }.setCancelable(false)

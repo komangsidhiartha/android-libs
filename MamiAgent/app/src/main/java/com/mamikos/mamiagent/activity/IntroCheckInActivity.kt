@@ -1,25 +1,21 @@
-package com.mamikos.mamiagent
+package com.mamikos.mamiagent.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.ContentValues
 import android.content.Context
-import android.content.CursorLoader
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -28,22 +24,18 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationListener
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import com.mamikos.mamiagent.R
 import com.mamikos.mamiagent.entities.RoomEntity
 import com.mamikos.mamiagent.helpers.MediaHelper
 import com.mamikos.mamiagent.networks.apis.CheckInApi
 import com.mamikos.mamiagent.networks.responses.StatusResponse
 import com.sidhiartha.libs.activities.BaseActivity
 import com.sidhiartha.libs.apps.logIfDebug
-import com.sidhiartha.libs.utils.GSONManager
 import kotlinx.android.synthetic.main.activity_intro_check_in.*
-import org.jetbrains.anko.image
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
 
 class IntroCheckInActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     override val layoutResource: Int = R.layout.activity_intro_check_in
@@ -302,8 +294,7 @@ class IntroCheckInActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
                 .setPositiveButton("Location Settings") { paramDialogInterface, paramInt ->
                     ActivityCompat.requestPermissions(this,
                             arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION,
-                                    android.Manifest.permission.ACCESS_COARSE_LOCATION),
-                            ListRoomActivity.SETTING_LOCATION);
+                                    android.Manifest.permission.ACCESS_COARSE_LOCATION), ListRoomActivity.SETTING_LOCATION);
                 }.setCancelable(false)
         dialog.show()
     }

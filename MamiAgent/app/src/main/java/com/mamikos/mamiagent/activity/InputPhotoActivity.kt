@@ -1,4 +1,4 @@
-package com.mamikos.mamiagent
+package com.mamikos.mamiagent.activity
 
 import android.Manifest
 import android.app.Activity
@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.view.View
 import android.view.ViewGroup
+import com.mamikos.mamiagent.R
 import com.mamikos.mamiagent.adapters.AddPhotoAdapter
 import com.mamikos.mamiagent.entities.MediaEntity
 import com.mamikos.mamiagent.entities.RoomEntity

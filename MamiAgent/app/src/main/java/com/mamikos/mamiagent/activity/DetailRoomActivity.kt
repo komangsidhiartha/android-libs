@@ -1,4 +1,4 @@
-package com.mamikos.mamiagent
+package com.mamikos.mamiagent.activity
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,6 +16,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
+import com.mamikos.mamiagent.R
 import com.mamikos.mamiagent.entities.RoomEntity
 import com.sidhiartha.libs.activities.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_room.*

@@ -8,7 +8,9 @@
         android:maxSdkVersion="22" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-feature android:name="android.hardware.location.gps" />
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -48,33 +50,43 @@
             android:value="AIzaSyCQIkeKDefYAlUkmylMHnSL9EhbISYCHK0" />
 
         <activity
-            android:name=".SplashActivity"
-            android:screenOrientation="portrait"
-            android:noHistory="true">
+            android:name=".activity.FormKostActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignInActivity"
+        <activity
+            android:name=".activity.SignInActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".VerifyPhoneActivity"
+        <activity
+            android:name=".activity.VerifyPhoneActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ListRoomActivity"
+        <activity
+            android:name=".activity.ListRoomActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".DetailRoomActivity"
+        <activity
+            android:name=".activity.DetailRoomActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".IntroCheckInActivity"
+        <activity
+            android:name=".activity.IntroCheckInActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".InputReviewActivity"
+        <activity
+            android:name=".activity.InputReviewActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".InputPhotoActivity"
+        <activity
+            android:name=".activity.InputPhotoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".SuccessInputActivity"
+        <activity
+            android:name=".activity.SuccessInputActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".StatisticActivity"
+        <activity
+            android:name=".activity.StatisticActivity"
             android:screenOrientation="portrait" />
+
         <provider
             android:name=".helpers.GenericFileProvider"
             android:authorities="${applicationId}.provider"
@@ -87,8 +99,12 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="22309a803cf61bd054896081dc9aaf69787fe278"
-            />
+            android:value="22309a803cf61bd054896081dc9aaf69787fe278" />
+
+        <activity
+            android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

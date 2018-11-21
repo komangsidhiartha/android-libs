@@ -8,18 +8,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.annotation.GlideModule
-import com.bumptech.glide.module.AppGlideModule
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.CenterInside
-import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.mamikos.mamiagent.*
+import com.mamikos.mamiagent.activity.ListRoomActivity
 import com.mamikos.mamiagent.entities.RoomEntity
 import com.sidhiartha.libs.adapters.RecyclerAdapter
 import com.sidhiartha.libs.apps.logIfDebug
-import kotlinx.android.synthetic.main.item_room.*
 import kotlinx.android.synthetic.main.item_room.view.*
 import org.jetbrains.anko.*
 
