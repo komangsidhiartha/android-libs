@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="type_gender">
+        <item>Campur</item>
+        <item>Putra</item>
+        <item>Putri</item>
+    </string-array>
+
+    <string-array name="times">
+        <item>Harian</item>
+        <item>Mingguan</item>
+        <item>Bulanan</item>
+        <item>Tahunan</item>
+    </string-array>
+
+    <string-array name="menu_drawer">
+        <item>Cari Iklan</item>
+        <item>Booking</item>
+        <item>Histori</item>
+        <item>Rekomendasi</item>
+        <item>Chat</item>
+        <item>Chat Dengan CS</item>
+        <item>Tambah Iklan</item>
+        <item>Setting</item>
+    </string-array>
+
+
+    <string-array name="min_bayar">
+        <item>Optional</item>           <!--0-->
+        <item>Minimal 2 Bln</item>      <!--67-->
+        <item>Minimal 3 Bln</item>      <!--65-->
+        <item>Minimal 4 Bln</item>      <!--68-->
+        <item>Minimal 5 Bln</item>      <!--69-->
+        <item>Minimal 6 Bln</item>      <!--66-->
+        <item>Minimal 7 Bln</item>      <!--70-->
+        <item>Minimal 8 Bln</item>      <!--71-->
+        <item>Minimal 9 Bln</item>      <!--72-->
+        <item>Minimal 10 Bln</item>     <!--73-->
+        <item>Minimal 11 Bln</item>     <!--74-->
+        <item>Minimal 1 Thn</item>      <!--64-->
+    </string-array>
+
+    <string-array name="min_bayar_room">
+        <item>Tidak ada minimal pembayaran</item>           <!--0-->
+        <item>Min. 2 Bln</item>      <!--67-->
+        <item>Min. 3 Bln</item>      <!--65-->
+        <item>Min. 4 Bln</item>      <!--68-->
+        <item>Min. 5 Bln</item>      <!--69-->
+        <item>Min. 6 Bln</item>      <!--66-->
+        <item>Min. 7 Bln</item>      <!--70-->
+        <item>Min. 8 Bln</item>      <!--71-->
+        <item>Min. 9 Bln</item>      <!--72-->
+        <item>Min. 10 Bln</item>     <!--73-->
+        <item>Min. 11 Bln</item>     <!--74-->
+        <item>Min. 1 Th</item>      <!--64-->
+    </string-array>
+
+    <string-array name="id_min_bayar_room">
+        <item>0</item>           <!--0-->
+        <item>67</item>      <!--67-->
+        <item>65</item>      <!--65-->
+        <item>68</item>      <!--68-->
+        <item>69</item>      <!--69-->
+        <item>66</item>      <!--66-->
+        <item>70</item>      <!--70-->
+        <item>71</item>      <!--71-->
+        <item>72</item>      <!--72-->
+        <item>73</item>     <!--73-->
+        <item>74</item>     <!--74-->
+        <item>64</item>      <!--64-->
+    </string-array>
+
+    <string-array name="booking_room_number">
+        <item>0 Kamar</item>
+        <item>1 Kamar</item>
+        <item>2 Kamar</item>
+        <item>3 Kamar</item>
+        <item>4 Kamar</item>
+        <item>5 Kamar</item>
+        <item>6 Kamar</item>
+    </string-array>
+
+    <string-array name="time_report">
+        <item>Hari ini</item>
+        <item>Kemarin</item>
+        <item>7 Hari Lalu</item>
+        <item>14 Hari Lalu</item>
+        <item>30 Hari Lalu</item>
+        <item>Semua</item>
+    </string-array>
+
+    <integer-array name="min_bayar_id">
+        <item>0</item>
+        <item>67</item>
+        <item>65</item>
+        <item>68</item>
+        <item>69</item>
+        <item>66</item>
+        <item>70</item>
+        <item>71</item>
+        <item>72</item>
+        <item>73</item>
+        <item>74</item>
+        <item>64</item>
+    </integer-array>
+
+    <string-array name="ads_type">
+        <item>Kost</item>
+        <item>Apartemen</item>
+        <item>Barang &amp; Jasa</item>
+        <item>Lowongan Kerja</item>
+    </string-array>
+
+    <string-array name="penginput">
+        <item>Pemilik Kos</item>
+        <item>Pengelola Kos</item>
+        <item>Agen</item>
+        <item>Anak Kos</item>
+        <item>Lainnya</item>
+    </string-array>
+
+    <string-array name="penginput_value">
+        <item>Pemilik Kos</item>
+        <item>Pengelola Kos</item>
+        <item>Agen</item>
+        <item>Anak Kos</item>
+        <item>Lainnya</item>
+    </string-array>
+
+    <string-array name="penginput_apartment">
+        <item>Pemilik</item>
+        <item>Pengelola</item>
+        <item>Agen</item>
+    </string-array>
+
+    <string-array name="penginput_marketplace">
+        <item>Pemilik Iklan</item>
+        <item>Pencari Iklan</item>
+    </string-array>
+
+    <string-array name="penginput_apartment_value">
+        <item>Pemilik Apartemen</item>
+        <item>Pengelola Apartemen</item>
+        <item>Agen Apartemen</item>
+    </string-array>
+
+    <string-array name="detailRentTime">
+        <item>Hari</item>
+        <item>Minggu</item>
+        <item>Bulan</item>
+        <item>Tahun</item>
+    </string-array>
+
+    <string-array name="type_unit_apartment">
+        <item>1-Room Studio</item>
+        <item>1 BR</item>
+        <item>2 BR</item>
+        <item>3 BR</item>
+        <item>4 BR</item>
+        <item>Lainnya</item>
+    </string-array>
+
+    <string-array name="vacancy_education">
+        <item>Apa Saja</item>
+        <item>SMA/SMK</item>
+        <item>D1/D2/D3</item>
+        <item>Sarjana/S1</item>
+        <item>Master/S2</item>
+        <item>Doktor/S3</item>
+        <item>Mahasiswa</item>
+        <item>Fresh graduate</item>
+    </string-array>
+
+    <string-array name="vacancy_job_type">
+        <item>Full-time</item>
+        <item>Part-time</item>
+        <item>Freelancer</item>
+    </string-array>
+
+    <string-array name="vacancy_salary">
+        <item>Bulanan</item>
+        <item>Mingguan</item>
+        <item>Harian</item>
+    </string-array>
+</resources>

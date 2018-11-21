@@ -98,5 +98,7 @@
     <color name="alto_solid">#dbdbdb</color>
     <color name="gallery_solid">#efefef</color>
     <color name="scorpion_approx">#595959</color>
+    <color name="silver_approx">#bababa</color>
+    <color name="dove_gray_approx">#707070</color>
     <!--END CompanyProfile-->
 </resources>

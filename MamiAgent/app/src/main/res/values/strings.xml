@@ -53,5 +53,7 @@
     <string name="msg_data_kos">Data kos</string>
     <string name="msg_data_facility_kos">Fasilitas kos</string>
     <string name="msg_data_owner_kos">Data pemilik</string>
+    <string name="msg_province_star">Provinsi*</string>
+    <string name="msg_example_province">Yogyakarta</string>
 
 </resources>
