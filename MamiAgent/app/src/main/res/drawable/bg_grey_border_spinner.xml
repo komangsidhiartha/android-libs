@@ -4,14 +4,14 @@
     <item>
         <layer-list>
             <item>
-                <shape xmlns:android="http://schemas.android.com/apk/res/android">
+                <shape>
                     <solid android:color="#ffffff" />
 
-                    <stroke android:width="2dp" android:color="#E1E1E1" />
+                    <stroke android:width="1.5dp" android:color="@color/mercury_approx" />
 
                     <padding android:bottom="2dp" android:left="2dp" android:right="16dp" android:top="2dp" />
 
-                    <corners android:bottomLeftRadius="3dp" android:bottomRightRadius="3dp" android:topLeftRadius="3dp" android:topRightRadius="3dp" />
+                    <corners android:bottomLeftRadius="2dp" android:bottomRightRadius="2dp" android:topLeftRadius="2dp" android:topRightRadius="2dp" />
                 </shape>
             </item>
             <item>

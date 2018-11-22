@@ -176,10 +176,12 @@
 
     </FrameLayout>
 
-    <ScrollView
+    <com.mamikos.mamiagent.views.LockableScrollView
+        android:id="@+id/formKostScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -187,6 +189,7 @@
             android:orientation="vertical">
 
             <com.mamikos.mamiagent.views.FormKostStep1View
+                android:id="@+id/formKostStep1View"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -205,7 +208,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
         </LinearLayout>
-    </ScrollView>
+    </com.mamikos.mamiagent.views.LockableScrollView>
 
 
 </LinearLayout>

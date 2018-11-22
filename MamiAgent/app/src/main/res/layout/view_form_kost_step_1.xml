@@ -3,9 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
+    <TextView
+        style="@style/Semibold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/msg_input_data_location"
+        android:textAllCaps="true"
+        android:textColor="@color/dove_gray_approx"
+        android:textSize="14sp" />
+
     <com.mamikos.mamiagent.views.FieldLocationView
+        android:id="@+id/provinceFieldLocationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -13,6 +28,7 @@
         android:layout_marginRight="16dp" />
 
     <com.mamikos.mamiagent.views.FieldLocationView
+        android:id="@+id/cityFieldLocationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -20,11 +36,68 @@
         android:layout_marginRight="16dp" />
 
     <com.mamikos.mamiagent.views.FieldLocationView
+        android:id="@+id/districtFieldLocationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp" />
 
+    <TextView
+        style="@style/Semibold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/msg_complete_address_star"
+        android:textColor="@color/dove_gray_approx"
+        android:textSize="14sp" />
+
+    <EditText
+        style="@style/Regular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/bg_grey_border_general"
+        android:padding="14dp"
+        android:textColor="@color/dove_gray_approx" />
+
+    <TextView
+        android:id="@+id/addressTextView"
+        style="@style/Semibold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/msg_map_location_start"
+        android:textColor="@color/dove_gray_approx"
+        android:textSize="14sp" />
+
+    <EditText
+        style="@style/Regular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/bg_grey_border_general"
+        android:padding="14dp"
+        android:textColor="@color/dove_gray_approx" />
+
+    <fragment
+        android:id="@+id/mapKostStep1Fragments"
+        android:name="com.mamikos.mamiagent.googleapi.DabangMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="32dp" />
+
+    <include
+        layout="@layout/view_btn_back_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

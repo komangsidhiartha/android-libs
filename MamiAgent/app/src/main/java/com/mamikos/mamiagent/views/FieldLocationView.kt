@@ -8,10 +8,7 @@ import android.widget.PopupWindow
 import com.mamikos.mamiagent.R
 import com.mamikos.mamiagent.helpers.UtilsHelper
 import kotlinx.android.synthetic.main.view_field_location.view.*
-import android.support.v4.widget.PopupWindowCompat.showAsDropDown
 import android.support.v4.content.ContextCompat
-import android.widget.LinearLayout
-
 
 /**
  * Created by Dedi Dot on 10/9/2018.
