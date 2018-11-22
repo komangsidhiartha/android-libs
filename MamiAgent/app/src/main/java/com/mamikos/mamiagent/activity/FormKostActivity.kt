@@ -3,6 +3,7 @@ package com.mamikos.mamiagent.activity
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
+import android.view.View
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -14,7 +15,9 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.mamikos.mamiagent.helpers.UtilsHelper
 import com.google.android.gms.common.api.GoogleApiClient
 import com.mamikos.mamiagent.googleapi.TouchableWrapper
+import com.mamikos.mamiagent.helpers.ReverseGeocodeTask
 import kotlinx.android.synthetic.main.activity_form_kost.*
+import kotlinx.android.synthetic.main.view_form_kost_step_1.*
 
 /**
  * Created by Dedi Dot on 11/21/2018.
@@ -62,6 +65,24 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             mMap.uiSettings.isMyLocationButtonEnabled = true
 
         }
+
+        centerMarkerPinA2.setOnClickListener {
+
+            centerMarkerPinA1.visibility = View.VISIBLE
+            centerMarkerPinA2.visibility = View.GONE
+
+            val reverse = ReverseGeocodeTask(this)
+
+            reverse.setCallBack(object : ReverseGeocodeTask.GeoCodeTaskCallBack {
+                override fun getFullAddress(address: String) {
+                    UtilsHelper.log("location full $address")
+                }
+            })
+
+            reverse.run(mMap.cameraPosition.target)
+
+        }
+
     }
 
     private fun updateMarkerMyLocation() {
@@ -73,7 +94,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 mFusedLocationClient.lastLocation.addOnSuccessListener(this) {
                     val ltLng = LatLng(it.latitude, it.longitude)
                     mMap.addMarker(MarkerOptions().position(ltLng).title("Saya disini"))
-                            .isDraggable = true
+                            //.isDraggable = true
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ltLng, 15.0f))
                     UtilsHelper.log("my location ${it.latitude}, ${it.longitude}")
                 }
