@@ -58,10 +58,17 @@
     <string name="msg_city_star">Kota*</string>
     <string name="msg_district_star">Kecamatan*</string>
     <string name="msg_input_data_location">Input data lokasi</string>
+    <string name="msg_input_data_kos">Input data kos</string>
     <string name="msg_complete_address_star">Alamat lengkap*</string>
     <string name="msg_map_location_start">Peta lokasi kos*</string>
     <string name="msg_map_back">Kembali</string>
     <string name="msg_map_next">Selanjutnya</string>
+    <string name="msg_kos_name_star">Nama kos*</string>
     <string name="msg_please_wait">Mohon tunggu...</string>
+    <string name="msg_man">Putra</string>
+    <string name="msg_women">Putri</string>
+    <string name="msg_mix">Campur</string>
+    <string name="msg_kos_type">Tipe kos</string>
+    <string name="msg_room_size">Luas kamar</string>
 
 </resources>

@@ -16,7 +16,7 @@
         android:layout_marginRight="16dp"
         android:text="@string/msg_input_data_location"
         android:textAllCaps="true"
-        android:textColor="@color/dove_gray_approx"
+        android:textColor="@color/dusty_gray_approx"
         android:textSize="14sp" />
 
     <com.mamikos.mamiagent.views.FieldLocationView
