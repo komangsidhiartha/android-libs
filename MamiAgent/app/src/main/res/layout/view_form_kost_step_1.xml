@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
-
 
     <TextView
         style="@style/Semibold"
@@ -57,6 +55,7 @@
         android:textSize="14sp" />
 
     <EditText
+        android:id="@+id/fullAddressEditText"
         style="@style/Regular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -80,6 +79,7 @@
         android:textSize="14sp" />
 
     <EditText
+        android:id="@+id/locationEditText"
         style="@style/Regular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -87,6 +87,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/bg_grey_border_general"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:padding="14dp"
         android:textColor="@color/dove_gray_approx" />
 
@@ -101,24 +103,25 @@
             android:layout_width="match_parent"
             android:layout_height="250dp" />
 
-        <android.support.v7.widget.AppCompatImageView
+        <com.mamikos.mamiagent.views.AnchoredImageView
             android:id="@+id/centerMarkerPinA1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="41dp"
+            android:layout_height="41dp"
             android:layout_gravity="center_horizontal|center_vertical"
             android:src="@drawable/ic_form_marker_a1"
             android:visibility="gone" />
 
-        <android.support.v7.widget.AppCompatImageView
+        <com.mamikos.mamiagent.views.AnchoredImageView
             android:id="@+id/centerMarkerPinA2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center_horizontal|center_vertical"
             android:src="@drawable/ic_form_marker_a2"
             android:visibility="visible" />
     </FrameLayout>
 
     <include
+        android:id="@+id/viewBtnBackNextStep1"
         layout="@layout/view_btn_back_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

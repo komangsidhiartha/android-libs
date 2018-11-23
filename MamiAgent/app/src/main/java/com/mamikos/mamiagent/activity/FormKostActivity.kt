@@ -4,6 +4,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.view.View
+import android.widget.ScrollView
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -46,6 +47,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     }
 
     private fun setMap() {
+
         val mapFragment = supportFragmentManager.findFragmentById(R.id.mapKostStep1Fragments) as SupportMapFragment
         mapFragment.getMapAsync {
 
@@ -64,6 +66,11 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             mMap.uiSettings.isZoomControlsEnabled = true
             mMap.uiSettings.isMyLocationButtonEnabled = true
 
+            mMap.setOnCameraMoveListener {
+                centerMarkerPinA1.visibility = View.GONE
+                centerMarkerPinA2.visibility = View.VISIBLE
+            }
+
         }
 
         centerMarkerPinA2.setOnClickListener {
@@ -71,16 +78,24 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             centerMarkerPinA1.visibility = View.VISIBLE
             centerMarkerPinA2.visibility = View.GONE
 
-            val reverse = ReverseGeocodeTask(this)
-
-            reverse.setCallBack(object : ReverseGeocodeTask.GeoCodeTaskCallBack {
-                override fun getFullAddress(address: String) {
-                    UtilsHelper.log("location full $address")
+            val reverseGeoCode = ReverseGeocodeTask(this)
+            reverseGeoCode.setCallBack(object : ReverseGeocodeTask.GeoCodeTaskCallBack {
+                override fun getFullAddress(address: String, latLng: LatLng) {
+                    UtilsHelper.log("location full $address $latLng")
+                    locationEditText.setText(address)
+                    locationEditText.isFocusable = true
+                    locationEditText.isFocusableInTouchMode = true 
                 }
             })
 
-            reverse.run(mMap.cameraPosition.target)
+            reverseGeoCode.run(mMap.cameraPosition.target)
 
+        }
+
+        locationEditText.setOnClickListener {
+            formKostScrollView.post {
+                formKostScrollView.fullScroll(ScrollView.FOCUS_DOWN)
+            }
         }
 
     }
@@ -94,7 +109,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 mFusedLocationClient.lastLocation.addOnSuccessListener(this) {
                     val ltLng = LatLng(it.latitude, it.longitude)
                     mMap.addMarker(MarkerOptions().position(ltLng).title("Saya disini"))
-                            //.isDraggable = true
+                    //.isDraggable = true
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ltLng, 15.0f))
                     UtilsHelper.log("my location ${it.latitude}, ${it.longitude}")
                 }

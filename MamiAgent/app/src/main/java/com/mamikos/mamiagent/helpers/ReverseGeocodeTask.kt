@@ -7,6 +7,7 @@ import android.os.AsyncTask
 import android.os.StrictMode
 import android.text.TextUtils
 import com.google.android.gms.maps.model.LatLng
+import com.mamikos.mamiagent.views.CustomLoadingView
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -30,8 +31,13 @@ class ReverseGeocodeTask(private var context: Context) {
     var city = ""
     var listFullAddress: List<Address> = arrayListOf()
     private lateinit var callback: GeoCodeTaskCallBack
+    private var loading: CustomLoadingView? = null
 
     fun run(ltLng: LatLng) {
+        if (loading == null) {
+            loading = CustomLoadingView(context)
+        }
+        loading?.show()
         ReverseGeocodeTaskX().execute(ltLng)
     }
 
@@ -41,9 +47,12 @@ class ReverseGeocodeTask(private var context: Context) {
 
     private inner class ReverseGeocodeTaskX : AsyncTask<LatLng, Void, String>() {
 
+        private lateinit var latLng: LatLng
+
         override fun doInBackground(vararg params: LatLng): String? {
 
-            val latLng = params[0]
+            latLng = params[0]
+
             try {
                 /*Sometimes getFromLocation Error Timeout server response*/
                 val locale = Locale("id")
@@ -53,29 +62,31 @@ class ReverseGeocodeTask(private var context: Context) {
                     return null
                 }
 
+                UtilsHelper.log("oke 11x ${latLng.latitude} ${latLng.longitude}")
+
                 if (latLng != null) {
-                    listFullAddress = addressGeocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
+                    listFullAddress = addressGeocoder.getFromLocation(latLng.latitude, latLng.longitude, 2)
 
-                    if (listFullAddress != null && listFullAddress!!.size > 0) {
-                        val address = listFullAddress!![0]
-                        streetName = address.thoroughfare
-                        convertAddress(address)
+                    if (listFullAddress != null && listFullAddress!!.size >= 2) {
+                        val address = listFullAddress!![1]
+                        UtilsHelper.log("oke 1")
+                        if (address != null && address.hasLatitude() && address.hasLongitude()) {
+                            streetName = address.thoroughfare
+                            convertAddress(address)
+                            UtilsHelper.log("oke 2")
+                        } else {
+                            UtilsHelper.log("oke 3")
+                            option2(latLng)
+                        }
+                    } else {
+                        UtilsHelper.log("oke 4")
                     }
+                } else {
+                    UtilsHelper.log("oke 5")
                 }
-            } catch (e: IOException) {
-                /*Alternative from timeout server response*/
-                try {
-                    val listFullAddress = getStringFromLocation(latLng.latitude, latLng.longitude)
-                    if (fullAddress != null && listFullAddress!!.size > 0) {
-                        val address = listFullAddress[0]
-                        convertAddress(address)
-                    }
-                } catch (e1: IOException) {
-                    e1.printStackTrace()
-                } catch (e1: JSONException) {
-                    e1.printStackTrace()
-                }
-
+            } catch (e: Exception) {
+                UtilsHelper.log("oke 6")
+                option2(latLng)
             }
 
             if (streetName == null) addressText = fullAddress
@@ -87,10 +98,29 @@ class ReverseGeocodeTask(private var context: Context) {
         override fun onPostExecute(addressText: String) {
             //query.id(R.id.tv_address_autocomplete_value).text(addressText)
             UtilsHelper.log("complete address ${addressText}")
-            callback.getFullAddress(addressText)
+            callback.getFullAddress(addressText, latLng)
+            loading?.hide()
         }
 
+    }
 
+    private fun option2(latLng: LatLng) {
+        /*Alternative from timeout server response*/
+        try {
+            UtilsHelper.log("oke 11 ${latLng.latitude} ${latLng.longitude}")
+            val listFullAddress = getStringFromLocation(latLng.latitude, latLng.longitude)
+            UtilsHelper.log("oke 8 ${listFullAddress.size}")
+            if (fullAddress != null && listFullAddress!!.size >= 2) {
+                val address = listFullAddress[1]
+                UtilsHelper.log("oke 9")
+                convertAddress(address)
+            } else {
+                UtilsHelper.log("oke 10")
+            }
+        } catch (e1: Exception) {
+            UtilsHelper.log("oke 7")
+            e1.printStackTrace()
+        }
     }
 
     private fun convertAddress(address: Address) {
@@ -116,7 +146,7 @@ class ReverseGeocodeTask(private var context: Context) {
         /*Analytics address from alternatives plan*/
         if (fullAddress.length == 0 || fullAddress == "") {
             if (address.getAddressLine(0) != null) {
-                fullAddress = ellipsize(address.getAddressLine(0), 60)
+                fullAddress = address.getAddressLine(0)
             }
         }
 
@@ -134,16 +164,20 @@ class ReverseGeocodeTask(private var context: Context) {
     @Throws(IOException::class, JSONException::class)
     fun getStringFromLocation(lat: Double, lng: Double): List<Address> {
 
+        UtilsHelper.log("from location 1")
+
         if (android.os.Build.VERSION.SDK_INT > 9) {
             val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
             StrictMode.setThreadPolicy(policy)
         }
 
-        val address = String.format(Locale.ENGLISH, "http://maps.googleapis.com/maps/api/geocode/json?latlng=%1\$f,%2\$f&sensor=true&language=" + Locale.getDefault().country, lat, lng)
+        UtilsHelper.log("from location 2")
+
+        val address = String.format(Locale.ENGLISH, "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&radius=1000000&sensor=true&key=AIzaSyAANygKT5R_5LiPkUxBzRPcBWI4k4yRQiU")
 
         val url: URL
         val reader: BufferedReader
-        val stringBuilder: StringBuilder = StringBuilder()
+        val stringBuilder = StringBuilder()
 
         url = URL(address)
         val connection = url.openConnection() as HttpURLConnection
@@ -152,7 +186,7 @@ class ReverseGeocodeTask(private var context: Context) {
         connection.connect()
 
         reader = BufferedReader(InputStreamReader(connection.inputStream))
-
+        UtilsHelper.log("from location 3")
         var b = reader.read()
         while ((b) != -1) {
             stringBuilder.append(b.toChar())
@@ -161,8 +195,9 @@ class ReverseGeocodeTask(private var context: Context) {
 
         val retList = ArrayList<Address>()
         val jsonObject = JSONObject(stringBuilder.toString())
-
+        UtilsHelper.log("from location 4 "+jsonObject)
         if ("OK".equals(jsonObject.getString("status"), ignoreCase = true)) {
+            UtilsHelper.log("from location 6")
             val results = jsonObject.getJSONArray("results")
             for (i in 0 until results.length()) {
                 val result = results.getJSONObject(i)
@@ -172,11 +207,12 @@ class ReverseGeocodeTask(private var context: Context) {
                 retList.add(addr)
             }
         }
+        UtilsHelper.log("from location 5")
         return retList
     }
 
 
     interface GeoCodeTaskCallBack {
-        fun getFullAddress(address: String)
+        fun getFullAddress(address: String, latLng: LatLng)
     }
 }

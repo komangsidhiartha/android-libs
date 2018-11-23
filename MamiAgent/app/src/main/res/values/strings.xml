@@ -62,5 +62,6 @@
     <string name="msg_map_location_start">Peta lokasi kos*</string>
     <string name="msg_map_back">Kembali</string>
     <string name="msg_map_next">Selanjutnya</string>
+    <string name="msg_please_wait">Mohon tunggu...</string>
 
 </resources>
