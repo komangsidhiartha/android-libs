@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/contentSquareConstraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/border_radius_type_kos_green">
+
+        <ImageView
+            android:id="@+id/squareImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name"
+            android:padding="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_girl" />
+
+        <TextView
+            android:id="@+id/squareNameTextView"
+            style="@style/Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:text="@string/msg_man"
+            android:textAllCaps="true"
+            android:textColor="@color/apptheme_color"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/squareImageView"
+            app:layout_constraintStart_toStartOf="@+id/squareImageView"
+            app:layout_constraintTop_toBottomOf="@+id/squareImageView" />
+
+        <LinearLayout
+            android:id="@+id/contentRoomSizeLinearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/leftRoomSizeEditText"
+                style="@style/Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="1"
+                android:text="3"
+                android:textColor="@color/apptheme_color"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/centerRoomSizeTextView"
+                style="@style/Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="x"
+                android:textColor="@color/apptheme_color"
+                android:textSize="20sp" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/rightRoomSizeEditText"
+                style="@style/Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="1"
+                android:text="3"
+                android:textColor="@color/apptheme_color"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/checkListSquareImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:contentDescription="@string/app_name"
+        app:srcCompat="@drawable/ic_check_circle_done" />
+
+</FrameLayout>

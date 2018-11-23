@@ -54,7 +54,7 @@
         android:textColor="@color/dove_gray_approx"
         android:textSize="14sp" />
 
-    <EditText
+    <android.support.v7.widget.AppCompatEditText
         android:id="@+id/fullAddressEditText"
         style="@style/Regular"
         android:layout_width="match_parent"
@@ -78,7 +78,7 @@
         android:textColor="@color/dove_gray_approx"
         android:textSize="14sp" />
 
-    <EditText
+    <android.support.v7.widget.AppCompatEditText
         android:id="@+id/locationEditText"
         style="@style/Regular"
         android:layout_width="match_parent"

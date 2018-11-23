@@ -70,5 +70,18 @@
     <string name="msg_mix">Campur</string>
     <string name="msg_kos_type">Tipe kos</string>
     <string name="msg_room_size">Luas kamar</string>
+    <string name="msg_room_total_star">Jumlah kamar total*</string>
+    <string name="msg_room_total_now_star">Jumlah kamar kosong saat ini*</string>
+    <string name="msg_pay_by">Pembayaran berdasarkan*</string>
+    <string name="msg_room_price">Harga kamar</string>
+    <string name="msg_per_month">/ Bulan</string>
+    <string name="msg_per_day">/ Hari</string>
+    <string name="msg_per_week">/ Minggu</string>
+    <string name="msg_per_year">/ Tahun</string>
+
+    <string name="msg_pay_month">Perbulan</string>
+    <string name="msg_pay_day">Perhari</string>
+    <string name="msg_pay_week">Perminggu</string>
+    <string name="msg_pay_year">Pertahun</string>
 
 </resources>
