@@ -21,6 +21,7 @@ import org.jetbrains.anko.imageResource
 class SquareGreyView : FrameLayout, TextWatcher, View.OnClickListener {
 
     private var clicked: Runnable? = null
+    var isChecked: Boolean = false
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -51,21 +52,23 @@ class SquareGreyView : FrameLayout, TextWatcher, View.OnClickListener {
         squareNameTextView.setAllCaps(false)
     }
 
-    fun setGender() {
-        squareNameTextView.visibility = View.VISIBLE
-        squareImageView.visibility = View.VISIBLE
-        contentRoomSizeLinearLayout.visibility = View.GONE
-    }
-
     fun setRoomSize() {
         squareNameTextView.visibility = View.GONE
         squareImageView.visibility = View.GONE
         contentRoomSizeLinearLayout.visibility = View.VISIBLE
         leftRoomSizeEditText.addTextChangedListener(this)
         rightRoomSizeEditText.addTextChangedListener(this)
+        setIsClick(true)
+    }
+
+    private fun setIsClick(b: Boolean) {
         leftRoomSizeEditText.setOnClickListener(this)
         centerRoomSizeTextView.setOnClickListener(this)
         rightRoomSizeEditText.setOnClickListener(this)
+        contentSquareConstraintLayout.setOnClickListener(this)
+        squareImageView.setOnClickListener(this)
+        squareNameTextView.setOnClickListener(this)
+        contentRoomSizeLinearLayout.setOnClickListener(this)
     }
 
     fun removeBackgroundRoomSize() {
@@ -84,7 +87,9 @@ class SquareGreyView : FrameLayout, TextWatcher, View.OnClickListener {
     }
 
     fun setCheckList(isOkay: Boolean) {
+        setIsClick(true)
         if (isOkay) {
+            isChecked = true
             checkListSquareImageView.visibility = View.VISIBLE
             contentSquareConstraintLayout.backgroundResource = R.drawable.border_radius_type_kos_green
             squareNameTextView.setTextColor(ContextCompat.getColor(context, R.color.apptheme_color))
@@ -92,6 +97,7 @@ class SquareGreyView : FrameLayout, TextWatcher, View.OnClickListener {
             centerRoomSizeTextView.setTextColor(ContextCompat.getColor(context, R.color.apptheme_color))
             rightRoomSizeEditText.setTextColor(ContextCompat.getColor(context, R.color.apptheme_color))
         } else {
+            isChecked = false
             checkListSquareImageView.visibility = View.GONE
             contentSquareConstraintLayout.backgroundResource = R.drawable.border_radius_type_kos_grey
             squareNameTextView.setTextColor(ContextCompat.getColor(context, R.color.silver_approx_2))

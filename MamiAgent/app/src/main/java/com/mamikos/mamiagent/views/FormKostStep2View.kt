@@ -2,6 +2,7 @@ package com.mamikos.mamiagent.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mamikos.mamiagent.R
@@ -26,33 +27,91 @@ class FormKostStep2View : FrameLayout {
         inflate(context, R.layout.view_form_kost_step_2, this)
         ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
-        genderMenTypeKosView.setString(context.getString(R.string.msg_man))
-        genderMenTypeKosView.setImage(R.drawable.ic_boy)
-        genderMenTypeKosView.setCheckList(true)
-        genderMenTypeKosView.setOnClickListener {
-            genderMixTypeKosView.setCheckList(false)
-            genderMenTypeKosView.setCheckList(true)
-            genderWomenTypeKosView.setCheckList(false)
-        }
+        setupGender()
 
-        genderWomenTypeKosView.setString(context.getString(R.string.msg_women))
-        genderWomenTypeKosView.setImage(R.drawable.ic_girl)
-        genderWomenTypeKosView.setCheckList(false)
-        genderWomenTypeKosView.setOnClickListener {
-            genderMixTypeKosView.setCheckList(false)
-            genderMenTypeKosView.setCheckList(false)
-            genderWomenTypeKosView.setCheckList(true)
-        }
+        setupRoomSize()
 
-        genderMixTypeKosView.setString(context.getString(R.string.msg_mix))
-        genderMixTypeKosView.setImage(R.drawable.ic_noun_boy_and_girl)
-        genderMixTypeKosView.setCheckList(false)
-        genderMixTypeKosView.setOnClickListener {
-            genderMixTypeKosView.setCheckList(true)
-            genderMenTypeKosView.setCheckList(false)
-            genderWomenTypeKosView.setCheckList(false)
-        }
+        setupPrice()
 
+        setupMinPay()
+
+    }
+
+    private fun setupMinPay() {
+        minPaySpinnerCustomView.setHint(context.getString(R.string.msg_min_pay))
+    }
+
+    private fun setupPrice() {
+        monthSquareGreyView.setCheckList(false)
+        monthSquareGreyView.setJustText()
+        monthSquareGreyView.setString(context.getString(R.string.msg_pay_month))
+        monthSquareGreyView.setOnClick(Runnable {
+            if (!monthSquareGreyView.isChecked) {
+                monthLinearLayout.visibility = View.VISIBLE
+                monthSquareGreyView.setCheckList(true)
+            } else {
+                monthLinearLayout.visibility = View.GONE
+                monthSquareGreyView.setCheckList(false)
+            }
+            monthPayEditText.setText("")
+            showTitleRoomPrice()
+        })
+
+        daySquareGreyView.setCheckList(false)
+        daySquareGreyView.setJustText()
+        daySquareGreyView.setString(context.getString(R.string.msg_pay_day))
+        daySquareGreyView.setOnClick(Runnable {
+            if (!daySquareGreyView.isChecked) {
+                dayLinearLayout.visibility = View.VISIBLE
+                daySquareGreyView.setCheckList(true)
+            } else {
+                dayLinearLayout.visibility = View.GONE
+                daySquareGreyView.setCheckList(false)
+            }
+            dayPayEditText.setText("")
+            showTitleRoomPrice()
+        })
+
+        yearSquareGreyView.setCheckList(false)
+        yearSquareGreyView.setJustText()
+        yearSquareGreyView.setString(context.getString(R.string.msg_pay_year))
+        yearSquareGreyView.setOnClick(Runnable {
+            if (!yearSquareGreyView.isChecked) {
+                yearLinearLayout.visibility = View.VISIBLE
+                yearSquareGreyView.setCheckList(true)
+            } else {
+                yearLinearLayout.visibility = View.GONE
+                yearSquareGreyView.setCheckList(false)
+            }
+            yearPayEditText.setText("")
+            showTitleRoomPrice()
+        })
+
+        weekSquareGreyView.setCheckList(false)
+        weekSquareGreyView.setJustText()
+        weekSquareGreyView.setString(context.getString(R.string.msg_pay_week))
+        weekSquareGreyView.setOnClick(Runnable {
+            if (!weekSquareGreyView.isChecked) {
+                weekLinearLayout.visibility = View.VISIBLE
+                weekSquareGreyView.setCheckList(true)
+            } else {
+                weekLinearLayout.visibility = View.GONE
+                weekSquareGreyView.setCheckList(false)
+            }
+            weekPayEditText.setText("")
+            showTitleRoomPrice()
+        })
+    }
+
+    private fun showTitleRoomPrice() {
+        if (!monthSquareGreyView.isChecked && !daySquareGreyView.isChecked && !weekSquareGreyView.isChecked && !yearSquareGreyView.isChecked) {
+            roomPriceTitleTextView.visibility = View.GONE
+        } else {
+            roomPriceTitleTextView.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setupRoomSize() {
         threeThreeRoomSizeView.setRoomSize()
         threeThreeRoomSizeView.setTextRoomSize("3", "3")
         threeThreeRoomSizeView.removeBackgroundRoomSize()
@@ -95,22 +154,35 @@ class FormKostStep2View : FrameLayout {
             fourFourRoomSizeView.setCheckList(false)
             customRoomSizeView.setCheckList(true)
         })
+    }
 
+    private fun setupGender() {
+        genderMenTypeKosView.setString(context.getString(R.string.msg_man))
+        genderMenTypeKosView.setImage(R.drawable.ic_boy)
+        genderMenTypeKosView.setCheckList(true)
+        genderMenTypeKosView.setOnClick(Runnable {
+            genderMixTypeKosView.setCheckList(false)
+            genderMenTypeKosView.setCheckList(true)
+            genderWomenTypeKosView.setCheckList(false)
+        })
 
+        genderWomenTypeKosView.setString(context.getString(R.string.msg_women))
+        genderWomenTypeKosView.setImage(R.drawable.ic_girl)
+        genderWomenTypeKosView.setCheckList(false)
+        genderWomenTypeKosView.setOnClick(Runnable {
+            genderMixTypeKosView.setCheckList(false)
+            genderMenTypeKosView.setCheckList(false)
+            genderWomenTypeKosView.setCheckList(true)
+        })
 
-        monthSquareGreyView.setJustText()
-        monthSquareGreyView.setString(context.getString(R.string.msg_pay_month))
-
-        daySquareGreyView.setJustText()
-        daySquareGreyView.setString(context.getString(R.string.msg_pay_day))
-
-        yearSquareGreyView.setJustText()
-        yearSquareGreyView.setString(context.getString(R.string.msg_pay_year))
-
-        weekSquareGreyView.setJustText()
-        weekSquareGreyView.setString(context.getString(R.string.msg_pay_week))
-
-
+        genderMixTypeKosView.setString(context.getString(R.string.msg_mix))
+        genderMixTypeKosView.setImage(R.drawable.ic_noun_boy_and_girl)
+        genderMixTypeKosView.setCheckList(false)
+        genderMixTypeKosView.setOnClick(Runnable {
+            genderMixTypeKosView.setCheckList(true)
+            genderMenTypeKosView.setCheckList(false)
+            genderWomenTypeKosView.setCheckList(false)
+        })
     }
 
 

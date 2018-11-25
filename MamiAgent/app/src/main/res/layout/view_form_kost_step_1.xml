@@ -19,24 +19,24 @@
         android:textColor="@color/dusty_gray_approx"
         android:textSize="14sp" />
 
-    <com.mamikos.mamiagent.views.FieldLocationView
-        android:id="@+id/provinceFieldLocationView"
+    <com.mamikos.mamiagent.views.SpinnerCustomView
+        android:id="@+id/provinceSpinnerCustomView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp" />
 
-    <com.mamikos.mamiagent.views.FieldLocationView
-        android:id="@+id/cityFieldLocationView"
+    <com.mamikos.mamiagent.views.SpinnerCustomView
+        android:id="@+id/citySpinnerCustomView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp" />
 
-    <com.mamikos.mamiagent.views.FieldLocationView
-        android:id="@+id/districtFieldLocationView"
+    <com.mamikos.mamiagent.views.SpinnerCustomView
+        android:id="@+id/districtSpinnerCustomView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"

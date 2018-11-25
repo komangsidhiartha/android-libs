@@ -197,12 +197,12 @@
             <com.mamikos.mamiagent.views.FormKostStep2View
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <com.mamikos.mamiagent.views.FormKostStep3View
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <com.mamikos.mamiagent.views.FormKostStep4View
                 android:layout_width="match_parent"

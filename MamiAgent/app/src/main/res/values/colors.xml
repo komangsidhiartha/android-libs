@@ -31,6 +31,7 @@
     <color name="transparent_vacancy">#99ffffff</color>
     <color name="transparent_closed">#99404040</color>
     <color name="detail_closed">#949494</color>
+    <color name="concrete_approx">#F3F3F3</color>
 
     <color name="darker_gray">#454D58</color>
     <color name="darker_gray_1">#343a41</color>
@@ -104,5 +105,6 @@
     <color name="dusty_gray_approx">#9C9C9C</color>
     <color name="mercury_approx">#E1E1E1</color>
     <color name="silver_approx_2">#B9B9B9</color>
+    <color name="tundora_approx">#464646</color>
     <!--END CompanyProfile-->
 </resources>

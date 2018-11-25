@@ -59,6 +59,7 @@
     <string name="msg_district_star">Kecamatan*</string>
     <string name="msg_input_data_location">Input data lokasi</string>
     <string name="msg_input_data_kos">Input data kos</string>
+    <string name="msg_input_facility_data_kos">Input fasilitas kos</string>
     <string name="msg_complete_address_star">Alamat lengkap*</string>
     <string name="msg_map_location_start">Peta lokasi kos*</string>
     <string name="msg_map_back">Kembali</string>
@@ -83,5 +84,34 @@
     <string name="msg_pay_day">Perhari</string>
     <string name="msg_pay_week">Perminggu</string>
     <string name="msg_pay_year">Pertahun</string>
+    <string name="msg_min_pay">Min. Pembayaran</string>
+    <string name="msg_was_electricity">Sudah termasuk listrik</string>
+    <string name="msg_was_not_electricity">Belum termasuk listrik</string>
+    <string name="msg_was_empty">Kosongan</string>
+    <string name="msg_was_not_empty">Sudah isi</string>
+    <string name="msg_inside">Didalam</string>
+    <string name="msg_outside">Diluar</string>
+    <string name="msg_other_facility_room">Fasilitas kamar lainnya</string>
+    <string name="msg_facility_room">Fasilitas kamar</string>
+    <string name="msg_facility_bathroom">Fasilitas kamar mandi</string>
+    <string name="msg_mbps">/ mbps</string>
+    <string name="msg_bed">Kasur</string>
+    <string name="msg_park">Parkir</string>
+    <string name="msg_twenty_four">Akses 24 jam</string>
+    <string name="msg_can_couple">Bisa Pasutri</string>
+    <string name="msg_cupboard">Lemari</string>
+    <string name="msg_wifi">Wifi</string>
+    <string name="msg_shower">Shower</string>
+    <string name="msg_squat_toilet">Kloset jongkok</string>
+    <string name="msg_squat_seat">Kloset duduk</string>
+    <string name="msg_hot_water">Air panas</string>
+    <string name="msg_chair">Kursi</string>
+    <string name="msg_table">Meja</string>
+    <string name="msg_ac">AC</string>
+    <string name="msg_tv">TV</string>
+    <string name="msg_fan">Kipas Angin</string>
+    <string name="msg_ex_image_landscape">Contoh foto landscape</string>
+    <string name="msg_image_building">Foto bangunan kos</string>
+    <string name="msg_image_kos_landscape">Foto-foto Kos <font color='red'>(Harus landscape)</font></string>
 
 </resources>

@@ -12,209 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginRight="16dp"
-        android:text="@string/msg_pay_by"
-        android:textColor="@color/dove_gray_approx"
-        android:textSize="14sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:orientation="horizontal">
-
-        <com.mamikos.mamiagent.views.SquareGreyView
-            android:id="@+id/monthSquareGreyView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <com.mamikos.mamiagent.views.SquareGreyView
-            android:id="@+id/daySquareGreyView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:orientation="horizontal">
-
-        <com.mamikos.mamiagent.views.SquareGreyView
-            android:id="@+id/weekSquareGreyView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <com.mamikos.mamiagent.views.SquareGreyView
-            android:id="@+id/yearSquareGreyView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-
-    <TextView
-        style="@style/Semibold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginRight="16dp"
-        android:text="@string/msg_room_price"
-        android:textColor="@color/dove_gray_approx"
-        android:textSize="14sp" />
-
-    <LinearLayout
-        android:id="@+id/monthLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/monthPayEditText"
-            style="@style/Regular"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_grey_border_general"
-            android:padding="14dp"
-            android:inputType="numberDecimal"
-            android:textColor="@color/dove_gray_approx" />
-
-        <TextView
-            style="@style/Semibold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="0.3"
-            android:text="@string/msg_per_month"
-            android:textColor="@color/dove_gray_approx2"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/weekLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/weekPayEditText"
-            style="@style/Regular"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_grey_border_general"
-            android:padding="14dp"
-            android:inputType="numberDecimal"
-            android:textColor="@color/dove_gray_approx" />
-
-        <TextView
-            style="@style/Semibold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="0.3"
-            android:text="@string/msg_per_week"
-            android:textColor="@color/dove_gray_approx2"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/dayLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/dayPayEditText"
-            style="@style/Regular"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_grey_border_general"
-            android:padding="14dp"
-            android:inputType="numberDecimal"
-            android:textColor="@color/dove_gray_approx" />
-
-        <TextView
-            style="@style/Semibold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="0.3"
-            android:text="@string/msg_per_day"
-            android:textColor="@color/dove_gray_approx2"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/yearLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/yearPayEditText"
-            style="@style/Regular"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_grey_border_general"
-            android:padding="14dp"
-            android:inputType="numberDecimal"
-            android:textColor="@color/dove_gray_approx" />
-
-        <TextView
-            style="@style/Semibold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="0.3"
-            android:text="@string/msg_per_year"
-            android:textColor="@color/dove_gray_approx2"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
-
-    <TextView
-        style="@style/Semibold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/msg_input_data_kos"
@@ -344,7 +141,7 @@
         android:textColor="@color/dove_gray_approx"
         android:textSize="14sp" />
 
-    <android.support.v7.widget.AppCompatEditText
+    <EditText
         android:id="@+id/roomTotalEditText"
         style="@style/Regular"
         android:layout_width="match_parent"
@@ -353,6 +150,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/bg_grey_border_general"
+        android:inputType="number"
+        android:isScrollContainer="true"
         android:padding="14dp"
         android:textColor="@color/dove_gray_approx" />
 
@@ -367,7 +166,7 @@
         android:textColor="@color/dove_gray_approx"
         android:textSize="14sp" />
 
-    <android.support.v7.widget.AppCompatEditText
+    <EditText
         android:id="@+id/roomTotalNowEditText"
         style="@style/Regular"
         android:layout_width="match_parent"
@@ -376,13 +175,262 @@
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/bg_grey_border_general"
+        android:inputType="number"
+        android:isScrollContainer="true"
         android:padding="14dp"
         android:textColor="@color/dove_gray_approx" />
+
+    <TextView
+        style="@style/Semibold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/msg_pay_by"
+        android:textColor="@color/dove_gray_approx"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal">
+
+        <com.mamikos.mamiagent.views.SquareGreyView
+            android:id="@+id/monthSquareGreyView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.mamikos.mamiagent.views.SquareGreyView
+            android:id="@+id/daySquareGreyView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal">
+
+        <com.mamikos.mamiagent.views.SquareGreyView
+            android:id="@+id/weekSquareGreyView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.mamikos.mamiagent.views.SquareGreyView
+            android:id="@+id/yearSquareGreyView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/roomPriceTitleTextView"
+        style="@style/Semibold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/msg_room_price"
+        android:textColor="@color/dove_gray_approx"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/monthLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/monthPayEditText"
+            style="@style/Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_grey_border_general"
+            android:inputType="numberDecimal"
+            android:padding="14dp"
+            android:textColor="@color/dove_gray_approx" />
+
+        <TextView
+            style="@style/Semibold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="0.3"
+            android:text="@string/msg_per_month"
+            android:textColor="@color/dove_gray_approx2"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/weekLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/weekPayEditText"
+            style="@style/Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_grey_border_general"
+            android:inputType="numberDecimal"
+            android:padding="14dp"
+            android:textColor="@color/dove_gray_approx" />
+
+        <TextView
+            style="@style/Semibold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="0.3"
+            android:text="@string/msg_per_week"
+            android:textColor="@color/dove_gray_approx2"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dayLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/dayPayEditText"
+            style="@style/Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_grey_border_general"
+            android:inputType="numberDecimal"
+            android:padding="14dp"
+            android:textColor="@color/dove_gray_approx" />
+
+        <TextView
+            style="@style/Semibold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="0.3"
+            android:text="@string/msg_per_day"
+            android:textColor="@color/dove_gray_approx2"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/yearLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/yearPayEditText"
+            style="@style/Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_grey_border_general"
+            android:inputType="numberDecimal"
+            android:padding="14dp"
+            android:textColor="@color/dove_gray_approx" />
+
+        <TextView
+            style="@style/Semibold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="0.3"
+            android:text="@string/msg_per_year"
+            android:textColor="@color/dove_gray_approx2"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <com.mamikos.mamiagent.views.SpinnerCustomView
+        android:id="@+id/minPaySpinnerCustomView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp" />
+
+    <RadioGroup
+        android:id="@+id/electricityRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatRadioButton
+            style="@style/Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="@string/msg_was_electricity"
+            android:textColor="@color/dove_gray_approx2"
+            android:textSize="12sp" />
+
+        <android.support.v7.widget.AppCompatRadioButton
+            style="@style/Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/msg_was_not_electricity"
+            android:textColor="@color/dove_gray_approx2"
+            android:textSize="12sp" />
+
+    </RadioGroup>
 
     <include
         android:id="@+id/viewBtnBackNextStep2"
         layout="@layout/view_btn_back_next"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp" />
 
 </LinearLayout>

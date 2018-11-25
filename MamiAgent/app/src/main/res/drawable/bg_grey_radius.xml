@@ -1,0 +1,10 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="2dp" />
+            <stroke android:width="2dp" android:color="@color/concrete_approx" />
+            <gradient android:angle="0" android:endColor="@color/concrete_approx" android:startColor="@color/concrete_approx" />        </shape>
+    </item>
+
+</selector>

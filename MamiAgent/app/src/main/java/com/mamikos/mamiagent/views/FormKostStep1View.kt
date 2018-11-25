@@ -25,8 +25,8 @@ class FormKostStep1View : FrameLayout {
     private fun init(context: Context) {
         inflate(context, R.layout.view_form_kost_step_1, this)
         ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        cityFieldLocationView.setHint(context.getString(R.string.msg_city_star))
-        districtFieldLocationView.setHint(context.getString(R.string.msg_district_star))
+        citySpinnerCustomView.setHint(context.getString(R.string.msg_city_star))
+        districtSpinnerCustomView.setHint(context.getString(R.string.msg_district_star))
     }
 
 

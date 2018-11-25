@@ -15,7 +15,7 @@ import android.support.v4.content.ContextCompat
  * Happy Coding!
  */
 
-class FieldLocationView : FrameLayout {
+class SpinnerCustomView : FrameLayout {
 
     var data: PopupWindow? = null
 
