@@ -9,6 +9,10 @@ import com.mamikos.mamiagent.R
 import com.mamikos.mamiagent.helpers.UtilsHelper
 import kotlinx.android.synthetic.main.view_field_location.view.*
 import android.support.v4.content.ContextCompat
+import android.widget.Toast
+import com.mamikos.mamiagent.entities.AreaEntity
+import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
+import com.mamikos.mamiagent.networks.responses.AreaResponse
 
 /**
  * Created by Dedi Dot on 10/9/2018.
@@ -17,7 +21,9 @@ import android.support.v4.content.ContextCompat
 
 class SpinnerCustomView : FrameLayout {
 
-    var data: PopupWindow? = null
+    var popUpWindow: PopupWindow? = null
+    private var response: AreaResponse? = null
+    private var onClick: OnClickInterfaceObject<AreaEntity>? = null
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -31,13 +37,30 @@ class SpinnerCustomView : FrameLayout {
         inflate(context, R.layout.view_field_location, this)
         ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         setOnClickListener {
-            val v = FormKostStep1View(context)
-            data = PopupWindow(v, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true) // Creation of popup
-            data?.setBackgroundDrawable(ContextCompat.getDrawable(context, R.color.transparent)) // biar bisa dismiss outside
-            data?.isOutsideTouchable = false
-            UtilsHelper.log("ahahahahaha")
-            data?.showAsDropDown(it)
+
+            if (response == null || response?.data?.size == 0) {
+                Toast.makeText(context, "data kosong", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val v = CustomRecyclerView(context)
+            v.setAreaOnClick(object : OnClickInterfaceObject<AreaEntity> {
+                override fun dataClicked(data: AreaEntity) {
+                    UtilsHelper.log("data ${data.name}")
+                    popUpWindow?.dismiss()
+                    onClick?.dataClicked(data)
+                }
+            })
+            v.setData(response?.data)
+            popUpWindow = PopupWindow(v, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true) // Creation of popup
+            popUpWindow?.setBackgroundDrawable(ContextCompat.getDrawable(context, R.color.transparent))
+            popUpWindow?.isOutsideTouchable = false
+            popUpWindow?.showAsDropDown(it)
         }
+    }
+
+    fun setClick(clicked: OnClickInterfaceObject<AreaEntity>?) {
+        onClick = clicked
     }
 
     fun setHint(strHint: String) {
@@ -46,6 +69,10 @@ class SpinnerCustomView : FrameLayout {
 
     fun setName(strName: String) {
         locationNameTextView.text = strName
+    }
+
+    fun setData(data: AreaResponse?) {
+        response = data
     }
 
 

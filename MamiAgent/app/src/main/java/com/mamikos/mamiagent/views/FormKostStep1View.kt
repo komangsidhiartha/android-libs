@@ -5,6 +5,9 @@ import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mamikos.mamiagent.R
+import com.mamikos.mamiagent.entities.AreaEntity
+import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
+import com.mamikos.mamiagent.networks.responses.AreaResponse
 import kotlinx.android.synthetic.main.view_btn_back_next.view.*
 import kotlinx.android.synthetic.main.view_form_kost_step_1.view.*
 
@@ -47,6 +50,21 @@ class FormKostStep1View : FrameLayout {
 
     fun setBackOnClick(click: Runnable) {
         backClick = click
+    }
+
+    fun setProvince(response: AreaResponse?, click: OnClickInterfaceObject<AreaEntity>?) {
+        provinceSpinnerCustomView.setData(response)
+        provinceSpinnerCustomView.setClick(click)
+    }
+
+    fun setCity(response: AreaResponse?, click: OnClickInterfaceObject<AreaEntity>?) {
+        citySpinnerCustomView.setData(response)
+        citySpinnerCustomView.setClick(click)
+    }
+
+    fun setSubdistrict(response: AreaResponse?, click: OnClickInterfaceObject<AreaEntity>?) {
+        districtSpinnerCustomView.setData(response!!)
+        districtSpinnerCustomView.setClick(click!!)
     }
 
 

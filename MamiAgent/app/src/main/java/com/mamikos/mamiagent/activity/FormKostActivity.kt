@@ -16,10 +16,17 @@ import com.sidhiartha.libs.activities.BaseActivity
 import com.google.android.gms.maps.model.MarkerOptions
 import com.mamikos.mamiagent.helpers.UtilsHelper
 import com.google.android.gms.common.api.GoogleApiClient
+import com.mamikos.mamiagent.entities.AreaEntity
 import com.mamikos.mamiagent.googleapi.TouchableWrapper
 import com.mamikos.mamiagent.helpers.ReverseGeocodeTask
+import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
+import com.mamikos.mamiagent.networks.apis.LocationApi
+import com.mamikos.mamiagent.networks.responses.AreaResponse
+import com.mamikos.mamiagent.views.CustomLoadingView
 import kotlinx.android.synthetic.main.activity_form_kost.*
 import kotlinx.android.synthetic.main.view_form_kost_step_1.*
+import kotlinx.android.synthetic.main.view_form_kost_step_1.view.*
+import org.jetbrains.anko.toast
 
 /**
  * Created by Dedi Dot on 11/21/2018.
@@ -30,15 +37,104 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         TouchableWrapper.TouchAction {
 
     private lateinit var mMap: GoogleMap
+    private lateinit var loading: CustomLoadingView
     private var googleApiClient: GoogleApiClient? = null
+
 
     override val layoutResource: Int
         get() = R.layout.activity_form_kost
 
     override fun viewDidLoad() {
+
+        loading = CustomLoadingView(this)
+        loading.show()
+
         buildGoogleApiClient()
         setMap()
         setLayoutNextBack()
+
+        requestProvinceApi()
+
+    }
+
+    private fun requestProvinceApi() {
+        val provinceApi = LocationApi.ProvinceApi()
+        provinceApi.exec(AreaResponse::class.java) { response: AreaResponse?, errorMessage: String? ->
+            when (response) {
+                null -> errorMessage?.let {
+                    toast(it)
+                }
+                else -> {
+                    if (response.status) {
+                        formKostStep1View.setProvince(response, object :
+                                OnClickInterfaceObject<AreaEntity> {
+                            override fun dataClicked(data: AreaEntity) {
+                                loading.show()
+                                formKostStep1View.provinceSpinnerCustomView.setName("${data.name}")
+                                requestCityApi(data.id)
+
+                                formKostStep1View.citySpinnerCustomView.setName("")
+                                formKostStep1View.citySpinnerCustomView.setData(null)
+                                formKostStep1View.districtSpinnerCustomView.setName("")
+                                formKostStep1View.districtSpinnerCustomView.setData(null)
+
+                            }
+                        })
+                    }
+                }
+            }
+            formKostStep1View.provinceSpinnerCustomView.setName("")
+            loading.hide()
+        }
+    }
+
+    private fun requestCityApi(cityId: Int) {
+        val cityApi = LocationApi.CityApi(cityId.toString())
+        cityApi.exec(AreaResponse::class.java) { response: AreaResponse?, errorMessage: String? ->
+            when (response) {
+                null -> errorMessage?.let {
+                    toast(it)
+                }
+                else -> {
+                    if (response.status) {
+                        formKostStep1View.setCity(response, object :
+                                OnClickInterfaceObject<AreaEntity> {
+                            override fun dataClicked(data: AreaEntity) {
+                                loading.show()
+                                requestSubDistrictApi(data.id)
+                                formKostStep1View.citySpinnerCustomView.setName("${data.name}")
+                            }
+                        })
+                    }
+                }
+            }
+            formKostStep1View.citySpinnerCustomView.setName("")
+            formKostStep1View.districtSpinnerCustomView.setName("")
+            loading.hide()
+        }
+    }
+
+    private fun requestSubDistrictApi(subDistrictId: Int) {
+        val subDistrictApi = LocationApi.SubDistrictApi(subDistrictId.toString())
+        subDistrictApi.exec(AreaResponse::class.java) { response: AreaResponse?, errorMessage: String? ->
+            when (response) {
+                null -> errorMessage?.let {
+                    toast(it)
+                }
+                else -> {
+                    if (response.status) {
+                        formKostStep1View.setSubdistrict(response, object :
+                                OnClickInterfaceObject<AreaEntity> {
+                            override fun dataClicked(data: AreaEntity) {
+                                formKostStep1View.districtSpinnerCustomView.setName("${data.name}")
+                            }
+                        })
+                    }
+                }
+            }
+            formKostStep1View.districtSpinnerCustomView.setName("")
+            loading.hide()
+        }
     }
 
     @Synchronized

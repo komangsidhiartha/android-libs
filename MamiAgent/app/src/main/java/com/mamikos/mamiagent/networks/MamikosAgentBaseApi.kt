@@ -22,7 +22,8 @@ import javax.crypto.spec.SecretKeySpec
 
 abstract class MamikosAgentBaseApi : BaseAPI()
 {
-    override val basePath: String = "http://songturu2.mamikos.com/api/agent/giant"
+    //override val basePath: String = "http://songturu2.mamikos.com/api/agent/giant"
+    override val basePath: String = "http://songturu2.mamikos.com/api/agent/groot"
     var formData: List<Pair<String, Any?>>? = null
     var fileUpload: File? = null
     var postParam = ""
