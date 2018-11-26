@@ -1,7 +1,11 @@
 package com.mamikos.mamiagent.activity
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
@@ -15,11 +19,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.mamikos.mamiagent.R
 import com.sidhiartha.libs.activities.BaseActivity
 import com.google.android.gms.maps.model.MarkerOptions
-import com.mamikos.mamiagent.helpers.UtilsHelper
 import com.google.android.gms.common.api.GoogleApiClient
 import com.mamikos.mamiagent.entities.AreaEntity
 import com.mamikos.mamiagent.googleapi.TouchableWrapper
-import com.mamikos.mamiagent.helpers.ReverseGeocodeTask
 import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
 import com.mamikos.mamiagent.networks.apis.LocationApi
 import com.mamikos.mamiagent.networks.responses.AreaResponse
@@ -31,8 +33,11 @@ import org.jetbrains.anko.toast
 
 import android.support.annotation.NonNull
 import android.widget.Toast
-import com.mamikos.mamiagent.helpers.UtilsPermission
-
+import com.mamikos.mamiagent.helpers.*
+import kotlinx.android.synthetic.main.view_form_kost_step_3.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import java.io.File
 
 /**
  * Created by Dedi Dot on 11/21/2018.
@@ -51,6 +56,8 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     override fun viewDidLoad() {
 
+        EventBus.getDefault().register(this)
+
         UtilsPermission.checkPermissionGps(this)
 
         loading = CustomLoadingView(this)
@@ -59,6 +66,12 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         setLayoutNextBack()
 
         requestProvinceApi()
+
+        setClickCameraGallery()
+
+    }
+
+    private fun setClickCameraGallery() {
 
     }
 
@@ -252,6 +265,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     override fun onDestroy() {
         googleApiClient?.disconnect()
+        EventBus.getDefault().unregister(this)
         super.onDestroy()
     }
 
@@ -369,8 +383,9 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     buildGoogleApiClient()
                     setMap()
                     UtilsPermission.checkPermissionStorageAndCamera(this)
-                }else{
-                    Toast.makeText(this, "Fitur yang di minta tidak dizinkan", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this, "Fitur yang di minta tidak dizinkan", Toast.LENGTH_LONG)
+                            .show()
                     finish()
                 }
             } else if (requestCode == UtilsPermission.PERMISSION_STORAGE_AND_CAMERA) {
@@ -383,6 +398,60 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 }
             }
         }
+
+    }
+
+    @Subscribe
+    fun onEvent(bundle: Bundle) {
+        UtilsHelper.log("afaas asfas asf $bundle")
+
+        pathCamera = bundle.getString("path")
+    }
+
+    var pathCamera = ""
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        UtilsHelper.log("requestCode $requestCode")
+        UtilsHelper.log("resultCode $resultCode")
+        UtilsHelper.log("data " + data)
+        UtilsHelper.log("datacuik " + data?.flags)
+
+        if (resultCode == Activity.RESULT_OK) {
+
+            if (requestCode == ShowCamera.CODE_CAMERA) {
+
+                UtilsHelper.log("path CAMERA: " + pathCamera)
+
+                successGetImage(Uri.parse(pathCamera))
+
+            } else if (requestCode == ShowGallery.CODE_GALLERY) {
+
+                if (data == null) {
+                    return
+                }
+
+                UtilsHelper.log("GALLERY " + UtilsHelper.getPathFromURI(this, data.data) + "\n" + data.data)
+
+                successGetImage(data.data)
+
+            }
+        }
+
+    }
+
+    private fun successGetImage(uri: Uri) {
+
+        val file = File(UtilsHelper.getPathFromURI(this, uri))
+
+        val options = BitmapFactory.Options()
+        options.inSampleSize = 4
+
+        val path = file.path
+        val bitmap = BitmapFactory.decodeFile(path, options)
+
+        photoBathroomImageView.setImageBitmap(bitmap)
 
     }
 }

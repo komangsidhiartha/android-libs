@@ -2,6 +2,7 @@ package com.mamikos.mamiagent.helpers
 
 import android.content.Context
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v4.content.res.ResourcesCompat
@@ -11,6 +12,11 @@ import com.mamikos.mamiagent.R
 import android.support.v7.app.AlertDialog
 import android.view.View
 import com.mamikos.mamiagent.views.LockableScrollView
+import java.text.SimpleDateFormat
+import java.util.*
+import android.widget.Toast
+import android.provider.MediaStore
+import android.support.v4.content.CursorLoader
 
 
 /**
@@ -99,6 +105,54 @@ class UtilsHelper {
 
         fun showSnackbar(rootView: View, str: String) {
             Snackbar.make(rootView, str, Snackbar.LENGTH_SHORT).show()
+        }
+
+        fun getTimestamp(): String {
+            val timeStamp = SimpleDateFormat("HH_mm_ss_SSS")
+            val now = Date()
+            return timeStamp.format(now)+""
+        }
+
+        fun getPathFromURI(context: Context, contentUri: Uri): String? {
+            val proj = arrayOf(MediaStore.Images.Media.DATA)
+            var result: String? = null
+
+            val cursorLoader = CursorLoader(context, contentUri, proj, null, null, null)
+            val cursor = cursorLoader.loadInBackground()
+            //log("cek cursorX " + cursor!!) // null di device oppo
+            log("cek cursorXX " + cursorLoader.uri.path)
+
+            if (cursor != null) {
+                val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                cursor.moveToFirst()
+                result = cursor.getString(column_index)
+                cursor.close()
+            } else {
+
+                // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                try {
+                    return cursorLoader.uri.path
+                } catch (e: Exception) {
+                    if (BuildConfig.DEBUG) {
+                        e.printStackTrace()
+                    }
+                    Toast.makeText(context, "getPathSDKBaru null bro", Toast.LENGTH_SHORT).show()
+                    return ""
+                }
+
+                /*  } else {
+                Cursor cursorx = context.getContentResolver().query(contentUri, proj, null, null, null);
+                if (cursorx != null) {
+                    if (cursorx.moveToFirst()) {
+                        int column_index = cursorx.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                        result = cursorx.getString(column_index);
+                    }
+                    cursorx.close();
+                }
+            }*/
+            }
+
+            return result
         }
 
     }

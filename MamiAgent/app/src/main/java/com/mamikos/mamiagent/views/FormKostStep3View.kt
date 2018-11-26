@@ -2,15 +2,20 @@ package com.mamikos.mamiagent.views
 
 import android.app.Activity
 import android.content.Context
+import android.os.Bundle
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mamikos.mamiagent.R
+import com.mamikos.mamiagent.helpers.ShowCamera
+import com.mamikos.mamiagent.helpers.ShowGallery
 import com.mamikos.mamiagent.helpers.UtilsHelper
+import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
 import kotlinx.android.synthetic.main.activity_form_kost.*
 import kotlinx.android.synthetic.main.view_btn_back_next.view.*
 import kotlinx.android.synthetic.main.view_form_kost_step_3.view.*
+import org.greenrobot.eventbus.EventBus
 import org.jetbrains.anko.onCheckedChange
 
 /**
@@ -53,6 +58,29 @@ class FormKostStep3View : FrameLayout {
 
         viewBtnBackNextStep3.backLinearLayout.setOnClickListener {
             backClick.run()
+        }
+
+        photoBathroomLinearLayout.setOnClickListener {
+            val dialogSelectImage = DialogOpenFileView(context)
+            dialogSelectImage.setOnClick(object : OnClickInterfaceObject<Int> {
+                override fun dataClicked(data: Int) {
+                    dialogSelectImage.dismiss()
+                    if (ShowCamera.CODE_CAMERA == data) {
+                        val showCamera = ShowCamera(context)
+                        showCamera.showNow()
+
+                        val file = showCamera.fileCamera
+                        val bundle = Bundle()
+                        bundle.putString("path", file?.path)
+                        EventBus.getDefault().post(bundle)
+
+                    } else if (ShowGallery.CODE_GALLERY == data) {
+                        val showGallery = ShowGallery(context)
+                        showGallery.showNow()
+                    }
+                }
+            })
+            dialogSelectImage.showDialog()
         }
 
     }
@@ -138,6 +166,8 @@ class FormKostStep3View : FrameLayout {
                 hotWaterSquareGreyView.setCheckList(false)
             }
         })
+
+
     }
 
     private fun setupRoomOtherFacility() {
