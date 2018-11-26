@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mamikos.mamiagent.R
+import kotlinx.android.synthetic.main.view_btn_back_next.view.*
 import kotlinx.android.synthetic.main.view_form_kost_step_2.view.*
 
 /**
@@ -14,6 +15,9 @@ import kotlinx.android.synthetic.main.view_form_kost_step_2.view.*
  */
 
 class FormKostStep2View : FrameLayout {
+
+    private lateinit var nextClick: Runnable
+    private lateinit var backClick: Runnable
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -34,6 +38,14 @@ class FormKostStep2View : FrameLayout {
         setupPrice()
 
         setupMinPay()
+
+        viewBtnBackNextStep2.nextLinearLayout.setOnClickListener {
+            nextClick.run()
+        }
+
+        viewBtnBackNextStep2.backLinearLayout.setOnClickListener {
+            backClick.run()
+        }
 
     }
 
@@ -185,5 +197,12 @@ class FormKostStep2View : FrameLayout {
         })
     }
 
+    fun setNextOnClick(click: Runnable) {
+        nextClick = click
+    }
+
+    fun setBackOnClick(click: Runnable) {
+        backClick = click
+    }
 
 }

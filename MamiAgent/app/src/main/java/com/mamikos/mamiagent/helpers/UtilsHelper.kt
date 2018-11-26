@@ -7,6 +7,8 @@ import android.support.v4.content.res.ResourcesCompat
 import android.util.Log
 import com.mamikos.mamiagent.BuildConfig
 import com.mamikos.mamiagent.R
+import android.support.v7.app.AlertDialog
+
 
 /**
  * Created by Dedi Dot on 9/21/2018.
@@ -58,6 +60,30 @@ class UtilsHelper {
 
         fun getFontSemiBold(context: Context): Typeface? {
             return ResourcesCompat.getFont(context, R.font.font_semi_bold)
+        }
+
+
+        fun showDialogYesNo(context: Context, title: String, message: String, runnable: Runnable,
+                            icon: Int) {
+            val builder = AlertDialog.Builder(context)
+            builder.setMessage(message)
+
+            if (!title.isEmpty()) {
+                builder.setTitle(title)
+            }
+
+            if (icon != 0) {
+                builder.setIcon(icon)
+            }
+
+            builder.setCancelable(false)
+            builder.setPositiveButton(context.getString(R.string.msg_yes)) { dialog, _ ->
+                runnable.run()
+                dialog.dismiss()
+            }
+            builder.setNegativeButton(context.getString(R.string.msg_no)) { dialog, _ -> dialog.dismiss() }
+            builder.show()
+
         }
 
     }

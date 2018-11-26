@@ -2,8 +2,168 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
+    <TextView
+        style="@style/Semibold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/msg_input_owner_data"
+        android:textAllCaps="true"
+        android:textColor="@color/dusty_gray_approx"
+        android:textSize="14sp" />
 
+    <TextView
+        style="@style/Semibold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/msg_owner_name_star"
+        android:textColor="@color/dove_gray_approx"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/ownerNameEditText"
+        style="@style/Regular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/bg_grey_border_general"
+        android:padding="14dp"
+        android:textColor="@color/dove_gray_approx" />
+
+    <TextView
+        style="@style/Semibold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/msg_owner_phone_star"
+        android:textColor="@color/dove_gray_approx"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/ownerPhoneEditText"
+        style="@style/Regular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/bg_grey_border_general"
+        android:padding="14dp"
+        android:textColor="@color/dove_gray_approx" />
+
+    <TextView
+        style="@style/Semibold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/msg_owner_email"
+        android:textColor="@color/dove_gray_approx"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/ownerEmailEditText"
+        style="@style/Regular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/bg_grey_border_general"
+        android:padding="14dp"
+        android:textColor="@color/dove_gray_approx" />
+
+    <TextView
+        style="@style/Semibold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/msg_create_password"
+        android:textColor="@color/dove_gray_approx"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/ownerPasswordEditText"
+        style="@style/Regular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/bg_grey_border_general"
+        android:inputType="textPassword"
+        android:padding="14dp"
+        android:textColor="@color/dove_gray_approx" />
+
+    <TextView
+        style="@style/Semibold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/msg_repeat_password"
+        android:textColor="@color/dove_gray_approx"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/ownerRepeatPasswordEditText"
+        style="@style/Regular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/bg_grey_border_general"
+        android:inputType="textPassword"
+        android:padding="14dp"
+        android:textColor="@color/dove_gray_approx" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            style="@style/Semibold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/msg_privacy"
+            android:textColor="@color/dove_gray_approx"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/viewBtnBackNextStep4"
+        layout="@layout/view_btn_back_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp" />
 
 </LinearLayout>

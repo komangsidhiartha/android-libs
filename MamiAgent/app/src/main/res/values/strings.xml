@@ -110,8 +110,19 @@
     <string name="msg_ac">AC</string>
     <string name="msg_tv">TV</string>
     <string name="msg_fan">Kipas Angin</string>
+    <string name="msg_owner_name_star">Nama Pemilik*</string>
+    <string name="msg_owner_phone_star">Nomor Telp Pemilik*</string>
+    <string name="msg_owner_email">Email</string>
+    <string name="msg_create_password">Buat password</string>
+    <string name="msg_yes">Iya</string>
+    <string name="msg_no">Tidak</string>
+    <string name="msg_repeat_password">Ulangi password</string>
     <string name="msg_ex_image_landscape">Contoh foto landscape</string>
     <string name="msg_image_building">Foto bangunan kos</string>
+    <string name="msg_exit">Yakin kamu mau keluar?</string>
+    <string name="msg_data_confirmation">Apakah data yang kamu masukkan sudah benar?</string>
+    <string name="msg_input_owner_data">Input data pemilik kos</string>
+    <string name="msg_privacy">Dengan menampilkan kos Anda di Mamikos, <b><i>Anda menyatakan setuju</i></b> menerima review tentang kos ANda sendiri dari pengguna Mamikos.</string>
     <string name="msg_image_kos_landscape">Foto-foto Kos <font color='red'>(Harus landscape)</font></string>
 
 </resources>

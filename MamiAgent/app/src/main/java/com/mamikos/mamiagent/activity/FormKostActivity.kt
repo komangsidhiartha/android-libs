@@ -3,6 +3,7 @@ package com.mamikos.mamiagent.activity
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.ScrollView
 import com.google.android.gms.location.LocationServices
@@ -37,6 +38,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     override fun viewDidLoad() {
         buildGoogleApiClient()
         setMap()
+        setLayoutNextBack()
     }
 
     @Synchronized
@@ -84,7 +86,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     UtilsHelper.log("location full $address $latLng")
                     locationEditText.setText(address)
                     locationEditText.isFocusable = true
-                    locationEditText.isFocusableInTouchMode = true 
+                    locationEditText.isFocusableInTouchMode = true
                 }
             })
 
@@ -150,6 +152,98 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     override fun onDestroy() {
         googleApiClient?.disconnect()
         super.onDestroy()
+    }
+
+    private fun setLayoutNextBack() {
+        formKostStep1View.setNextOnClick(Runnable {
+            formKostStep1View.visibility = View.GONE
+            formKostStep2View.visibility = View.VISIBLE
+            scrollUp()
+
+            imageOneView.setImageResource(R.drawable.ic_check_circle_done)
+            imageTwoView.setImageResource(R.drawable.ic_check_circle_done)
+            imageThreeView.setImageResource(R.drawable.ic_circle_undone)
+            lineOneView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
+            lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
+
+        })
+
+        formKostStep1View.setBackOnClick(Runnable {
+            UtilsHelper.showDialogYesNo(this, "", getString(R.string.msg_exit), Runnable {
+                finish()
+            }, 0)
+        })
+
+        formKostStep2View.setNextOnClick(Runnable {
+            formKostStep2View.visibility = View.GONE
+            formKostStep3View.visibility = View.VISIBLE
+            scrollUp()
+
+            imageTwoView.setImageResource(R.drawable.ic_check_circle_done)
+            imageThreeView.setImageResource(R.drawable.ic_check_circle_done)
+            imageFourView.setImageResource(R.drawable.ic_circle_undone)
+            lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
+            lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
+
+        })
+
+        formKostStep2View.setBackOnClick(Runnable {
+            formKostStep1View.visibility = View.VISIBLE
+            formKostStep2View.visibility = View.GONE
+            scrollUp()
+
+            imageOneView.setImageResource(R.drawable.ic_check_circle_done)
+            imageTwoView.setImageResource(R.drawable.ic_circle_undone)
+            lineOneView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
+            lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.alto_solid))
+            imageThreeView.setImageResource(R.drawable.ic_circle_grey)
+        })
+
+        formKostStep3View.setNextOnClick(Runnable {
+            formKostStep3View.visibility = View.GONE
+            formKostStep4View.visibility = View.VISIBLE
+            scrollUp()
+
+            imageThreeView.setImageResource(R.drawable.ic_check_circle_done)
+            imageFourView.setImageResource(R.drawable.ic_check_circle_done)
+            lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
+
+        })
+
+        formKostStep3View.setBackOnClick(Runnable {
+            formKostStep3View.visibility = View.GONE
+            formKostStep2View.visibility = View.VISIBLE
+            scrollUp()
+
+            imageTwoView.setImageResource(R.drawable.ic_check_circle_done)
+            imageThreeView.setImageResource(R.drawable.ic_circle_undone)
+            lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.alto_solid))
+            lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
+            imageFourView.setImageResource(R.drawable.ic_circle_grey)
+
+        })
+
+        formKostStep4View.setNextOnClick(Runnable {
+            UtilsHelper.showDialogYesNo(this, "", getString(R.string.msg_data_confirmation), Runnable {
+                finish()
+            }, 0)
+        })
+
+        formKostStep4View.setBackOnClick(Runnable {
+            formKostStep4View.visibility = View.GONE
+            formKostStep3View.visibility = View.VISIBLE
+            scrollUp()
+
+            imageThreeView.setImageResource(R.drawable.ic_check_circle_done)
+            imageFourView.setImageResource(R.drawable.ic_circle_undone)
+            lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.apptheme_color))
+        })
+    }
+
+    private fun scrollUp() {
+        formKostScrollView.post {
+            formKostScrollView.fullScroll(ScrollView.FOCUS_UP)
+        }
     }
 
 }

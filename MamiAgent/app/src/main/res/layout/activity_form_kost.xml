@@ -50,7 +50,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="5dp"
                             android:layout_gravity="center_vertical"
-                            android:background="@color/accent_brand_color" />
+                            android:background="@color/apptheme_color" />
 
                         <ImageView
                             android:id="@+id/imageOneView"
@@ -192,19 +192,22 @@
                 android:id="@+id/formKostStep1View"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <com.mamikos.mamiagent.views.FormKostStep2View
+                android:id="@+id/formKostStep2View"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
 
             <com.mamikos.mamiagent.views.FormKostStep3View
+                android:id="@+id/formKostStep3View"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <com.mamikos.mamiagent.views.FormKostStep4View
+                android:id="@+id/formKostStep4View"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />

@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mamikos.mamiagent.R
+import kotlinx.android.synthetic.main.view_btn_back_next.view.*
 import kotlinx.android.synthetic.main.view_form_kost_step_1.view.*
 
 /**
@@ -13,6 +14,9 @@ import kotlinx.android.synthetic.main.view_form_kost_step_1.view.*
  */
 
 class FormKostStep1View : FrameLayout {
+
+    private lateinit var nextClick: Runnable
+    private lateinit var backClick: Runnable
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -27,6 +31,22 @@ class FormKostStep1View : FrameLayout {
         ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         citySpinnerCustomView.setHint(context.getString(R.string.msg_city_star))
         districtSpinnerCustomView.setHint(context.getString(R.string.msg_district_star))
+
+        viewBtnBackNextStep1.nextLinearLayout.setOnClickListener {
+            nextClick.run()
+        }
+
+        viewBtnBackNextStep1.backLinearLayout.setOnClickListener {
+            backClick.run()
+        }
+    }
+
+    fun setNextOnClick(click: Runnable) {
+        nextClick = click
+    }
+
+    fun setBackOnClick(click: Runnable) {
+        backClick = click
     }
 
 

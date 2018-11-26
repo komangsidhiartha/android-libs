@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mamikos.mamiagent.R
+import kotlinx.android.synthetic.main.view_btn_back_next.view.*
 import kotlinx.android.synthetic.main.view_form_kost_step_3.view.*
 
 /**
@@ -14,6 +15,9 @@ import kotlinx.android.synthetic.main.view_form_kost_step_3.view.*
  */
 
 class FormKostStep3View : FrameLayout {
+
+    private lateinit var nextClick: Runnable
+    private lateinit var backClick: Runnable
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -30,6 +34,14 @@ class FormKostStep3View : FrameLayout {
         setupRoomFacility()
         setupRoomOtherFacility()
         setupBathRoomFacility()
+
+        viewBtnBackNextStep3.nextLinearLayout.setOnClickListener {
+            nextClick.run()
+        }
+
+        viewBtnBackNextStep3.backLinearLayout.setOnClickListener {
+            backClick.run()
+        }
 
     }
 
@@ -93,6 +105,7 @@ class FormKostStep3View : FrameLayout {
                 speedTestLinearLayout.visibility = View.GONE
             }
             speedTestEditText.setText("")
+
         })
 
         twentyFourSquareGreyView.setString(context.getString(R.string.msg_twenty_four))
@@ -206,6 +219,14 @@ class FormKostStep3View : FrameLayout {
                 fanSquareGreyView.setCheckList(false)
             }
         })
+    }
+
+    fun setNextOnClick(click: Runnable) {
+        nextClick = click
+    }
+
+    fun setBackOnClick(click: Runnable) {
+        backClick = click
     }
 
 
