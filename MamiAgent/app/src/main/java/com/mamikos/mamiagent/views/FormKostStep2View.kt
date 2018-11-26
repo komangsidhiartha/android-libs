@@ -1,13 +1,20 @@
 package com.mamikos.mamiagent.views
 
+import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mamikos.mamiagent.R
+import com.mamikos.mamiagent.entities.AreaEntity
+import com.mamikos.mamiagent.helpers.UtilsHelper
+import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
+import com.mamikos.mamiagent.networks.responses.AreaResponse
+import kotlinx.android.synthetic.main.activity_form_kost.*
 import kotlinx.android.synthetic.main.view_btn_back_next.view.*
 import kotlinx.android.synthetic.main.view_form_kost_step_2.view.*
+import org.jetbrains.anko.onCheckedChange
 
 /**
  * Created by Dedi Dot on 10/9/2018.
@@ -18,6 +25,11 @@ class FormKostStep2View : FrameLayout {
 
     private lateinit var nextClick: Runnable
     private lateinit var backClick: Runnable
+    private var scrollView: LockableScrollView? = null
+    var typeGender = "0"
+    var roomSize = "3,3"
+    var isElectricity = ""
+    var minPaySelected = ""
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -39,7 +51,13 @@ class FormKostStep2View : FrameLayout {
 
         setupMinPay()
 
+        setupElectricity()
+
         viewBtnBackNextStep2.nextLinearLayout.setOnClickListener {
+            if (scrollView == null) {
+                scrollView = (context as Activity).formKostScrollView
+            }
+            //validation()
             nextClick.run()
         }
 
@@ -49,8 +67,84 @@ class FormKostStep2View : FrameLayout {
 
     }
 
+    private fun setupElectricity() {
+        includeElectricityRadioButton.onCheckedChange { _, b ->
+            if (b) {
+                isElectricity = "0"
+            }
+        }
+
+        withoutElectricityRadioButton.onCheckedChange { _, b ->
+            if (b) {
+                isElectricity = "1"
+            }
+        }
+    }
+
+    private fun validation() {
+        if (kosNameEditText.text.toString().isEmpty()) {
+            UtilsHelper.showSnackbar(this, "Data nama kos tidak boleh kosong")
+            UtilsHelper.autoFocusScroll(kosNameEditText, scrollView)
+            return
+        }
+
+        if (roomTotalEditText.text.toString().isEmpty()) {
+            UtilsHelper.showSnackbar(this, "Data total kamar tidak boleh kosong")
+            UtilsHelper.autoFocusScroll(roomTotalEditText, scrollView)
+            return
+        }
+
+        if (roomTotalNowEditText.text.toString().isEmpty()) {
+            UtilsHelper.showSnackbar(this, "Data kamar kosong tidak boleh kosong")
+            UtilsHelper.autoFocusScroll(roomTotalNowEditText, scrollView)
+            return
+        }
+
+        if (dayPayEditText.text.toString().isEmpty() && weekPayEditText.text.toString().isEmpty() && monthPayEditText.text.toString().isEmpty() && yearPayEditText.text.toString().isEmpty()) {
+            UtilsHelper.showSnackbar(this, "Data pembayaran tidak boleh kosong")
+            UtilsHelper.autoFocusScroll(paymentPeriodBy, scrollView)
+            return
+        }
+
+        if (minPaySpinnerCustomView.getDataSelected() == null) {
+            UtilsHelper.showSnackbar(this, "Data minimal pembayaran tidak boleh kosong")
+            UtilsHelper.autoFocusScroll(roomPriceTitleTextView, scrollView)
+            return
+        }
+
+        if (roomSize.isEmpty() || !roomSize.contains(",")) {
+            UtilsHelper.showSnackbar(this, "Data ukuran kamar tidak boleh kosong")
+            UtilsHelper.autoFocusScroll(threeThreeRoomSizeView, scrollView)
+            return
+        }
+
+        nextClick.run()
+
+    }
+
     private fun setupMinPay() {
         minPaySpinnerCustomView.setHint(context.getString(R.string.msg_min_pay))
+        val minPay = resources.getStringArray(R.array.min_bayar_room)
+        val minPayId = resources.getStringArray(R.array.id_min_bayar_room)
+
+        val dataResponse = AreaResponse()
+        val data: ArrayList<AreaEntity> = arrayListOf()
+
+        for (i in 0 until minPay.size) {
+            val newData = AreaEntity(id = minPayId[i].toInt(), name = minPay[i])
+            data.add(newData)
+        }
+
+        dataResponse.data.addAll(data)
+
+        minPaySpinnerCustomView.setData(dataResponse)
+        minPaySpinnerCustomView.setClick(object : OnClickInterfaceObject<AreaEntity> {
+            override fun dataClicked(data: AreaEntity) {
+                minPaySpinnerCustomView.setName(data.name)
+                minPaySelected = data.id.toString()
+            }
+        })
+
     }
 
     private fun setupPrice() {
@@ -133,6 +227,7 @@ class FormKostStep2View : FrameLayout {
             threeFourRoomSizeView.setCheckList(false)
             fourFourRoomSizeView.setCheckList(false)
             customRoomSizeView.setCheckList(false)
+            roomSize = "3,3"
         })
 
         threeFourRoomSizeView.setRoomSize()
@@ -144,6 +239,7 @@ class FormKostStep2View : FrameLayout {
             threeFourRoomSizeView.setCheckList(true)
             fourFourRoomSizeView.setCheckList(false)
             customRoomSizeView.setCheckList(false)
+            roomSize = "3,4"
         })
 
         fourFourRoomSizeView.setRoomSize()
@@ -155,6 +251,7 @@ class FormKostStep2View : FrameLayout {
             threeFourRoomSizeView.setCheckList(false)
             fourFourRoomSizeView.setCheckList(true)
             customRoomSizeView.setCheckList(false)
+            roomSize = "4,4"
         })
 
         customRoomSizeView.setRoomSize()
@@ -165,6 +262,7 @@ class FormKostStep2View : FrameLayout {
             threeFourRoomSizeView.setCheckList(false)
             fourFourRoomSizeView.setCheckList(false)
             customRoomSizeView.setCheckList(true)
+            roomSize = customRoomSizeView.getTextRoomSize()
         })
     }
 
@@ -176,6 +274,7 @@ class FormKostStep2View : FrameLayout {
             genderMixTypeKosView.setCheckList(false)
             genderMenTypeKosView.setCheckList(true)
             genderWomenTypeKosView.setCheckList(false)
+            typeGender = "0"
         })
 
         genderWomenTypeKosView.setString(context.getString(R.string.msg_women))
@@ -185,6 +284,7 @@ class FormKostStep2View : FrameLayout {
             genderMixTypeKosView.setCheckList(false)
             genderMenTypeKosView.setCheckList(false)
             genderWomenTypeKosView.setCheckList(true)
+            typeGender = "1"
         })
 
         genderMixTypeKosView.setString(context.getString(R.string.msg_mix))
@@ -194,6 +294,7 @@ class FormKostStep2View : FrameLayout {
             genderMixTypeKosView.setCheckList(true)
             genderMenTypeKosView.setCheckList(false)
             genderWomenTypeKosView.setCheckList(false)
+            typeGender = "2"
         })
     }
 

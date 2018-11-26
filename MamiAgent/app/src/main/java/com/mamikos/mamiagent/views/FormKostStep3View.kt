@@ -1,13 +1,17 @@
 package com.mamikos.mamiagent.views
 
+import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mamikos.mamiagent.R
+import com.mamikos.mamiagent.helpers.UtilsHelper
+import kotlinx.android.synthetic.main.activity_form_kost.*
 import kotlinx.android.synthetic.main.view_btn_back_next.view.*
 import kotlinx.android.synthetic.main.view_form_kost_step_3.view.*
+import org.jetbrains.anko.onCheckedChange
 
 /**
  * Created by Dedi Dot on 10/9/2018.
@@ -18,6 +22,7 @@ class FormKostStep3View : FrameLayout {
 
     private lateinit var nextClick: Runnable
     private lateinit var backClick: Runnable
+    private var scrollView: LockableScrollView? = null
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -36,13 +41,29 @@ class FormKostStep3View : FrameLayout {
         setupBathRoomFacility()
 
         viewBtnBackNextStep3.nextLinearLayout.setOnClickListener {
-            nextClick.run()
+            if (scrollView == null) {
+                scrollView = (context as Activity).formKostScrollView
+            }
+
+            validation()
+            //nextClick.run()
         }
 
         viewBtnBackNextStep3.backLinearLayout.setOnClickListener {
             backClick.run()
         }
 
+    }
+
+    private fun validation() {
+
+        /*if (kosNameEditText.text.toString().isEmpty()) {
+            UtilsHelper.showSnackbar(this, "Data nama kos tidak boleh kosong")
+            UtilsHelper.autoFocusScroll(kosNameEditText, scrollView)
+            return
+        }*/
+
+        nextClick.run()
     }
 
     private fun setupBathRoomFacility() {
@@ -143,6 +164,21 @@ class FormKostStep3View : FrameLayout {
     }
 
     private fun setupRoomFacility() {
+
+        notEmptyRoomRadioButton.onCheckedChange { _, b ->
+            if (b) {
+                facilityRoomOneLinearLayout.visibility = View.VISIBLE
+                facilityRoomTwoLinearLayout.visibility = View.VISIBLE
+            }
+        }
+
+        emptyRoomRadioButton.onCheckedChange { _, b ->
+            if (b) {
+                facilityRoomOneLinearLayout.visibility = View.GONE
+                facilityRoomTwoLinearLayout.visibility = View.GONE
+            }
+        }
+
         mattressSquareGreyView.setString(context.getString(R.string.msg_bed))
         mattressSquareGreyView.setImage(R.drawable.ic_bed)
         mattressSquareGreyView.setCheckList(false)
@@ -154,15 +190,15 @@ class FormKostStep3View : FrameLayout {
             }
         })
 
-       cupboardSquareGreyView.setString(context.getString(R.string.msg_cupboard))
-       cupboardSquareGreyView.setImage(R.drawable.ic_wardrobe)
-       cupboardSquareGreyView.setCheckList(false)
-       cupboardSquareGreyView.setOnClick(Runnable {
-           if (!cupboardSquareGreyView.isChecked) {
-               cupboardSquareGreyView.setCheckList(true)
-           } else {
-               cupboardSquareGreyView.setCheckList(false)
-           }
+        cupboardSquareGreyView.setString(context.getString(R.string.msg_cupboard))
+        cupboardSquareGreyView.setImage(R.drawable.ic_wardrobe)
+        cupboardSquareGreyView.setCheckList(false)
+        cupboardSquareGreyView.setOnClick(Runnable {
+            if (!cupboardSquareGreyView.isChecked) {
+                cupboardSquareGreyView.setCheckList(true)
+            } else {
+                cupboardSquareGreyView.setCheckList(false)
+            }
         })
 
         tableSquareGreyView.setString(context.getString(R.string.msg_table))

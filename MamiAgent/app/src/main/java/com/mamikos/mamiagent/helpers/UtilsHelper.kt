@@ -3,11 +3,14 @@ package com.mamikos.mamiagent.helpers
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Handler
+import android.support.design.widget.Snackbar
 import android.support.v4.content.res.ResourcesCompat
 import android.util.Log
 import com.mamikos.mamiagent.BuildConfig
 import com.mamikos.mamiagent.R
 import android.support.v7.app.AlertDialog
+import android.view.View
+import com.mamikos.mamiagent.views.LockableScrollView
 
 
 /**
@@ -84,6 +87,16 @@ class UtilsHelper {
             builder.setNegativeButton(context.getString(R.string.msg_no)) { dialog, _ -> dialog.dismiss() }
             builder.show()
 
+        }
+
+        fun autoFocusScroll(view: View, scrollView: LockableScrollView? = null) {
+            scrollView?.post {
+                scrollView.scrollTo(0, view.top - 100)
+            }
+        }
+
+        fun showSnackbar(rootView: View, str: String) {
+            Snackbar.make(rootView, str, Snackbar.LENGTH_SHORT).show()
         }
 
     }

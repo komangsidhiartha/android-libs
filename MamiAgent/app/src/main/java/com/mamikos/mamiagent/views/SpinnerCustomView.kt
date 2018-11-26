@@ -22,6 +22,7 @@ import com.mamikos.mamiagent.networks.responses.AreaResponse
 class SpinnerCustomView : FrameLayout {
 
     var popUpWindow: PopupWindow? = null
+    private var areaSelected: AreaEntity? = null
     private var response: AreaResponse? = null
     private var onClick: OnClickInterfaceObject<AreaEntity>? = null
 
@@ -49,6 +50,7 @@ class SpinnerCustomView : FrameLayout {
                     UtilsHelper.log("data ${data.name}")
                     popUpWindow?.dismiss()
                     onClick?.dataClicked(data)
+                    areaSelected = data
                 }
             })
             v.setData(response?.data)
@@ -73,6 +75,11 @@ class SpinnerCustomView : FrameLayout {
 
     fun setData(data: AreaResponse?) {
         response = data
+        areaSelected = null
+    }
+
+    fun getDataSelected(): AreaEntity? {
+        return areaSelected
     }
 
 

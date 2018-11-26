@@ -44,11 +44,11 @@ class SquareGreyView : FrameLayout, TextWatcher, View.OnClickListener {
         squareImageView.imageResource = img
     }
 
-    fun setJustText(){
+    fun setJustText() {
         squareNameTextView.visibility = View.VISIBLE
         squareImageView.visibility = View.GONE
         contentRoomSizeLinearLayout.visibility = View.GONE
-        squareNameTextView.setPadding(20,20,20,20)
+        squareNameTextView.setPadding(20, 20, 20, 20)
         squareNameTextView.setAllCaps(false)
     }
 
@@ -84,6 +84,14 @@ class SquareGreyView : FrameLayout, TextWatcher, View.OnClickListener {
     fun setTextRoomSize(left: String, right: String) {
         leftRoomSizeEditText.setText(left)
         rightRoomSizeEditText.setText(right)
+    }
+
+    fun getTextRoomSize(): String {
+        return if (leftRoomSizeEditText.text.toString().isEmpty() || rightRoomSizeEditText.text.toString().isEmpty()) {
+            ""
+        } else {
+            leftRoomSizeEditText.text.toString() + "," + rightRoomSizeEditText.text.toString()
+        }
     }
 
     fun setCheckList(isOkay: Boolean) {

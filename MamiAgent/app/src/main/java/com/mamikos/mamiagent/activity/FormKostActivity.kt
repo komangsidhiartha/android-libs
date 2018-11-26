@@ -342,4 +342,10 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         }
     }
 
+    override fun onBackPressed() {
+        UtilsHelper.showDialogYesNo(this, "", getString(R.string.msg_exit), Runnable {
+            super.onBackPressed()
+        }, 0)
+    }
+
 }

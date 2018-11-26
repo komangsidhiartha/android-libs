@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class AreaEntity(val id: Int, val areaProvinceId: Int, val areaCityId: Int, val name: String) :  Parcelable
+data class AreaEntity(val id: Int, val areaProvinceId: Int = 0, val areaCityId: Int = 0, val name: String = "") :  Parcelable

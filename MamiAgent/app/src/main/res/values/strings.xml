@@ -122,7 +122,7 @@
     <string name="msg_exit">Yakin kamu mau keluar?</string>
     <string name="msg_data_confirmation">Apakah data yang kamu masukkan sudah benar?</string>
     <string name="msg_input_owner_data">Input data pemilik kos</string>
-    <string name="msg_privacy">Dengan menampilkan kos Anda di Mamikos, <b><i>Anda menyatakan setuju</i></b> menerima review tentang kos ANda sendiri dari pengguna Mamikos.</string>
+    <string name="msg_privacy">Dengan menampilkan kos Anda di Mamikos, <b><u>Anda menyatakan setuju</u></b> menerima review tentang kos Anda sendiri dari pengguna Mamikos.</string>
     <string name="msg_image_kos_landscape">Foto-foto Kos <font color='red'>(Harus landscape)</font></string>
 
 </resources>

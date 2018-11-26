@@ -181,6 +181,7 @@
         android:textColor="@color/dove_gray_approx" />
 
     <TextView
+        android:id="@+id/paymentPeriodBy"
         style="@style/Semibold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -406,6 +407,7 @@
         android:orientation="horizontal">
 
         <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/includeElectricityRadioButton"
             style="@style/Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -416,6 +418,7 @@
             android:textSize="12sp" />
 
         <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/withoutElectricityRadioButton"
             style="@style/Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

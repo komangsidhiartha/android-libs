@@ -37,6 +37,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/bg_grey_border_general"
+        android:inputType="text"
         android:padding="14dp"
         android:textColor="@color/dove_gray_approx" />
 
@@ -60,6 +61,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/bg_grey_border_general"
+        android:inputType="phone"
         android:padding="14dp"
         android:textColor="@color/dove_gray_approx" />
 
@@ -83,6 +85,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/bg_grey_border_general"
+        android:inputType="textEmailAddress"
         android:padding="14dp"
         android:textColor="@color/dove_gray_approx" />
 
@@ -143,6 +146,7 @@
         android:orientation="horizontal">
 
         <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/privacyCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal" />

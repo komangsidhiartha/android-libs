@@ -7,6 +7,6 @@ import com.mamikos.mamiagent.entities.AreaEntity
  *
  */
 
-data class AreaResponse(val areaSubdistrict: ArrayList<AreaEntity>,
-                        val areaCity: ArrayList<AreaEntity>,
-                        val data: ArrayList<AreaEntity>) : StatusResponse()
+data class AreaResponse(val areaSubdistrict: ArrayList<AreaEntity> = arrayListOf(),
+                        val areaCity: ArrayList<AreaEntity> = arrayListOf(),
+                        val data: ArrayList<AreaEntity> = arrayListOf()) : StatusResponse()

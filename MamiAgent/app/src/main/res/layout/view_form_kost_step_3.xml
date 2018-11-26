@@ -39,6 +39,7 @@
         android:orientation="horizontal">
 
         <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/notEmptyRoomRadioButton"
             style="@style/Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,11 +50,12 @@
             android:textSize="12sp" />
 
         <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/emptyRoomRadioButton"
             style="@style/Regular"
-            android:checked="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:checked="false"
             android:text="@string/msg_was_empty"
             android:textColor="@color/dove_gray_approx2"
             android:textSize="12sp" />
@@ -61,6 +63,7 @@
     </RadioGroup>
 
     <LinearLayout
+        android:id="@+id/facilityRoomOneLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -97,6 +100,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/facilityRoomTwoLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -235,6 +239,7 @@
         android:orientation="horizontal">
 
         <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/insideBathroomRadioButton"
             style="@style/Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -245,6 +250,7 @@
             android:textSize="12sp" />
 
         <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/outsideBathroomRadioButton"
             style="@style/Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
