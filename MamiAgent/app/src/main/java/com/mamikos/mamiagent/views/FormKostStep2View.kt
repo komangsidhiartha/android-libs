@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mamikos.mamiagent.R
 import com.mamikos.mamiagent.entities.AreaEntity
+import com.mamikos.mamiagent.helpers.NumberTextWatcher
 import com.mamikos.mamiagent.helpers.UtilsHelper
 import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
 import com.mamikos.mamiagent.networks.responses.AreaResponse
@@ -64,6 +65,11 @@ class FormKostStep2View : FrameLayout {
         viewBtnBackNextStep2.backLinearLayout.setOnClickListener {
             backClick.run()
         }
+
+        dayPayEditText.addTextChangedListener(NumberTextWatcher(dayPayEditText, UtilsHelper.KEY_FORMAT_PRICE))
+        weekPayEditText.addTextChangedListener(NumberTextWatcher(weekPayEditText, UtilsHelper.KEY_FORMAT_PRICE))
+        monthPayEditText.addTextChangedListener(NumberTextWatcher(monthPayEditText, UtilsHelper.KEY_FORMAT_PRICE))
+        yearPayEditText.addTextChangedListener(NumberTextWatcher(yearPayEditText, UtilsHelper.KEY_FORMAT_PRICE))
 
     }
 

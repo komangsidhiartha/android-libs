@@ -42,6 +42,8 @@ public class CustomLoadingView {
     }
 
     public void hide() {
-        dialogLoading.dismiss();
+        if (dialogLoading != null) {
+            dialogLoading.dismiss();
+        }
     }
 }

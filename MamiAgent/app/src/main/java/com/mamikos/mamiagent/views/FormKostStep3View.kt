@@ -23,6 +23,8 @@ class FormKostStep3View : FrameLayout {
     private lateinit var nextClick: Runnable
     private lateinit var backClick: Runnable
     private var scrollView: LockableScrollView? = null
+    private var facBathRoom = ""
+    private var facRoom = ""
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -57,16 +59,41 @@ class FormKostStep3View : FrameLayout {
 
     private fun validation() {
 
-        /*if (kosNameEditText.text.toString().isEmpty()) {
-            UtilsHelper.showSnackbar(this, "Data nama kos tidak boleh kosong")
-            UtilsHelper.autoFocusScroll(kosNameEditText, scrollView)
-            return
-        }*/
+        if (notEmptyRoomRadioButton.isChecked) {
+            val alreadySelected = mattressSquareGreyView.isChecked || cupboardSquareGreyView.isChecked || tableSquareGreyView.isChecked || chairSquareGreyView.isChecked || acSquareGreyView.isChecked || tvSquareGreyView.isChecked || fanSquareGreyView.isChecked
+            if (!alreadySelected) {
+                UtilsHelper.showSnackbar(this, "Data fasilitas kamar tidak boleh kosong")
+                UtilsHelper.autoFocusScroll(mattressSquareGreyView, scrollView)
+                return
+            }
+        }
+
+        if (wifiSquareGreyView.isChecked) {
+            if (speedTestEditText.text.toString().isEmpty()) {
+                UtilsHelper.showSnackbar(this, "Data speed test tidak boleh kosong")
+                UtilsHelper.autoFocusScroll(speedTestEditText, scrollView)
+                return
+            }
+        }
+
+
 
         nextClick.run()
     }
 
     private fun setupBathRoomFacility() {
+
+        insideBathroomRadioButton.onCheckedChange { _, b ->
+            if (b) {
+                facBathRoom = "1"
+            }
+        }
+
+        outsideBathroomRadioButton.onCheckedChange { _, b ->
+            if (b) {
+                facBathRoom = "0"
+            }
+        }
 
         showerSquareGreyView.setString(context.getString(R.string.msg_shower))
         showerSquareGreyView.setImage(R.drawable.ic_shower)
@@ -169,6 +196,7 @@ class FormKostStep3View : FrameLayout {
             if (b) {
                 facilityRoomOneLinearLayout.visibility = View.VISIBLE
                 facilityRoomTwoLinearLayout.visibility = View.VISIBLE
+                facRoom = "1"
             }
         }
 
@@ -176,6 +204,14 @@ class FormKostStep3View : FrameLayout {
             if (b) {
                 facilityRoomOneLinearLayout.visibility = View.GONE
                 facilityRoomTwoLinearLayout.visibility = View.GONE
+                mattressSquareGreyView.setCheckList(false)
+                cupboardSquareGreyView.setCheckList(false)
+                tableSquareGreyView.setCheckList(false)
+                chairSquareGreyView.setCheckList(false)
+                acSquareGreyView.setCheckList(false)
+                tvSquareGreyView.setCheckList(false)
+                fanSquareGreyView.setCheckList(false)
+                facRoom = "0"
             }
         }
 

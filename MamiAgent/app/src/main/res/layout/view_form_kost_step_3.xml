@@ -325,6 +325,7 @@
             style="@style/Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/msg_ex_image_landscape"
@@ -342,6 +343,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/photoBuildingLinearLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -354,6 +356,7 @@
                 android:padding="16dp">
 
                 <ImageView
+                    android:id="@+id/photoBuildingImageView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
@@ -375,6 +378,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/photoInsideRoomLinearLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -383,6 +387,7 @@
             android:orientation="vertical">
 
             <FrameLayout
+                android:id="@+id/photoInsideRoomImageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_grey_radius"
@@ -403,13 +408,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:text="@string/msg_image_building"
+                android:text="@string/msg_image_inside_room"
                 android:textColor="@color/tundora_approx"
                 android:textSize="12sp" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/photoBathroomLinearLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -422,6 +428,7 @@
                 android:padding="16dp">
 
                 <ImageView
+                    android:id="@+id/photoBathroomImageView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
@@ -436,7 +443,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:text="@string/msg_image_building"
+                android:text="@string/msg_image_bathroom"
                 android:textColor="@color/tundora_approx"
                 android:textSize="12sp" />
 

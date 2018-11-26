@@ -23,6 +23,8 @@ class UtilsHelper {
 
     companion object {
 
+        val KEY_FORMAT_PRICE = "#,###"
+
         fun log(message: String) {
             if (BuildConfig.SHOW_LOG) {
 

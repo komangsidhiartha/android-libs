@@ -1,5 +1,6 @@
 package com.mamikos.mamiagent.activity
 
+import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -28,6 +29,11 @@ import kotlinx.android.synthetic.main.view_form_kost_step_1.*
 import kotlinx.android.synthetic.main.view_form_kost_step_1.view.*
 import org.jetbrains.anko.toast
 
+import android.support.annotation.NonNull
+import android.widget.Toast
+import com.mamikos.mamiagent.helpers.UtilsPermission
+
+
 /**
  * Created by Dedi Dot on 11/21/2018.
  * Happy Coding!
@@ -40,17 +46,16 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     private lateinit var loading: CustomLoadingView
     private var googleApiClient: GoogleApiClient? = null
 
-
     override val layoutResource: Int
         get() = R.layout.activity_form_kost
 
     override fun viewDidLoad() {
 
+        UtilsPermission.checkPermissionGps(this)
+
         loading = CustomLoadingView(this)
         loading.show()
 
-        buildGoogleApiClient()
-        setMap()
         setLayoutNextBack()
 
         requestProvinceApi()
@@ -348,4 +353,36 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         }, 0)
     }
 
+
+    override fun onRequestPermissionsResult(
+            requestCode: Int, @NonNull permissions: Array<String>, @NonNull grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        val booleanPermission = arrayListOf<Boolean>()
+        for (i in permissions.indices) {
+            if (requestCode == UtilsPermission.PERMISSION_GPS) {
+                if (permissions[i] == Manifest.permission.ACCESS_COARSE_LOCATION && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    booleanPermission.add(true)
+                } else if (permissions[i] == Manifest.permission.ACCESS_FINE_LOCATION && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    booleanPermission.add(true)
+                }
+                if (booleanPermission.size >= 1) {
+                    buildGoogleApiClient()
+                    setMap()
+                    UtilsPermission.checkPermissionStorageAndCamera(this)
+                }else{
+                    Toast.makeText(this, "Fitur yang di minta tidak dizinkan", Toast.LENGTH_LONG).show()
+                    finish()
+                }
+            } else if (requestCode == UtilsPermission.PERMISSION_STORAGE_AND_CAMERA) {
+                if (permissions[i] == Manifest.permission.WRITE_EXTERNAL_STORAGE && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    booleanPermission.add(true)
+                } else if (permissions[i] == Manifest.permission.READ_EXTERNAL_STORAGE && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    booleanPermission.add(true)
+                } else if (permissions[i] == Manifest.permission.CAMERA && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    booleanPermission.add(true)
+                }
+            }
+        }
+
+    }
 }

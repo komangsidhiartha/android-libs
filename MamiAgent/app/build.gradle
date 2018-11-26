@@ -24,8 +24,8 @@ android {
         applicationId "com.mamikos.mamiagent"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 4
-        versionName "1.1.3"
+        versionCode 1
+        versionName "1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         buildConfigField("boolean", "SHOW_LOG", "false")
@@ -43,7 +43,7 @@ android {
     productFlavors {
         devel {
             dimension "v1"
-            versionName "1.1.3"
+            versionName "1"
             buildConfigField("boolean", "SHOW_LOG", "true")
             buildConfigField("boolean", "SHOW_FABRIC", "false")
         }

@@ -119,7 +119,10 @@
     <string name="msg_repeat_password">Ulangi password</string>
     <string name="msg_ex_image_landscape">Contoh foto landscape</string>
     <string name="msg_image_building">Foto bangunan kos</string>
+    <string name="msg_image_bathroom">Foto kamar mandi</string>
+    <string name="msg_image_inside_room">Foto dalam kamar</string>
     <string name="msg_exit">Yakin kamu mau keluar?</string>
+    <string name="msg_allow_this_feature">Aplikasi membutuhkan izin untuk bisa menggunakan fitur, izinkan?</string>
     <string name="msg_data_confirmation">Apakah data yang kamu masukkan sudah benar?</string>
     <string name="msg_input_owner_data">Input data pemilik kos</string>
     <string name="msg_privacy">Dengan menampilkan kos Anda di Mamikos, <b><u>Anda menyatakan setuju</u></b> menerima review tentang kos Anda sendiri dari pengguna Mamikos.</string>
