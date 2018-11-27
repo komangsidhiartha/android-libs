@@ -17,14 +17,15 @@ class ShowGallery(private val mContext: Context) {
 
     private val imgFromCamera: File? = null
 
+
     fun checkPermission() {
         UtilsPermission.checkPermissionStorageAndCamera(mContext as Activity)
     }
 
-    fun showNow() {
+    fun showNow(code: Int) {
         val intent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/"
-        (mContext as Activity).startActivityForResult(Intent.createChooser(intent, mContext.getString(R.string.msg_select_file)), CODE_GALLERY)
+        (mContext as Activity).startActivityForResult(Intent.createChooser(intent, mContext.getString(R.string.msg_select_file)), code)
     }
 
     companion object {

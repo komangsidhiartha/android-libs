@@ -25,8 +25,8 @@ public class CustomLoadingView {
         view = View.inflate(context, R.layout.view_custom_loading, null);
         builder.setView(view);
         dialogLoading = builder.create();
-        dialogLoading.setCancelable(true);
-        dialogLoading.setCanceledOnTouchOutside(false);
+        //dialogLoading.setCancelable(false);
+        //dialogLoading.setCanceledOnTouchOutside(false);
     }
 
     public void hideTextStatus() {

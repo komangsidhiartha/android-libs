@@ -33,8 +33,18 @@ import org.jetbrains.anko.toast
 
 import android.support.annotation.NonNull
 import android.widget.Toast
+import com.mamikos.mamiagent.entities.PhotoFormEntity
+import com.mamikos.mamiagent.entities.SaveKostEntity
 import com.mamikos.mamiagent.helpers.*
+import com.mamikos.mamiagent.networks.apis.PhotosApi
+import com.mamikos.mamiagent.networks.apis.SaveKosApi
+import com.mamikos.mamiagent.networks.responses.MediaResponse
+import com.mamikos.mamiagent.networks.responses.StatusResponse
+import com.sidhiartha.libs.utils.GSONManager
+import kotlinx.android.synthetic.main.view_form_kost_step_2.view.*
 import kotlinx.android.synthetic.main.view_form_kost_step_3.*
+import kotlinx.android.synthetic.main.view_form_kost_step_3.view.*
+import kotlinx.android.synthetic.main.view_form_kost_step_4.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.io.File
@@ -50,6 +60,8 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     private lateinit var mMap: GoogleMap
     private lateinit var loading: CustomLoadingView
     private var googleApiClient: GoogleApiClient? = null
+    var fullAddressLatLng: LatLng? = null
+    var myLatLng: LatLng? = null
 
     override val layoutResource: Int
         get() = R.layout.activity_form_kost
@@ -201,6 +213,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     locationEditText.setText(address)
                     locationEditText.isFocusable = true
                     locationEditText.isFocusableInTouchMode = true
+                    fullAddressLatLng = latLng
                 }
             })
 
@@ -224,6 +237,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 val mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
                 mFusedLocationClient.lastLocation.addOnSuccessListener(this) {
                     val ltLng = LatLng(it.latitude, it.longitude)
+                    myLatLng = ltLng
                     mMap.addMarker(MarkerOptions().position(ltLng).title("Saya disini"))
                     //.isDraggable = true
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ltLng, 15.0f))
@@ -340,7 +354,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         formKostStep4View.setNextOnClick(Runnable {
             UtilsHelper.showDialogYesNo(this, "", getString(R.string.msg_data_confirmation), Runnable {
-                finish()
+                goSaveKos()
             }, 0)
         })
 
@@ -353,6 +367,173 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             imageFourView.setImageResource(R.drawable.ic_circle_undone)
             lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.apptheme_color))
         })
+    }
+
+    private fun goSaveKos() {
+
+        try {
+
+            loading.show()
+
+            val saveKos = SaveKostEntity()
+
+            saveKos.province = formKostStep1View.provinceSpinnerCustomView.getName()
+            saveKos.areaCity = formKostStep1View.citySpinnerCustomView.getName()
+            saveKos.subdistrict = formKostStep1View.districtSpinnerCustomView.getName()
+            saveKos.latitude = fullAddressLatLng?.latitude!!
+            saveKos.longitude = fullAddressLatLng?.longitude!!
+            saveKos.agentLat = myLatLng?.latitude!!
+            saveKos.agentLong = myLatLng?.longitude!!
+            saveKos.address = formKostStep1View.fullAddressEditText.text.toString()
+
+            saveKos.name = formKostStep2View.kosNameEditText.text.toString()
+            saveKos.gender = formKostStep2View.typeGender.toInt()
+            saveKos.roomSize = "[${formKostStep2View.roomSize}]"
+            saveKos.roomCount = formKostStep2View.roomTotalEditText.text.toString().toInt()
+            saveKos.roomAvailable = formKostStep2View.roomTotalNowEditText.text.toString().toInt()
+            if (!formKostStep2View.dayPayEditText.text.isEmpty()) {
+                saveKos.priceDaily = formKostStep2View.dayPayEditText.text.toString()
+                        .replace(".", "").toInt()
+            }
+            if (!formKostStep2View.weekPayEditText.text.isEmpty()) {
+                saveKos.priceWeekly = formKostStep2View.weekPayEditText.text.toString()
+                        .replace(".", "").toInt()
+            }
+            if (!formKostStep2View.monthPayEditText.text.isEmpty()) {
+                saveKos.priceMonthly = formKostStep2View.monthPayEditText.text.toString()
+                        .replace(".", "").toInt()
+            }
+            if (!formKostStep2View.yearPayEditText.text.isEmpty()) {
+                saveKos.priceYearly = formKostStep2View.yearPayEditText.text.toString()
+                        .replace(".", "").toLong()
+            }
+
+            saveKos.minMonth = formKostStep2View.minPaySelected.toInt()
+
+            val selectedFacRoom = arrayListOf<Int>()
+            val selectedFacBathRoom = arrayListOf<Int>()
+
+            if (formKostStep3View.mattressSquareGreyView.isChecked) {
+                selectedFacRoom.add(10)
+            }
+            if (formKostStep3View.cupboardSquareGreyView.isChecked) {
+                selectedFacRoom.add(11)
+            }
+            if (formKostStep3View.tableSquareGreyView.isChecked) {
+                selectedFacRoom.add(14)
+            }
+            if (formKostStep3View.chairSquareGreyView.isChecked) {
+                selectedFacRoom.add(17)
+            }
+            if (formKostStep3View.acSquareGreyView.isChecked) {
+                selectedFacRoom.add(13)
+            }
+            if (formKostStep3View.tvSquareGreyView.isChecked) {
+                selectedFacRoom.add(12)
+            }
+            if (formKostStep3View.fanSquareGreyView.isChecked) {
+                selectedFacRoom.add(58)
+            }
+            if (formKostStep3View.facRoom == "0") {
+                selectedFacRoom.add(62)
+            }
+
+            if (!formKostStep3View.speedTestEditText.text.isEmpty()) {
+                saveKos.wifiSpeed = formKostStep3View.speedTestEditText.text.toString()
+                selectedFacRoom.add(15)
+            }
+
+            if (formKostStep3View.twentyFourSquareGreyView.isChecked) {
+                selectedFacRoom.add(59)
+            }
+
+            if (formKostStep3View.coupleSquareGreyView.isChecked) {
+                selectedFacRoom.add(60)
+            }
+
+            saveKos.facRoom = selectedFacRoom
+
+            if (formKostStep3View.showerSquareGreyView.isChecked) {
+                selectedFacRoom.add(3)
+            }
+            if (formKostStep3View.toiletSeatSquareGreyView.isChecked) {
+                selectedFacRoom.add(2)
+            }
+            if (formKostStep3View.squatToiletSquareGreyView.isChecked) {
+                selectedFacRoom.add(5)
+            }
+            if (formKostStep3View.hotWaterSquareGreyView.isChecked) {
+                selectedFacRoom.add(8)
+            }
+
+            saveKos.photos = PhotoFormEntity()
+
+            if (photoBathroomBuildingId > 0) {
+                saveKos.photos.bath = arrayListOf()
+                saveKos.photos.bath!!.add(photoBathroomBuildingId)
+            }
+            if (photoInsideBuildingId > 0) {
+                saveKos.photos.mains = photoInsideBuildingId
+            }
+            if (photoKosBuildingId > 0) {
+                saveKos.photos.cover = photoKosBuildingId
+            }
+
+            if (formKostStep3View.facBathRoom == "0") {
+                selectedFacRoom.add(4)
+            } else {
+                selectedFacRoom.add(1)
+            }
+
+            saveKos.facBath = selectedFacBathRoom
+
+            val selectedPark = arrayListOf<Int>()
+
+            if (formKostStep3View.parkSquareGreyView.isChecked) {
+                selectedPark.add(22)
+                selectedPark.add(23)
+                selectedPark.add(24)
+                saveKos.facParking = "ada"
+            }
+
+            if (formKostStep2View.isElectricity == "0") {
+                saveKos.withListrik = 1
+                saveKos.withoutListrik = 0
+            } else {
+                saveKos.withListrik = 0
+                saveKos.withoutListrik = 1
+            }
+
+            saveKos.ownerName = formKostStep4View.ownerNameEditText.text.toString()
+            saveKos.ownerEmail = formKostStep4View.ownerEmailEditText.text.toString()
+            saveKos.phone = formKostStep4View.ownerPhoneEditText.text.toString()
+            saveKos.password = formKostStep4View.ownerPasswordEditText.text.toString()
+            saveKos.inputAs = "agen"
+
+            val apiSave = SaveKosApi.SaveKost()
+
+            apiSave.postParam = GSONManager.toJson(saveKos)
+            UtilsHelper.log("wooooo " + apiSave.postParam)
+
+            apiSave.exec(StatusResponse::class.java) { response: StatusResponse?, errorMessage: String? ->
+                when (response) {
+                    null -> errorMessage?.let {
+                        toast(it)
+                    }
+                    else -> {
+                        UtilsHelper.showDialogYesNo(this, "", "Berhasil tambah kos, input lagi?", Runnable {
+                            val intent = Intent(this, FormKostActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }, 0)
+                    }
+                }
+                loading.hide()
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun scrollUp() {
@@ -416,34 +597,32 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         UtilsHelper.log("requestCode $requestCode")
         UtilsHelper.log("resultCode $resultCode")
         UtilsHelper.log("data " + data)
-        UtilsHelper.log("datacuik " + data?.flags)
 
         if (resultCode == Activity.RESULT_OK) {
 
-            if (requestCode == ShowCamera.CODE_CAMERA) {
+            if (requestCode == GlobalConst.CODE_CAMERA_BATHROOM || requestCode == GlobalConst.CODE_CAMERA_INSIDEROOM || requestCode == GlobalConst.CODE_CAMERA_BUILDING) {
 
-                UtilsHelper.log("path CAMERA: " + pathCamera)
+                successGetImage(Uri.parse(pathCamera), requestCode)
 
-                successGetImage(Uri.parse(pathCamera))
-
-            } else if (requestCode == ShowGallery.CODE_GALLERY) {
-
+            } else if (requestCode == GlobalConst.CODE_GALLERY_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
                 if (data == null) {
                     return
                 }
-
-                UtilsHelper.log("GALLERY " + UtilsHelper.getPathFromURI(this, data.data) + "\n" + data.data)
-
-                successGetImage(data.data)
-
+                successGetImage(data.data, requestCode)
             }
         }
 
     }
 
-    private fun successGetImage(uri: Uri) {
+    var photoKosBuildingId = 0
+    var photoBathroomBuildingId = 0
+    var photoInsideBuildingId = 0
+
+    private fun successGetImage(uri: Uri, requestCode: Int) {
 
         val file = File(UtilsHelper.getPathFromURI(this, uri))
+
+        uploadImage(file, requestCode)
 
         val options = BitmapFactory.Options()
         options.inSampleSize = 4
@@ -451,7 +630,45 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         val path = file.path
         val bitmap = BitmapFactory.decodeFile(path, options)
 
-        photoBathroomImageView.setImageBitmap(bitmap)
+        if (requestCode == GlobalConst.CODE_CAMERA_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_BATHROOM) {
+            photoBathroomImageView.setImageBitmap(bitmap)
+            photoBathroomImageView.visibility = View.VISIBLE
+        } else if (requestCode == GlobalConst.CODE_CAMERA_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM) {
+            photoInsideRoomImageView.setImageBitmap(bitmap)
+            photoInsideRoomImageView.visibility = View.VISIBLE
+        } else if (requestCode == GlobalConst.CODE_CAMERA_BUILDING || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
+            photoBuildingImageView.setImageBitmap(bitmap)
+            photoBuildingImageView.visibility = View.VISIBLE
+        }
+
+    }
+
+    private fun uploadImage(file: File, requestCode: Int) {
+        loading.show()
+        val upload = PhotosApi.MediaApi()
+        upload.fileUpload = MediaHelper.compressImage(this, file)
+        upload.formData = listOf(Pair("", ""))
+
+        upload.exec(MediaResponse::class.java) { response: MediaResponse?, errorMessage: String? ->
+            hideLoadingBar()
+            UtilsHelper.log("errorMessage $errorMessage")
+            when (response) {
+                null -> errorMessage?.let { toast(it) }
+                else -> {
+                    UtilsHelper.log("data $response")
+                    UtilsHelper.log("dataM ${response.media.id}")
+                    if (requestCode == GlobalConst.CODE_CAMERA_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_BATHROOM) {
+                        photoBathroomBuildingId = response.media.id
+                    } else if (requestCode == GlobalConst.CODE_CAMERA_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM) {
+                        photoInsideBuildingId = response.media.id
+                    } else if (requestCode == GlobalConst.CODE_CAMERA_BUILDING || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
+                        photoKosBuildingId = response.media.id
+                    }
+                }
+            }
+            loading.hide()
+        }
+
 
     }
 }

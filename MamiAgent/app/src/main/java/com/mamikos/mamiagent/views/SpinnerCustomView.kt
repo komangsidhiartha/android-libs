@@ -73,6 +73,10 @@ class SpinnerCustomView : FrameLayout {
         locationNameTextView.text = strName
     }
 
+    fun getName(): String {
+        return locationNameTextView.text.toString()
+    }
+
     fun setData(data: AreaResponse?) {
         response = data
         areaSelected = null

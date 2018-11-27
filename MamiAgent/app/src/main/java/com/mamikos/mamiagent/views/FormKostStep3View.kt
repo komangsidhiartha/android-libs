@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mamikos.mamiagent.R
+import com.mamikos.mamiagent.helpers.GlobalConst
 import com.mamikos.mamiagent.helpers.ShowCamera
 import com.mamikos.mamiagent.helpers.ShowGallery
 import com.mamikos.mamiagent.helpers.UtilsHelper
@@ -28,8 +29,8 @@ class FormKostStep3View : FrameLayout {
     private lateinit var nextClick: Runnable
     private lateinit var backClick: Runnable
     private var scrollView: LockableScrollView? = null
-    private var facBathRoom = ""
-    private var facRoom = ""
+    var facBathRoom = "0"
+    var facRoom = "0"
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -67,7 +68,7 @@ class FormKostStep3View : FrameLayout {
                     dialogSelectImage.dismiss()
                     if (ShowCamera.CODE_CAMERA == data) {
                         val showCamera = ShowCamera(context)
-                        showCamera.showNow()
+                        showCamera.showNow(GlobalConst.CODE_CAMERA_BATHROOM)
 
                         val file = showCamera.fileCamera
                         val bundle = Bundle()
@@ -76,7 +77,53 @@ class FormKostStep3View : FrameLayout {
 
                     } else if (ShowGallery.CODE_GALLERY == data) {
                         val showGallery = ShowGallery(context)
-                        showGallery.showNow()
+                        showGallery.showNow(GlobalConst.CODE_GALLERY_BATHROOM)
+                    }
+                }
+            })
+            dialogSelectImage.showDialog()
+        }
+
+        photoInsideRoomLinearLayout.setOnClickListener {
+            val dialogSelectImage = DialogOpenFileView(context)
+            dialogSelectImage.setOnClick(object : OnClickInterfaceObject<Int> {
+                override fun dataClicked(data: Int) {
+                    dialogSelectImage.dismiss()
+                    if (ShowCamera.CODE_CAMERA == data) {
+                        val showCamera = ShowCamera(context)
+                        showCamera.showNow(GlobalConst.CODE_CAMERA_INSIDEROOM)
+
+                        val file = showCamera.fileCamera
+                        val bundle = Bundle()
+                        bundle.putString("path", file?.path)
+                        EventBus.getDefault().post(bundle)
+
+                    } else if (ShowGallery.CODE_GALLERY == data) {
+                        val showGallery = ShowGallery(context)
+                        showGallery.showNow(GlobalConst.CODE_GALLERY_INSIDEROOM)
+                    }
+                }
+            })
+            dialogSelectImage.showDialog()
+        }
+
+        photoBuildingLinearLayout.setOnClickListener {
+            val dialogSelectImage = DialogOpenFileView(context)
+            dialogSelectImage.setOnClick(object : OnClickInterfaceObject<Int> {
+                override fun dataClicked(data: Int) {
+                    dialogSelectImage.dismiss()
+                    if (ShowCamera.CODE_CAMERA == data) {
+                        val showCamera = ShowCamera(context)
+                        showCamera.showNow(GlobalConst.CODE_CAMERA_BUILDING)
+
+                        val file = showCamera.fileCamera
+                        val bundle = Bundle()
+                        bundle.putString("path", file?.path)
+                        EventBus.getDefault().post(bundle)
+
+                    } else if (ShowGallery.CODE_GALLERY == data) {
+                        val showGallery = ShowGallery(context)
+                        showGallery.showNow(GlobalConst.CODE_GALLERY_BUILDING)
                     }
                 }
             })
@@ -311,7 +358,7 @@ class FormKostStep3View : FrameLayout {
             }
         })
 
-        fanSquareGreyView.setString(context.getString(R.string.msg_cupboard))
+        fanSquareGreyView.setString(context.getString(R.string.msg_fan))
         fanSquareGreyView.setImage(R.drawable.ic_fan)
         fanSquareGreyView.setCheckList(false)
         fanSquareGreyView.setOnClick(Runnable {

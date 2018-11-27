@@ -29,8 +29,8 @@ class FormKostStep2View : FrameLayout {
     private var scrollView: LockableScrollView? = null
     var typeGender = "0"
     var roomSize = "3,3"
-    var isElectricity = ""
-    var minPaySelected = ""
+    var isElectricity = "0"
+    var minPaySelected = "0"
 
     constructor(context: Context) : super(context) {
         init(context)

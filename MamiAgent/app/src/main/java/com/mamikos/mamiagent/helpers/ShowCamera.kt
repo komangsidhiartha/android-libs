@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
@@ -13,7 +12,6 @@ import android.support.v4.content.FileProvider
 import com.mamikos.mamiagent.BuildConfig
 
 import java.io.File
-import java.io.IOException
 
 /**
  * Created by Dedi Android on 28/03/2018.
@@ -43,24 +41,24 @@ class ShowCamera(private val mContext: Context) {
         UtilsPermission.checkPermissionStorageAndCamera(mContext as Activity)
     }
 
-    fun showNow() {
+    fun showNow(code: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            showNowNougat()
+            showNowNougat(code)
         } else {
-            showNowRegular()
+            showNowRegular(code)
         }
     }
 
-    private fun showNowRegular() {
+    private fun showNowRegular(code: Int) {
         val myUri = Uri.parse(path + UtilsHelper.getTimestamp() + ".png")
         fileCamera = File(myUri.path!!)
         val fileUri = Uri.fromFile(fileCamera)
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
-        (mContext as Activity).startActivityForResult(cameraIntent, CODE_CAMERA)
+        (mContext as Activity).startActivityForResult(cameraIntent, code)
     }
 
-    private fun showNowNougat() {
+    private fun showNowNougat(code: Int) {
         try {
             fileCamera = createImageFile()
             val photoURI = FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", fileCamera!!)
@@ -68,14 +66,7 @@ class ShowCamera(private val mContext: Context) {
             val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             //cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-            val bundle = Bundle()
-            bundle.putString("jancook", photoURI.path)
-
-            cameraIntent.putExtras(bundle)
-            cameraIntent.putExtra("path_bro", photoURI)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                (mContext as Activity).startActivityForResult(cameraIntent, CODE_CAMERA, bundle)
-            }
+            (mContext as Activity).startActivityForResult(cameraIntent, code)
 
         } catch (e: Exception) {
             e.printStackTrace()

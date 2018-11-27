@@ -7,6 +7,7 @@ import com.github.kittinunf.fuel.core.*
 import com.github.kittinunf.fuel.httpUpload
 import com.github.kittinunf.result.Result
 import com.mamikos.mamiagent.apps.MamiApp
+import com.mamikos.mamiagent.helpers.UtilsHelper
 import com.sidhiartha.libs.apps.logIfDebug
 import com.sidhiartha.libs.networks.APIMethod
 import com.sidhiartha.libs.networks.BaseAPI
@@ -20,8 +21,7 @@ import java.util.*
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
-abstract class MamikosAgentBaseApi : BaseAPI()
-{
+abstract class MamikosAgentBaseApi : BaseAPI() {
     //override val basePath: String = "http://songturu2.mamikos.com/api/agent/giant"
     override val basePath: String = "http://songturu2.mamikos.com/api/agent/groot"
     var formData: List<Pair<String, Any?>>? = null
@@ -43,11 +43,9 @@ abstract class MamikosAgentBaseApi : BaseAPI()
         val timeStamp = System.currentTimeMillis() / 1000
 
         val header = HashMap<String, String>()
-        if (method == APIMethod.UPLOAD)
-        {
-            header["Content-Type"] = "multipart/form-data; boundary="+ System.currentTimeMillis()
-        }
-        else {
+        if (method == APIMethod.UPLOAD) {
+            header["Content-Type"] = "multipart/form-data; boundary=" + System.currentTimeMillis()
+        } else {
             header["Content-Type"] = "application/json"
         }
         header["X-GIT-Time"] = "" + timeStamp
@@ -55,8 +53,7 @@ abstract class MamikosAgentBaseApi : BaseAPI()
         return header
     }
 
-    fun <T> exec(kelas: Class<T>, handler: (response: T?, errorMessage: String?) -> Unit)
-    {
+    fun <T> exec(kelas: Class<T>, handler: (response: T?, errorMessage: String?) -> Unit) {
         val localHandler = { request: Request, response: Response, result: Result<Json, FuelError> ->
             val (json, error) = result
 
@@ -64,14 +61,21 @@ abstract class MamikosAgentBaseApi : BaseAPI()
             Log.w("Network Manager", "response $response")
             Log.w("Network Manager", "json $json")
             Log.w("Network Manager", "error $error")
-            if (error != null)
-            {
+            if (error != null) {
                 handler(null, error.localizedMessage)
-            } else
-            {
+            } else {
                 var decode = ""
                 try {
-                    decode = GITStringBuilder.de(NetworkEntity().stringUrl(), json!!.obj().get("data").toString())
+
+                    if (method == APIMethod.UPLOAD) {
+                        decode = json!!.obj().toString()
+                    } else {
+                        decode = GITStringBuilder.de(NetworkEntity().stringUrl(), json!!.obj().get("data").toString())
+                    }
+
+                    UtilsHelper.log("resposepath ${basePath}")
+                    UtilsHelper.log("resposedata ${decode}")
+
                     handler(GSONManager.fromJson(decode, kelas), null)
                 } catch (e: GeneralSecurityException) {
                     e.printStackTrace()
@@ -81,8 +85,7 @@ abstract class MamikosAgentBaseApi : BaseAPI()
             }
         }
 
-        when (method)
-        {
+        when (method) {
             APIMethod.GET -> get(localHandler)
             APIMethod.DELETE -> delete(localHandler)
             APIMethod.POST -> post(localHandler)
@@ -92,21 +95,19 @@ abstract class MamikosAgentBaseApi : BaseAPI()
         }
     }
 
-    fun upload(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
-    {
+    fun upload(
+            handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit) {
         val files: ArrayList<DataPart> = arrayListOf()
-        fileUpload?.let { files.add(DataPart(it, "file", "image/jpeg")) }
+        //fileUpload?.let { files.add(DataPart(it, "file", "image/jpeg")) }
+        fileUpload?.let { files.add(DataPart(it, "media", "image/jpeg")) }
 
-        "$basePath/$path".httpUpload(Method.POST, formData()).header(headers).
-                dataParts { request, url -> files }
-                .responseJson(handler)
+        "$basePath/$path".httpUpload(Method.POST, formData()).header(headers)
+                .dataParts { request, url -> files }.responseJson(handler)
     }
 
-    fun formData(): List<Pair<String, Any?>>?
-    {
+    fun formData(): List<Pair<String, Any?>>? {
         val json = JSONObject()
-        for (data in formData!!)
-        {
+        for (data in formData!!) {
             json.put(data.first, data.second)
         }
         var encrypt = json.toString()
@@ -138,8 +139,7 @@ abstract class MamikosAgentBaseApi : BaseAPI()
     @Throws(Exception::class)
     fun encodeHeader(key: String, data: String): String {
         val sha256HMAC = Mac.getInstance("HmacSHA256")
-        val secretKey = SecretKeySpec(key.toByteArray(),
-                "HmacSHA256")
+        val secretKey = SecretKeySpec(key.toByteArray(), "HmacSHA256")
         sha256HMAC.init(secretKey)
 
         return String(Hex.encodeHex(sha256HMAC.doFinal(data.toByteArray())))

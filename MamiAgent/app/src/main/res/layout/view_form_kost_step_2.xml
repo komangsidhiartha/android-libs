@@ -39,6 +39,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/bg_grey_border_general"
+        android:inputType="text"
         android:padding="14dp"
         android:textColor="@color/dove_gray_approx" />
 

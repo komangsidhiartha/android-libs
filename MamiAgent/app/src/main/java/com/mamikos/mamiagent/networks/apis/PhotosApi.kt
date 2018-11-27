@@ -10,6 +10,9 @@ open class PhotosApi : MamikosAgentBaseApi()
     class DeleteMediaApi(var id: Int): PhotosApi()
     class GetEditPhotoApi(var id: String): PhotosApi()
 
+    override val basePath: String
+        get() = "http://songturu.mamikos.com/api/v1"
+
     override val headers: Map<String, String>?
         get() = generateAuthHeader(path)
     override val method: APIMethod
