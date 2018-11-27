@@ -30,7 +30,7 @@ class FormKostStep3View : FrameLayout {
     private lateinit var backClick: Runnable
     private var scrollView: LockableScrollView? = null
     var facBathRoom = "0"
-    var facRoom = "0"
+    var facRoom = "1"
 
     constructor(context: Context) : super(context) {
         init(context)

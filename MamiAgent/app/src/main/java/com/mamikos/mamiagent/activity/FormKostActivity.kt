@@ -39,6 +39,7 @@ import com.mamikos.mamiagent.helpers.*
 import com.mamikos.mamiagent.networks.apis.PhotosApi
 import com.mamikos.mamiagent.networks.apis.SaveKosApi
 import com.mamikos.mamiagent.networks.responses.MediaResponse
+import com.mamikos.mamiagent.networks.responses.MessagesResponse
 import com.mamikos.mamiagent.networks.responses.StatusResponse
 import com.sidhiartha.libs.utils.GSONManager
 import kotlinx.android.synthetic.main.view_form_kost_step_2.view.*
@@ -451,6 +452,10 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 selectedFacRoom.add(60)
             }
 
+            if (formKostStep3View.parkSquareGreyView.isChecked) {
+                selectedFacRoom.add(22)
+            }
+
             saveKos.facRoom = selectedFacRoom
 
             if (formKostStep3View.showerSquareGreyView.isChecked) {
@@ -480,21 +485,12 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             }
 
             if (formKostStep3View.facBathRoom == "0") {
-                selectedFacRoom.add(4)
+                selectedFacBathRoom.add(4)
             } else {
-                selectedFacRoom.add(1)
+                selectedFacBathRoom.add(1)
             }
 
             saveKos.facBath = selectedFacBathRoom
-
-            val selectedPark = arrayListOf<Int>()
-
-            if (formKostStep3View.parkSquareGreyView.isChecked) {
-                selectedPark.add(22)
-                selectedPark.add(23)
-                selectedPark.add(24)
-                saveKos.facParking = "ada"
-            }
 
             if (formKostStep2View.isElectricity == "0") {
                 saveKos.withListrik = 1
@@ -506,7 +502,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             saveKos.ownerName = formKostStep4View.ownerNameEditText.text.toString()
             saveKos.ownerEmail = formKostStep4View.ownerEmailEditText.text.toString()
-            saveKos.phone = formKostStep4View.ownerPhoneEditText.text.toString()
+            saveKos.ownerPhone = formKostStep4View.ownerPhoneEditText.text.toString()
             saveKos.password = formKostStep4View.ownerPasswordEditText.text.toString()
             saveKos.inputAs = "agen"
 
@@ -515,17 +511,25 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             apiSave.postParam = GSONManager.toJson(saveKos)
             UtilsHelper.log("wooooo " + apiSave.postParam)
 
-            apiSave.exec(StatusResponse::class.java) { response: StatusResponse?, errorMessage: String? ->
+            apiSave.exec(MessagesResponse::class.java) { response: MessagesResponse?, errorMessage: String? ->
                 when (response) {
                     null -> errorMessage?.let {
                         toast(it)
                     }
                     else -> {
-                        UtilsHelper.showDialogYesNo(this, "", "Berhasil tambah kos, input lagi?", Runnable {
+                        var msg = "Berhasil tambah kos, input lagi?"
+                        if (!response.status) {
+                            for (i in 0..response.messages?.size!! - 1) {
+                                msg += response.messages[i]
+                            }
+                        }
+
+                        UtilsHelper.showDialogYesNo(this, "", msg, Runnable {
                             val intent = Intent(this, FormKostActivity::class.java)
                             startActivity(intent)
                             finish()
                         }, 0)
+
                     }
                 }
                 loading.hide()
@@ -618,57 +622,73 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     var photoBathroomBuildingId = 0
     var photoInsideBuildingId = 0
 
-    private fun successGetImage(uri: Uri, requestCode: Int) {
+    private fun successGetImage(uri: Uri?, requestCode: Int) {
 
-        val file = File(UtilsHelper.getPathFromURI(this, uri))
+        try {
+            if (uri != null) {
+                val file = File(UtilsHelper.getPathFromURI(this, uri))
 
-        uploadImage(file, requestCode)
+                uploadImage(file, requestCode)
 
-        val options = BitmapFactory.Options()
-        options.inSampleSize = 4
+                val options = BitmapFactory.Options()
+                options.inSampleSize = 4
 
-        val path = file.path
-        val bitmap = BitmapFactory.decodeFile(path, options)
+                val path = file.path
+                val bitmap = BitmapFactory.decodeFile(path, options)
 
-        if (requestCode == GlobalConst.CODE_CAMERA_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_BATHROOM) {
-            photoBathroomImageView.setImageBitmap(bitmap)
-            photoBathroomImageView.visibility = View.VISIBLE
-        } else if (requestCode == GlobalConst.CODE_CAMERA_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM) {
-            photoInsideRoomImageView.setImageBitmap(bitmap)
-            photoInsideRoomImageView.visibility = View.VISIBLE
-        } else if (requestCode == GlobalConst.CODE_CAMERA_BUILDING || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
-            photoBuildingImageView.setImageBitmap(bitmap)
-            photoBuildingImageView.visibility = View.VISIBLE
+                if (requestCode == GlobalConst.CODE_CAMERA_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_BATHROOM) {
+                    photoBathroomImageView.setImageBitmap(bitmap)
+                    photoBathroomImageView.visibility = View.VISIBLE
+                } else if (requestCode == GlobalConst.CODE_CAMERA_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM) {
+                    photoInsideRoomImageView.setImageBitmap(bitmap)
+                    photoInsideRoomImageView.visibility = View.VISIBLE
+                } else if (requestCode == GlobalConst.CODE_CAMERA_BUILDING || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
+                    photoBuildingImageView.setImageBitmap(bitmap)
+                    photoBuildingImageView.visibility = View.VISIBLE
+                }
+            } else {
+                toast("Gagal mengambil foto, coba lagi")
+            }
+        } catch (e: Exception) {
+            toast("coba lagi ${e}")
         }
 
     }
 
     private fun uploadImage(file: File, requestCode: Int) {
-        loading.show()
-        val upload = PhotosApi.MediaApi()
-        upload.fileUpload = MediaHelper.compressImage(this, file)
-        upload.formData = listOf(Pair("", ""))
+        try {
+            loading.show()
+            val upload = PhotosApi.MediaApi()
+            try {
+                upload.fileUpload = MediaHelper.compressImage(this, file)
+            }catch (e: Exception){
+                toast("gagal mengambil gambar coba lagi bro")
+            }
+            upload.formData = listOf(Pair("", ""))
 
-        upload.exec(MediaResponse::class.java) { response: MediaResponse?, errorMessage: String? ->
-            hideLoadingBar()
-            UtilsHelper.log("errorMessage $errorMessage")
-            when (response) {
-                null -> errorMessage?.let { toast(it) }
-                else -> {
-                    UtilsHelper.log("data $response")
-                    UtilsHelper.log("dataM ${response.media.id}")
-                    if (requestCode == GlobalConst.CODE_CAMERA_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_BATHROOM) {
-                        photoBathroomBuildingId = response.media.id
-                    } else if (requestCode == GlobalConst.CODE_CAMERA_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM) {
-                        photoInsideBuildingId = response.media.id
-                    } else if (requestCode == GlobalConst.CODE_CAMERA_BUILDING || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
-                        photoKosBuildingId = response.media.id
+            upload.exec(MediaResponse::class.java) { response: MediaResponse?, errorMessage: String? ->
+                hideLoadingBar()
+                UtilsHelper.log("errorMessage $errorMessage")
+                when (response) {
+                    null -> errorMessage?.let { toast(it) }
+                    else -> {
+                        UtilsHelper.log("data $response")
+                        UtilsHelper.log("dataM ${response.media.id}")
+                        if (requestCode == GlobalConst.CODE_CAMERA_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_BATHROOM) {
+                            photoBathroomBuildingId = response.media.id
+                        } else if (requestCode == GlobalConst.CODE_CAMERA_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM) {
+                            photoInsideBuildingId = response.media.id
+                        } else if (requestCode == GlobalConst.CODE_CAMERA_BUILDING || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
+                            photoKosBuildingId = response.media.id
+                        }
                     }
                 }
+                loading.hide()
             }
-            loading.hide()
-        }
 
+        } catch (e: Exception) {
+            toast("coba lagix ${e}")
+        }
 
     }
 }

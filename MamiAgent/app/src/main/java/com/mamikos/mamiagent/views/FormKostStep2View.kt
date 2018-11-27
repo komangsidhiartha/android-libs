@@ -58,8 +58,8 @@ class FormKostStep2View : FrameLayout {
             if (scrollView == null) {
                 scrollView = (context as Activity).formKostScrollView
             }
-            //validation()
-            nextClick.run()
+            validation()
+            //nextClick.run()
         }
 
         viewBtnBackNextStep2.backLinearLayout.setOnClickListener {
