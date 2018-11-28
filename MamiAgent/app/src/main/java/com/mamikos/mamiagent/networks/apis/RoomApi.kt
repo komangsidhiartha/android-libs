@@ -1,5 +1,6 @@
 package com.mamikos.mamiagent.networks.apis
 
+import com.mamikos.mamiagent.BuildConfig
 import com.mamikos.mamiagent.networks.MamikosAgentBaseApi
 import com.sidhiartha.libs.networks.APIMethod
 
@@ -12,6 +13,8 @@ open class RoomApi : MamikosAgentBaseApi()
     class UpdateReviewRoomApi(val id: String): RoomApi()
     class SaveDataRoomApi: RoomApi()
     class DetailRoom(val roomID: String): RoomApi()
+
+    override val basePath: String = BuildConfig.BASE_URL_OLD
 
     override val headers: Map<String, String>?
         get() = generateAuthHeader(path)

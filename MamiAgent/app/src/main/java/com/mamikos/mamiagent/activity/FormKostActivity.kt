@@ -48,6 +48,7 @@ import kotlinx.android.synthetic.main.view_form_kost_step_3.view.*
 import kotlinx.android.synthetic.main.view_form_kost_step_4.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import org.jetbrains.anko.startActivity
 import java.io.File
 
 /**
@@ -82,6 +83,10 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         setLayoutNextBack()
 
         requestProvinceApi()
+
+        titleAddDataAds.setOnClickListener {
+            startActivity<ListRoomActivity>()
+        }
 
     }
 

@@ -30,6 +30,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         buildConfigField("boolean", "SHOW_LOG", "false")
         buildConfigField("boolean", "SHOW_FABRIC", "true")
+        buildConfigField("String", "BASE_URL_OLD", "\"http://songturu2.mamikos.com/api/agent/giant\"")
         buildConfigField("String", "BASE_URL", "\"http://songturu2.mamikos.com/api/agent/groot\"")
         buildConfigField("String", "BASE_URL_MEDIA", "\"http://songturu.mamikos.com/api/v1\"")
     }
@@ -48,6 +49,7 @@ android {
             versionName "1"
             buildConfigField("boolean", "SHOW_LOG", "true")
             buildConfigField("boolean", "SHOW_FABRIC", "false")
+            buildConfigField("String", "BASE_URL_OLD", "\"http://songturu2.mamikos.com/api/agent/giant\"")
             buildConfigField("String", "BASE_URL", "\"http://songturu2.mamikos.com/api/agent/groot\"")
             buildConfigField("String", "BASE_URL_MEDIA", "\"http://songturu.mamikos.com/api/v1\"")
         }

@@ -28,7 +28,6 @@ abstract class MamikosAgentBaseApi : BaseAPI() {
     var formData: List<Pair<String, Any?>>? = null
     var fileUpload: File? = null
     var postParam = ""
-    var isResultString = false
 
     fun generateAuthHeader(url: String): Map<String, String> {
         logIfDebug("url before:\n $url")
@@ -78,12 +77,8 @@ abstract class MamikosAgentBaseApi : BaseAPI() {
                     UtilsHelper.log("resposepath ${basePath}")
                     UtilsHelper.log("resposedata ${decode}")
 
-                    if(isResultString){
+                    handler(GSONManager.fromJson(decode, kelas), null)
 
-                        handler(GSONManager.fromJson(result.toString(), kelas), null)
-                    }else{
-                        handler(GSONManager.fromJson(decode, kelas), null)
-                    }
                 } catch (e: GeneralSecurityException) {
                     e.printStackTrace()
                 } catch (e: JSONException) {
