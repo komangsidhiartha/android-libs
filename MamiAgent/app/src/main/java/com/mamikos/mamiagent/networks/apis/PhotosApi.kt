@@ -1,5 +1,6 @@
 package com.mamikos.mamiagent.networks.apis
 
+import com.mamikos.mamiagent.BuildConfig
 import com.mamikos.mamiagent.networks.MamikosAgentBaseApi
 import com.sidhiartha.libs.networks.APIMethod
 
@@ -11,7 +12,7 @@ open class PhotosApi : MamikosAgentBaseApi()
     class GetEditPhotoApi(var id: String): PhotosApi()
 
     override val basePath: String
-        get() = "http://songturu.mamikos.com/api/v1"
+        get() = BuildConfig.BASE_URL_MEDIA
 
     override val headers: Map<String, String>?
         get() = generateAuthHeader(path)

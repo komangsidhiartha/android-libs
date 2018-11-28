@@ -6,6 +6,7 @@ import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.core.*
 import com.github.kittinunf.fuel.httpUpload
 import com.github.kittinunf.result.Result
+import com.mamikos.mamiagent.BuildConfig
 import com.mamikos.mamiagent.apps.MamiApp
 import com.mamikos.mamiagent.helpers.UtilsHelper
 import com.sidhiartha.libs.apps.logIfDebug
@@ -23,10 +24,11 @@ import javax.crypto.spec.SecretKeySpec
 
 abstract class MamikosAgentBaseApi : BaseAPI() {
     //override val basePath: String = "http://songturu2.mamikos.com/api/agent/giant"
-    override val basePath: String = "http://songturu2.mamikos.com/api/agent/groot"
+    override val basePath: String =  BuildConfig.BASE_URL
     var formData: List<Pair<String, Any?>>? = null
     var fileUpload: File? = null
     var postParam = ""
+    var isResultString = false
 
     fun generateAuthHeader(url: String): Map<String, String> {
         logIfDebug("url before:\n $url")
@@ -76,7 +78,12 @@ abstract class MamikosAgentBaseApi : BaseAPI() {
                     UtilsHelper.log("resposepath ${basePath}")
                     UtilsHelper.log("resposedata ${decode}")
 
-                    handler(GSONManager.fromJson(decode, kelas), null)
+                    if(isResultString){
+
+                        handler(GSONManager.fromJson(result.toString(), kelas), null)
+                    }else{
+                        handler(GSONManager.fromJson(decode, kelas), null)
+                    }
                 } catch (e: GeneralSecurityException) {
                     e.printStackTrace()
                 } catch (e: JSONException) {

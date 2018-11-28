@@ -1,14 +1,16 @@
 package com.mamikos.mamiagent.activity
 
 import `in`.arjsna.passcodeview.PassCodeView
-import android.content.Intent
 import com.mamikos.mamiagent.R
+import com.mamikos.mamiagent.apps.MamiApp
 import com.mamikos.mamiagent.helpers.UtilsHelper
 import com.mamikos.mamiagent.networks.apis.PassCodeApi
-import com.mamikos.mamiagent.networks.responses.StatusResponse
+import com.mamikos.mamiagent.networks.responses.PassCodeResponse
 import com.mamikos.mamiagent.views.CustomLoadingView
 import com.sidhiartha.libs.activities.BaseActivity
+import com.sidhiartha.libs.utils.GSONManager
 import kotlinx.android.synthetic.main.activity_pass_code.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.json.JSONObject
 
@@ -46,15 +48,16 @@ class PassCodeActivity : BaseActivity() {
         val jsonData = JSONObject()
         jsonData.put("code", it)
         api.postParam = jsonData.toString()
-        api.exec(StatusResponse::class.java) { response: StatusResponse?, errorMessage: String? ->
+        api.exec(PassCodeResponse::class.java) { response: PassCodeResponse?, errorMessage: String? ->
             when (response) {
                 null -> errorMessage?.let {
                     toast(it)
                 }
                 else -> {
+                    UtilsHelper.log("sip ${GSONManager.toJson(response)}")
                     if (response.status) {
-                        val intent = Intent(this, FormKostActivity::class.java)
-                        startActivity(intent)
+                        MamiApp.sessionManager.agentPhoneNumber = response.data.phoneNumber
+                        startActivity<FormKostActivity>()
                         finish()
                     } else {
                         toast(response.message + "")

@@ -63,6 +63,9 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     private var googleApiClient: GoogleApiClient? = null
     var fullAddressLatLng: LatLng? = null
     var myLatLng: LatLng? = null
+    var photoKosBuildingId = 0
+    var photoBathroomBuildingId = 0
+    var photoInsideBuildingId = 0
 
     override val layoutResource: Int
         get() = R.layout.activity_form_kost
@@ -79,12 +82,6 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         setLayoutNextBack()
 
         requestProvinceApi()
-
-        setClickCameraGallery()
-
-    }
-
-    private fun setClickCameraGallery() {
 
     }
 
@@ -389,7 +386,12 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             saveKos.name = formKostStep2View.kosNameEditText.text.toString()
             saveKos.gender = formKostStep2View.typeGender.toInt()
-            saveKos.roomSize = "[${formKostStep2View.roomSize}]"
+
+            val roomSize: ArrayList<String> = arrayListOf()
+            roomSize.add(formKostStep2View.roomSize.split(",")[0])
+            roomSize.add(formKostStep2View.roomSize.split(",")[1])
+            saveKos.roomSize = roomSize
+
             saveKos.roomCount = formKostStep2View.roomTotalEditText.text.toString().toInt()
             saveKos.roomAvailable = formKostStep2View.roomTotalNowEditText.text.toString().toInt()
             if (!formKostStep2View.dayPayEditText.text.isEmpty()) {
@@ -547,9 +549,12 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     }
 
     override fun onBackPressed() {
-        UtilsHelper.showDialogYesNo(this, "", getString(R.string.msg_exit), Runnable {
+        if (isNeedToShowCloseWarning()) {
+            Toast.makeText(this, R.string.msg_back_pressed, Toast.LENGTH_SHORT).show()
+        } else {
             super.onBackPressed()
-        }, 0)
+        }
+        lastBackPressedTimeInMillis = System.currentTimeMillis()
     }
 
 
@@ -618,10 +623,6 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     }
 
-    var photoKosBuildingId = 0
-    var photoBathroomBuildingId = 0
-    var photoInsideBuildingId = 0
-
     private fun successGetImage(uri: Uri?, requestCode: Int) {
 
         try {
@@ -661,7 +662,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             val upload = PhotosApi.MediaApi()
             try {
                 upload.fileUpload = MediaHelper.compressImage(this, file)
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 toast("gagal mengambil gambar coba lagi bro")
             }
             upload.formData = listOf(Pair("", ""))

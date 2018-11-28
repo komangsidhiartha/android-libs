@@ -27,7 +27,7 @@ class FormKostStep2View : FrameLayout {
     private lateinit var nextClick: Runnable
     private lateinit var backClick: Runnable
     private var scrollView: LockableScrollView? = null
-    var typeGender = "0"
+    var typeGender = "1"
     var roomSize = "3,3"
     var isElectricity = "0"
     var minPaySelected = "0"
@@ -280,7 +280,7 @@ class FormKostStep2View : FrameLayout {
             genderMixTypeKosView.setCheckList(false)
             genderMenTypeKosView.setCheckList(true)
             genderWomenTypeKosView.setCheckList(false)
-            typeGender = "0"
+            typeGender = "1"
         })
 
         genderWomenTypeKosView.setString(context.getString(R.string.msg_women))
@@ -290,7 +290,7 @@ class FormKostStep2View : FrameLayout {
             genderMixTypeKosView.setCheckList(false)
             genderMenTypeKosView.setCheckList(false)
             genderWomenTypeKosView.setCheckList(true)
-            typeGender = "1"
+            typeGender = "2"
         })
 
         genderMixTypeKosView.setString(context.getString(R.string.msg_mix))
@@ -300,7 +300,7 @@ class FormKostStep2View : FrameLayout {
             genderMixTypeKosView.setCheckList(true)
             genderMenTypeKosView.setCheckList(false)
             genderWomenTypeKosView.setCheckList(false)
-            typeGender = "2"
+            typeGender = "0"
         })
     }
 

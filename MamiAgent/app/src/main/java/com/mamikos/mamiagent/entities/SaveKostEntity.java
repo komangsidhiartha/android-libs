@@ -14,6 +14,7 @@ import java.util.List;
 @SuppressWarnings({"SpellCheckingInspection", "unused"})
 public class SaveKostEntity implements Parcelable {
     private List<Integer> concernIds;
+    private List<String> roomSize;
     private List<Integer> facProperty, facRoom, facBath;
     private PhotoUrlEntity photoUrl;
     private PhotoFormEntity photos;
@@ -23,7 +24,7 @@ public class SaveKostEntity implements Parcelable {
             facShare, facShareOther, facNear, facNearOther, facParking, paymentDuration,
             remarks, description, agentName, agentEmail, agentPhone, agentStatus, floor, deposit,
             roomTitle, priceTitleTime, areaCity, areaSubdistrict, statusKost, youtubeLink;
-    private String subdistrict, city, province, inputAs, roomSize, ownerEmail, password, wifiSpeed;
+    private String subdistrict, city, province, inputAs,  ownerEmail, password, wifiSpeed;
 
     private String inputSource;
 
@@ -157,11 +158,11 @@ public class SaveKostEntity implements Parcelable {
         this.inputAs = inputAs;
     }
 
-    public String getRoomSize() {
+    public List<String> getRoomSize() {
         return roomSize;
     }
 
-    public void setRoomSize(String roomSize) {
+    public void setRoomSize(List<String> roomSize) {
         this.roomSize = roomSize;
     }
 
@@ -709,6 +710,7 @@ public class SaveKostEntity implements Parcelable {
         dest.writeList(this.facProperty);
         dest.writeList(this.facRoom);
         dest.writeList(this.facBath);
+        dest.writeList(this.roomSize);
         dest.writeParcelable(this.photoUrl, flags);
         dest.writeParcelable(this.photos, flags);
         dest.writeString(this.name);
@@ -748,7 +750,6 @@ public class SaveKostEntity implements Parcelable {
         dest.writeString(this.subdistrict);
         dest.writeString(this.city);
         dest.writeString(this.inputAs);
-        dest.writeString(this.roomSize);
         dest.writeString(this.ownerEmail);
         dest.writeString(this.password);
         dest.writeString(this.inputSource);
@@ -784,6 +785,8 @@ public class SaveKostEntity implements Parcelable {
         in.readList(this.facRoom, Integer.class.getClassLoader());
         this.facBath = new ArrayList<Integer>();
         in.readList(this.facBath, Integer.class.getClassLoader());
+        this.roomSize = new ArrayList<String>();
+        in.readList(this.roomSize, String.class.getClassLoader());
         this.photoUrl = in.readParcelable(PhotoUrlEntity.class.getClassLoader());
         this.photos = in.readParcelable(PhotoFormEntity.class.getClassLoader());
         this.name = in.readString();
@@ -824,7 +827,6 @@ public class SaveKostEntity implements Parcelable {
         this.city = in.readString();
         this.wifiSpeed = in.readString();
         this.inputAs = in.readString();
-        this.roomSize = in.readString();
         this.ownerEmail = in.readString();
         this.password = in.readString();
         this.inputSource = in.readString();
