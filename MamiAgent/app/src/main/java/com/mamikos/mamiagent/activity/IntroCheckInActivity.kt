@@ -37,7 +37,8 @@ import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import java.io.File
 
-class IntroCheckInActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+class IntroCheckInActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, LocationListener {
     override val layoutResource: Int = R.layout.activity_intro_check_in
 
     companion object {
@@ -65,17 +66,13 @@ class IntroCheckInActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
         room = intent.extras.getParcelable(ListRoomActivity.ROOM_EXTRA)
 
         setupActionBar()
-        mGoogleApiClient = GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build()
+        mGoogleApiClient = GoogleApiClient.Builder(this).addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this).addApi(LocationServices.API).build()
 
         mLocationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         ivCheckIn.onClick {
-            if (checkLocation())
-                launchCamera()
+            if (checkLocation()) launchCamera()
         }
 
         btnChangePhoto.onClick {
@@ -132,7 +129,8 @@ class IntroCheckInActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
+                                            grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             SETTING_CAMERA -> {
@@ -141,8 +139,7 @@ class IntroCheckInActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
             }
             ListRoomActivity.SETTING_LOCATION -> {
                 if (grantResults.count() > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(this,
-                                    android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                         startLocationUpdates()
                     }
 
@@ -154,16 +151,19 @@ class IntroCheckInActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int,
-                                  data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == TAKE_PHOTO_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                val handler  = Handler()
+                val handler = Handler()
                 handler.postDelayed({
-                    photoFile = File(mCurrentPhotoPath)
-                    logIfDebug("PHOTO " + photoFile)
-                    processCapturedPhoto()
-                },1000)
+                    try {
+                        photoFile = File(mCurrentPhotoPath)
+                        logIfDebug("PHOTO " + photoFile)
+                        processCapturedPhoto()
+                    } catch (e: Exception) {
+                        toast("gagal, coba lagi")
+                    }
+                }, 1000)
             } else {
                 photoFile = null
             }
@@ -178,42 +178,30 @@ class IntroCheckInActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
         llBtnCheckIn.visibility = View.VISIBLE
     }
 
-    fun validateAndCheckIn()
-    {
-        if (room.statuses == RoomEntity.STATUS_DEFAULT && photoFile == null)
-        {
+    fun validateAndCheckIn() {
+        if (room.statuses == RoomEntity.STATUS_DEFAULT && photoFile == null) {
             toast("Foto harus diisi")
-        }
-        else
-            checkIn()
+        } else checkIn()
     }
 
     fun checkIn() {
         showLoadingBar()
         val checkInApi: CheckInApi
-        if (room.statuses == RoomEntity.STATUS_DEFAULT)
-        {
+        if (room.statuses == RoomEntity.STATUS_DEFAULT) {
             checkInApi = CheckInApi.FirstCheckInApi()
-        }
-        else
-        {
+        } else {
             checkInApi = CheckInApi.UpdateCheckInApi()
         }
 
-        checkInApi.formData = listOf(
-                Pair("latitude", mLocation!!.latitude),
-                Pair("longitude", mLocation!!.longitude),
-                Pair("id", room._id))
+        checkInApi.formData = listOf(Pair("latitude", mLocation!!.latitude), Pair("longitude", mLocation!!.longitude), Pair("id", room._id))
 
 
-        if (photoFile != null)
-            checkInApi.fileUpload = MediaHelper.compressImage(this, photoFile)
+        if (photoFile != null) checkInApi.fileUpload = MediaHelper.compressImage(this, photoFile)
 
         checkInApi.exec(StatusResponse::class.java) { response: StatusResponse?, errorMessage: String? ->
             hideLoadingBar()
             when (response) {
-                null ->
-                    errorMessage?.let { toast(it) }
+                null -> errorMessage?.let { toast(it) }
                 else -> {
                     toast("" + response.message)
                     if (response.status) {
@@ -245,8 +233,7 @@ class IntroCheckInActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
     }
 
     override fun onConnected(p0: Bundle?) {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             showAlertLocation()
             return
         }
@@ -267,7 +254,7 @@ class IntroCheckInActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
     protected fun startLocationUpdates() {
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-//                .setInterval(UPDATE_INTERVAL).setFastestInterval(FASTEST_INTERVAL)
+        //                .setInterval(UPDATE_INTERVAL).setFastestInterval(FASTEST_INTERVAL)
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             showAlertLocation()
@@ -282,8 +269,7 @@ class IntroCheckInActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
     }
 
     private fun checkLocation(): Boolean {
-        if (!isLocationEnabled)
-            showAlertLocation()
+        if (!isLocationEnabled) showAlertLocation()
         return isLocationEnabled
     }
 
@@ -292,9 +278,7 @@ class IntroCheckInActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
         dialog.setTitle("Enable Location")
                 .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " + "use this app")
                 .setPositiveButton("Location Settings") { paramDialogInterface, paramInt ->
-                    ActivityCompat.requestPermissions(this,
-                            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION,
-                                    android.Manifest.permission.ACCESS_COARSE_LOCATION), ListRoomActivity.SETTING_LOCATION);
+                    ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION), ListRoomActivity.SETTING_LOCATION);
                 }.setCancelable(false)
         dialog.show()
     }
