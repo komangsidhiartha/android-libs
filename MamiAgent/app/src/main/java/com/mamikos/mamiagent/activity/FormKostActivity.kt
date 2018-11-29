@@ -398,6 +398,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             saveKos.province = formKostStep22View.provinceSpinnerCustomView.getName()
             saveKos.areaCity = formKostStep22View.citySpinnerCustomView.getName()
+            saveKos.city = formKostStep22View.citySpinnerCustomView.getName()
             saveKos.subdistrict = formKostStep22View.districtSpinnerCustomView.getName()
             saveKos.latitude = fullAddressLatLng?.latitude!!
             saveKos.longitude = fullAddressLatLng?.longitude!!
