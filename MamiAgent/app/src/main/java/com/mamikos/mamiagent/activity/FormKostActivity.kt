@@ -40,7 +40,6 @@ import com.mamikos.mamiagent.networks.apis.PhotosApi
 import com.mamikos.mamiagent.networks.apis.SaveKosApi
 import com.mamikos.mamiagent.networks.responses.MediaResponse
 import com.mamikos.mamiagent.networks.responses.MessagesResponse
-import com.mamikos.mamiagent.networks.responses.StatusResponse
 import com.sidhiartha.libs.utils.GSONManager
 import kotlinx.android.synthetic.main.view_form_kost_step_2.view.*
 import kotlinx.android.synthetic.main.view_form_kost_step_3.*
@@ -84,9 +83,9 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         requestProvinceApi()
 
-        titleAddDataAds.setOnClickListener {
+        /*titleAddDataAds.setOnClickListener {
             startActivity<ListRoomActivity>()
-        }
+        }*/
 
     }
 
@@ -535,7 +534,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                         toast(it)
                     }
                     else -> {
-                        var msg = "Berhasil tambah kos, input lagi?"
+                        var msg = "Berhasil tambah kos, bersihkan form?"
                         if (!response.status) {
                             for (i in 0..response.messages?.size!! - 1) {
                                 msg += response.messages[i]

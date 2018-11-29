@@ -48,7 +48,7 @@
     <string name="search">Search</string>
     <string name="comment">Komentar</string>
     <string name="facility">Fasilitas</string>
-    <string name="msg_add_data_ads">Tambah data iklan atau <u><b>Lihat inputan</b></u></string>
+    <string name="msg_add_data_ads">Tambah data iklan <!--atau <u><b>Lihat inputan</b></u>--></string>
     <string name="msg_data_location">Data lokasi</string>
     <string name="msg_data_kos">Data kos</string>
     <string name="msg_data_facility_kos">Fasilitas kos</string>
@@ -112,7 +112,7 @@
     <string name="msg_fan">Kipas Angin</string>
     <string name="msg_owner_name_star">Nama Pemilik*</string>
     <string name="msg_owner_phone_star">Nomor Telp Pemilik*</string>
-    <string name="msg_owner_email">Email</string>
+    <string name="msg_owner_email">Email (opsional)</string>
     <string name="msg_create_password">Buat password</string>
     <string name="msg_yes">Iya</string>
     <string name="msg_no">Tidak</string>

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mamikos.mamiagent.R
+import com.mamikos.mamiagent.activity.FormKostActivity
 import com.mamikos.mamiagent.helpers.GlobalConst
 import com.mamikos.mamiagent.helpers.ShowCamera
 import com.mamikos.mamiagent.helpers.ShowGallery
@@ -151,7 +152,15 @@ class FormKostStep44View : FrameLayout {
             }
         }
 
-
+        if (context is FormKostActivity) {
+            val photoBuildingId = (context as FormKostActivity).photoKosBuildingId
+            val photoBathroomBuildingId = (context as FormKostActivity).photoBathroomBuildingId
+            val photoInsideBuildingId = (context as FormKostActivity).photoInsideBuildingId
+            if (photoBuildingId == 0 || photoBathroomBuildingId == 0 || photoInsideBuildingId == 0) {
+                UtilsHelper.showSnackbar(this, "Data foto tidak boleh kosong")
+                return
+            }
+        }
 
         nextClick.run()
     }

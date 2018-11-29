@@ -9,4 +9,6 @@ import kotlinx.android.parcel.Parcelize
  *
  */
 
-@Parcelize data class PhotoFormEntity(var cover: Int? = null, @SerializedName("main") var mains: Int? = null) : BasePhotoEntity(), Parcelable
+@Parcelize data class PhotoFormEntity(
+        var cover: Int? = null,
+        @SerializedName("main") var mains: Int? = null) : BasePhotoEntity(), Parcelable
