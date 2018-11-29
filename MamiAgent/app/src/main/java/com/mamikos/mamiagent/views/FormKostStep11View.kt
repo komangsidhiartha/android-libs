@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.view_form_kost_step_4.view.*
  * Happy Coding!
  */
 
-class FormKostStep4View : FrameLayout {
+class FormKostStep11View : FrameLayout {
 
     private lateinit var nextClick: Runnable
     private lateinit var backClick: Runnable
@@ -62,7 +62,7 @@ class FormKostStep4View : FrameLayout {
             return
         }
 
-        if (ownerPasswordEditText.text.toString().isEmpty()) {
+        /*if (ownerPasswordEditText.text.toString().isEmpty()) {
             UtilsHelper.showSnackbar(this, "Password tidak boleh kosong")
             UtilsHelper.autoFocusScroll(ownerPasswordEditText, scrollView)
             return
@@ -74,15 +74,15 @@ class FormKostStep4View : FrameLayout {
             return
         }
 
-        if (!privacyCheckBox.isChecked) {
-            UtilsHelper.showSnackbar(this, "Kamu belum setuju dengan syarat yang berlaku")
-            UtilsHelper.autoFocusScroll(privacyCheckBox, scrollView)
-            return
-        }
-
         if (!ownerPasswordEditText.text.toString().contentEquals(ownerRepeatPasswordEditText.text.toString())) {
             UtilsHelper.showSnackbar(this, "Password tidak sama")
             UtilsHelper.autoFocusScroll(ownerPasswordEditText, scrollView)
+            return
+        }*/
+
+        if (!privacyCheckBox.isChecked) {
+            UtilsHelper.showSnackbar(this, "Kamu belum setuju dengan syarat yang berlaku")
+            UtilsHelper.autoFocusScroll(privacyCheckBox, scrollView)
             return
         }
 

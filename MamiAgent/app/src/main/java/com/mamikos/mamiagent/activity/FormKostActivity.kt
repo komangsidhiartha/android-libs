@@ -99,24 +99,24 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 }
                 else -> {
                     if (response.status) {
-                        formKostStep1View.setProvince(response, object :
+                        formKostStep22View.setProvince(response, object :
                                 OnClickInterfaceObject<AreaEntity> {
                             override fun dataClicked(data: AreaEntity) {
                                 loading.show()
-                                formKostStep1View.provinceSpinnerCustomView.setName("${data.name}")
+                                formKostStep22View.provinceSpinnerCustomView.setName("${data.name}")
                                 requestCityApi(data.id)
 
-                                formKostStep1View.citySpinnerCustomView.setName("")
-                                formKostStep1View.citySpinnerCustomView.setData(null)
-                                formKostStep1View.districtSpinnerCustomView.setName("")
-                                formKostStep1View.districtSpinnerCustomView.setData(null)
+                                formKostStep22View.citySpinnerCustomView.setName("")
+                                formKostStep22View.citySpinnerCustomView.setData(null)
+                                formKostStep22View.districtSpinnerCustomView.setName("")
+                                formKostStep22View.districtSpinnerCustomView.setData(null)
 
                             }
                         })
                     }
                 }
             }
-            formKostStep1View.provinceSpinnerCustomView.setName("")
+            formKostStep22View.provinceSpinnerCustomView.setName("")
             loading.hide()
         }
     }
@@ -130,19 +130,19 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 }
                 else -> {
                     if (response.status) {
-                        formKostStep1View.setCity(response, object :
+                        formKostStep22View.setCity(response, object :
                                 OnClickInterfaceObject<AreaEntity> {
                             override fun dataClicked(data: AreaEntity) {
                                 loading.show()
                                 requestSubDistrictApi(data.id)
-                                formKostStep1View.citySpinnerCustomView.setName("${data.name}")
+                                formKostStep22View.citySpinnerCustomView.setName("${data.name}")
                             }
                         })
                     }
                 }
             }
-            formKostStep1View.citySpinnerCustomView.setName("")
-            formKostStep1View.districtSpinnerCustomView.setName("")
+            formKostStep22View.citySpinnerCustomView.setName("")
+            formKostStep22View.districtSpinnerCustomView.setName("")
             loading.hide()
         }
     }
@@ -156,16 +156,16 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 }
                 else -> {
                     if (response.status) {
-                        formKostStep1View.setSubdistrict(response, object :
+                        formKostStep22View.setSubdistrict(response, object :
                                 OnClickInterfaceObject<AreaEntity> {
                             override fun dataClicked(data: AreaEntity) {
-                                formKostStep1View.districtSpinnerCustomView.setName("${data.name}")
+                                formKostStep22View.districtSpinnerCustomView.setName("${data.name}")
                             }
                         })
                     }
                 }
             }
-            formKostStep1View.districtSpinnerCustomView.setName("")
+            formKostStep22View.districtSpinnerCustomView.setName("")
             loading.hide()
         }
     }
@@ -287,89 +287,100 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     }
 
     private fun setLayoutNextBack() {
-        formKostStep1View.setNextOnClick(Runnable {
-            formKostStep1View.visibility = View.GONE
-            formKostStep2View.visibility = View.VISIBLE
+
+        formKostStep11View.setNextOnClick(Runnable {
+            formKostStep11View.visibility = View.GONE
+            formKostStep22View.visibility = View.VISIBLE
             scrollUp()
 
             imageOneView.setImageResource(R.drawable.ic_check_circle_done)
             imageTwoView.setImageResource(R.drawable.ic_check_circle_done)
             imageThreeView.setImageResource(R.drawable.ic_circle_undone)
-            lineOneView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
             lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
 
         })
 
-        formKostStep1View.setBackOnClick(Runnable {
-            UtilsHelper.showDialogYesNo(this, "", getString(R.string.msg_exit), Runnable {
-                finish()
-            }, 0)
-        })
-
-        formKostStep2View.setNextOnClick(Runnable {
-            formKostStep2View.visibility = View.GONE
-            formKostStep3View.visibility = View.VISIBLE
+        formKostStep22View.setNextOnClick(Runnable {
+            formKostStep22View.visibility = View.GONE
+            formKostStep33View.visibility = View.VISIBLE
             scrollUp()
 
+            imageOneView.setImageResource(R.drawable.ic_check_circle_done)
             imageTwoView.setImageResource(R.drawable.ic_check_circle_done)
             imageThreeView.setImageResource(R.drawable.ic_check_circle_done)
             imageFourView.setImageResource(R.drawable.ic_circle_undone)
+            lineOneView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
             lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
             lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
 
         })
 
-        formKostStep2View.setBackOnClick(Runnable {
-            formKostStep1View.visibility = View.VISIBLE
-            formKostStep2View.visibility = View.GONE
-            scrollUp()
-
-            imageOneView.setImageResource(R.drawable.ic_check_circle_done)
-            imageTwoView.setImageResource(R.drawable.ic_circle_undone)
-            lineOneView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
-            lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.alto_solid))
-            imageThreeView.setImageResource(R.drawable.ic_circle_grey)
-        })
-
-        formKostStep3View.setNextOnClick(Runnable {
-            formKostStep3View.visibility = View.GONE
-            formKostStep4View.visibility = View.VISIBLE
-            scrollUp()
-
-            imageThreeView.setImageResource(R.drawable.ic_check_circle_done)
-            imageFourView.setImageResource(R.drawable.ic_check_circle_done)
-            lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
-
-        })
-
-        formKostStep3View.setBackOnClick(Runnable {
-            formKostStep3View.visibility = View.GONE
-            formKostStep2View.visibility = View.VISIBLE
+        formKostStep33View.setNextOnClick(Runnable {
+            formKostStep33View.visibility = View.GONE
+            formKostStep44View.visibility = View.VISIBLE
             scrollUp()
 
             imageTwoView.setImageResource(R.drawable.ic_check_circle_done)
-            imageThreeView.setImageResource(R.drawable.ic_circle_undone)
-            lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.alto_solid))
+            imageThreeView.setImageResource(R.drawable.ic_check_circle_done)
+            imageFourView.setImageResource(R.drawable.ic_check_circle_done)
             lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
-            imageFourView.setImageResource(R.drawable.ic_circle_grey)
+            lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
 
         })
 
-        formKostStep4View.setNextOnClick(Runnable {
+        formKostStep44View.setNextOnClick(Runnable {
             UtilsHelper.showDialogYesNo(this, "", getString(R.string.msg_data_confirmation), Runnable {
                 goSaveKos()
             }, 0)
         })
 
-        formKostStep4View.setBackOnClick(Runnable {
-            formKostStep4View.visibility = View.GONE
-            formKostStep3View.visibility = View.VISIBLE
+
+
+        formKostStep11View.setBackOnClick(Runnable {
+            UtilsHelper.showDialogYesNo(this, "", getString(R.string.msg_exit), Runnable {
+                finish()
+            }, 0)
+        })
+
+        formKostStep22View.setBackOnClick(Runnable {
+            formKostStep11View.visibility = View.VISIBLE
+            formKostStep22View.visibility = View.GONE
             scrollUp()
 
+            imageOneView.setImageResource(R.drawable.ic_check_circle_done)
+            imageTwoView.setImageResource(R.drawable.ic_circle_undone)
+            imageThreeView.setImageResource(R.drawable.ic_circle_grey)
+            lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.alto_solid))
+            lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.alto_solid))
+        })
+
+        formKostStep33View.setBackOnClick(Runnable {
+            formKostStep22View.visibility = View.VISIBLE
+            formKostStep33View.visibility = View.GONE
+            scrollUp()
+
+            imageOneView.setImageResource(R.drawable.ic_check_circle_done)
+            imageTwoView.setImageResource(R.drawable.ic_check_circle_done)
+            imageThreeView.setImageResource(R.drawable.ic_circle_undone)
+            lineOneView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
+            lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
+            lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.alto_solid))
+            imageFourView.setImageResource(R.drawable.ic_circle_grey)
+        })
+
+        formKostStep44View.setBackOnClick(Runnable {
+            formKostStep44View.visibility = View.GONE
+            formKostStep33View.visibility = View.VISIBLE
+            scrollUp()
+
+            imageTwoView.setImageResource(R.drawable.ic_check_circle_done)
             imageThreeView.setImageResource(R.drawable.ic_check_circle_done)
             imageFourView.setImageResource(R.drawable.ic_circle_undone)
-            lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.apptheme_color))
+            lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
+            lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
+
         })
+
     }
 
     private fun goSaveKos() {
@@ -380,101 +391,101 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             val saveKos = SaveKostEntity()
 
-            saveKos.province = formKostStep1View.provinceSpinnerCustomView.getName()
-            saveKos.areaCity = formKostStep1View.citySpinnerCustomView.getName()
-            saveKos.subdistrict = formKostStep1View.districtSpinnerCustomView.getName()
+            saveKos.province = formKostStep22View.provinceSpinnerCustomView.getName()
+            saveKos.areaCity = formKostStep22View.citySpinnerCustomView.getName()
+            saveKos.subdistrict = formKostStep22View.districtSpinnerCustomView.getName()
             saveKos.latitude = fullAddressLatLng?.latitude!!
             saveKos.longitude = fullAddressLatLng?.longitude!!
             saveKos.agentLat = myLatLng?.latitude!!
             saveKos.agentLong = myLatLng?.longitude!!
-            saveKos.address = formKostStep1View.fullAddressEditText.text.toString()
+            saveKos.address = formKostStep22View.fullAddressEditText.text.toString()
 
-            saveKos.name = formKostStep2View.kosNameEditText.text.toString()
-            saveKos.gender = formKostStep2View.typeGender.toInt()
+            saveKos.name = formKostStep33View.kosNameEditText.text.toString()
+            saveKos.gender = formKostStep33View.typeGender.toInt()
 
             val roomSize: ArrayList<String> = arrayListOf()
-            roomSize.add(formKostStep2View.roomSize.split(",")[0])
-            roomSize.add(formKostStep2View.roomSize.split(",")[1])
+            roomSize.add(formKostStep33View.roomSize.split(",")[0])
+            roomSize.add(formKostStep33View.roomSize.split(",")[1])
             saveKos.roomSize = roomSize
 
-            saveKos.roomCount = formKostStep2View.roomTotalEditText.text.toString().toInt()
-            saveKos.roomAvailable = formKostStep2View.roomTotalNowEditText.text.toString().toInt()
-            if (!formKostStep2View.dayPayEditText.text.isEmpty()) {
-                saveKos.priceDaily = formKostStep2View.dayPayEditText.text.toString()
+            saveKos.roomCount = formKostStep33View.roomTotalEditText.text.toString().toInt()
+            saveKos.roomAvailable = formKostStep33View.roomTotalNowEditText.text.toString().toInt()
+            if (!formKostStep33View.dayPayEditText.text.isEmpty()) {
+                saveKos.priceDaily = formKostStep33View.dayPayEditText.text.toString()
                         .replace(".", "").toInt()
             }
-            if (!formKostStep2View.weekPayEditText.text.isEmpty()) {
-                saveKos.priceWeekly = formKostStep2View.weekPayEditText.text.toString()
+            if (!formKostStep33View.weekPayEditText.text.isEmpty()) {
+                saveKos.priceWeekly = formKostStep33View.weekPayEditText.text.toString()
                         .replace(".", "").toInt()
             }
-            if (!formKostStep2View.monthPayEditText.text.isEmpty()) {
-                saveKos.priceMonthly = formKostStep2View.monthPayEditText.text.toString()
+            if (!formKostStep33View.monthPayEditText.text.isEmpty()) {
+                saveKos.priceMonthly = formKostStep33View.monthPayEditText.text.toString()
                         .replace(".", "").toInt()
             }
-            if (!formKostStep2View.yearPayEditText.text.isEmpty()) {
-                saveKos.priceYearly = formKostStep2View.yearPayEditText.text.toString()
+            if (!formKostStep33View.yearPayEditText.text.isEmpty()) {
+                saveKos.priceYearly = formKostStep33View.yearPayEditText.text.toString()
                         .replace(".", "").toLong()
             }
 
-            saveKos.minMonth = formKostStep2View.minPaySelected.toInt()
+            saveKos.minMonth = formKostStep33View.minPaySelected.toInt()
 
             val selectedFacRoom = arrayListOf<Int>()
             val selectedFacBathRoom = arrayListOf<Int>()
 
-            if (formKostStep3View.mattressSquareGreyView.isChecked) {
+            if (formKostStep44View.mattressSquareGreyView.isChecked) {
                 selectedFacRoom.add(10)
             }
-            if (formKostStep3View.cupboardSquareGreyView.isChecked) {
+            if (formKostStep44View.cupboardSquareGreyView.isChecked) {
                 selectedFacRoom.add(11)
             }
-            if (formKostStep3View.tableSquareGreyView.isChecked) {
+            if (formKostStep44View.tableSquareGreyView.isChecked) {
                 selectedFacRoom.add(14)
             }
-            if (formKostStep3View.chairSquareGreyView.isChecked) {
+            if (formKostStep44View.chairSquareGreyView.isChecked) {
                 selectedFacRoom.add(17)
             }
-            if (formKostStep3View.acSquareGreyView.isChecked) {
+            if (formKostStep44View.acSquareGreyView.isChecked) {
                 selectedFacRoom.add(13)
             }
-            if (formKostStep3View.tvSquareGreyView.isChecked) {
+            if (formKostStep44View.tvSquareGreyView.isChecked) {
                 selectedFacRoom.add(12)
             }
-            if (formKostStep3View.fanSquareGreyView.isChecked) {
+            if (formKostStep44View.fanSquareGreyView.isChecked) {
                 selectedFacRoom.add(58)
             }
-            if (formKostStep3View.facRoom == "0") {
+            if (formKostStep44View.facRoom == "0") {
                 selectedFacRoom.add(62)
             }
 
-            if (!formKostStep3View.speedTestEditText.text.isEmpty()) {
-                saveKos.wifiSpeed = formKostStep3View.speedTestEditText.text.toString()
+            if (!formKostStep44View.speedTestEditText.text.isEmpty()) {
+                saveKos.wifiSpeed = formKostStep44View.speedTestEditText.text.toString()
                 selectedFacRoom.add(15)
             }
 
-            if (formKostStep3View.twentyFourSquareGreyView.isChecked) {
+            if (formKostStep44View.twentyFourSquareGreyView.isChecked) {
                 selectedFacRoom.add(59)
             }
 
-            if (formKostStep3View.coupleSquareGreyView.isChecked) {
+            if (formKostStep44View.coupleSquareGreyView.isChecked) {
                 selectedFacRoom.add(60)
             }
 
-            if (formKostStep3View.parkSquareGreyView.isChecked) {
+            if (formKostStep44View.parkSquareGreyView.isChecked) {
                 selectedFacRoom.add(22)
             }
 
             saveKos.facRoom = selectedFacRoom
 
-            if (formKostStep3View.showerSquareGreyView.isChecked) {
+            if (formKostStep44View.showerSquareGreyView.isChecked) {
                 selectedFacRoom.add(3)
             }
-            if (formKostStep3View.toiletSeatSquareGreyView.isChecked) {
+            if (formKostStep44View.toiletSeatSquareGreyView.isChecked) {
                 selectedFacRoom.add(2)
             }
-            if (formKostStep3View.squatToiletSquareGreyView.isChecked) {
+            if (formKostStep44View.squatToiletSquareGreyView.isChecked) {
                 selectedFacRoom.add(5)
             }
-            if (formKostStep3View.hotWaterSquareGreyView.isChecked) {
+            if (formKostStep44View.hotWaterSquareGreyView.isChecked) {
                 selectedFacRoom.add(8)
             }
 
@@ -491,7 +502,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 saveKos.photos.cover = photoKosBuildingId
             }
 
-            if (formKostStep3View.facBathRoom == "0") {
+            if (formKostStep44View.facBathRoom == "0") {
                 selectedFacBathRoom.add(4)
             } else {
                 selectedFacBathRoom.add(1)
@@ -499,7 +510,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             saveKos.facBath = selectedFacBathRoom
 
-            if (formKostStep2View.isElectricity == "0") {
+            if (formKostStep33View.isElectricity == "0") {
                 saveKos.withListrik = 1
                 saveKos.withoutListrik = 0
             } else {
@@ -507,10 +518,10 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 saveKos.withoutListrik = 1
             }
 
-            saveKos.ownerName = formKostStep4View.ownerNameEditText.text.toString()
-            saveKos.ownerEmail = formKostStep4View.ownerEmailEditText.text.toString()
-            saveKos.ownerPhone = formKostStep4View.ownerPhoneEditText.text.toString()
-            saveKos.password = formKostStep4View.ownerPasswordEditText.text.toString()
+            saveKos.ownerName = formKostStep11View.ownerNameEditText.text.toString()
+            saveKos.ownerEmail = formKostStep11View.ownerEmailEditText.text.toString()
+            saveKos.ownerPhone = formKostStep11View.ownerPhoneEditText.text.toString()
+            //saveKos.password = formKostStep11View.ownerPasswordEditText.text.toString()
             saveKos.inputAs = "agen"
 
             val apiSave = SaveKosApi.SaveKost()

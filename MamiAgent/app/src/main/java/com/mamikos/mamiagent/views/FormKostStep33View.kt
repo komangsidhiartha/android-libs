@@ -22,7 +22,7 @@ import org.jetbrains.anko.onCheckedChange
  * Happy Coding!
  */
 
-class FormKostStep2View : FrameLayout {
+class FormKostStep33View : FrameLayout {
 
     private lateinit var nextClick: Runnable
     private lateinit var backClick: Runnable

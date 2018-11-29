@@ -131,6 +131,17 @@
                         android:layout_marginTop="16dp"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
+                        android:text="@string/msg_data_owner_kos"
+                        android:textColor="@color/black"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        style="@style/Semibold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
                         android:text="@string/msg_data_location"
                         android:textColor="@color/black"
                         android:textSize="10sp" />
@@ -157,17 +168,6 @@
                         android:textColor="@color/black"
                         android:textSize="10sp" />
 
-                    <TextView
-                        style="@style/Semibold"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:text="@string/msg_data_owner_kos"
-                        android:textColor="@color/black"
-                        android:textSize="10sp" />
-
                 </LinearLayout>
 
             </LinearLayout>
@@ -188,29 +188,31 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.mamikos.mamiagent.views.FormKostStep1View
-                android:id="@+id/formKostStep1View"
+            <com.mamikos.mamiagent.views.FormKostStep11View
+                android:id="@+id/formKostStep11View"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible" />
 
-            <com.mamikos.mamiagent.views.FormKostStep2View
-                android:id="@+id/formKostStep2View"
+            <com.mamikos.mamiagent.views.FormKostStep22View
+                android:id="@+id/formKostStep22View"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
 
-            <com.mamikos.mamiagent.views.FormKostStep3View
-                android:id="@+id/formKostStep3View"
+            <com.mamikos.mamiagent.views.FormKostStep33View
+                android:id="@+id/formKostStep33View"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
 
-            <com.mamikos.mamiagent.views.FormKostStep4View
-                android:id="@+id/formKostStep4View"
+            <com.mamikos.mamiagent.views.FormKostStep44View
+                android:id="@+id/formKostStep44View"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
+
+
         </LinearLayout>
     </com.mamikos.mamiagent.views.LockableScrollView>
 

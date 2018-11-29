@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.view_form_kost_step_1.view.*
  * Happy Coding!
  */
 
-class FormKostStep1View : FrameLayout {
+class FormKostStep22View : FrameLayout {
 
     private lateinit var nextClick: Runnable
     private lateinit var backClick: Runnable
