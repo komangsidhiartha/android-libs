@@ -169,13 +169,13 @@ class FormKostStep44View : FrameLayout {
 
         insideBathroomRadioButton.onCheckedChange { _, b ->
             if (b) {
-                facBathRoom = "1"
+                facBathRoom = "0"
             }
         }
 
         outsideBathroomRadioButton.onCheckedChange { _, b ->
             if (b) {
-                facBathRoom = "0"
+                facBathRoom = "1"
             }
         }
 

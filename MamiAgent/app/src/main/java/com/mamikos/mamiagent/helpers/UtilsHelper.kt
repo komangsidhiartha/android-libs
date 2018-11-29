@@ -21,6 +21,10 @@ import java.io.UnsupportedEncodingException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import kotlin.experimental.and
+import android.content.DialogInterface
+import android.R.string.yes
+
+
 
 
 /**
@@ -97,6 +101,28 @@ class UtilsHelper {
                 dialog.dismiss()
             }
             builder.setNegativeButton(context.getString(R.string.msg_no)) { dialog, _ -> dialog.dismiss() }
+            builder.show()
+
+        }
+
+        fun showDialogYes(context: Context, title: String, message: String, runnable: Runnable?,
+                          icon: Int) {
+            val builder = AlertDialog.Builder(context)
+            builder.setMessage(message)
+
+            if (!title.isEmpty()) {
+                builder.setTitle(title)
+            }
+
+            if (icon != 0) {
+                builder.setIcon(icon)
+            }
+
+            builder.setCancelable(false)
+            builder.setPositiveButton(context.getString(R.string.msg_yes)) { dialog, which ->
+                runnable?.run()
+                dialog.dismiss()
+            }
             builder.show()
 
         }

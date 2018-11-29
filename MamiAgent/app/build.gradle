@@ -28,16 +28,17 @@ android {
         versionName "1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        buildConfigField("boolean", "SHOW_LOG", "false")
-        buildConfigField("boolean", "SHOW_FABRIC", "true")
-        buildConfigField("String", "BASE_URL_OLD", "\"http://songturu2.mamikos.com/api/agent/giant\"")
-        buildConfigField("String", "BASE_URL", "\"http://songturu2.mamikos.com/api/agent/groot\"")
-        buildConfigField("String", "BASE_URL_MEDIA", "\"http://songturu.mamikos.com/api/v1\"")
     }
+
     buildTypes {
         release {
             minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            shrinkResources false
         }
     }
 
@@ -53,9 +54,18 @@ android {
             buildConfigField("String", "BASE_URL", "\"http://songturu2.mamikos.com/api/agent/groot\"")
             buildConfigField("String", "BASE_URL_MEDIA", "\"http://songturu.mamikos.com/api/v1\"")
         }
+        rilis {
+            dimension "v1"
+            versionName "1"
+            buildConfigField("boolean", "SHOW_LOG", "false")
+            buildConfigField("boolean", "SHOW_FABRIC", "true")
+            buildConfigField("String", "BASE_URL_OLD", "\"http://songturu2.mamikos.com/api/agent/giant\"")
+            buildConfigField("String", "BASE_URL", "\"http://songturu2.mamikos.com/api/agent/groot\"")
+            buildConfigField("String", "BASE_URL_MEDIA", "\"http://songturu.mamikos.com/api/v1\"")
+        }
     }
 
-    signingConfigs {
+    /*signingConfigs {
         debug {}
         release {
             keyAlias 'mamikos'
@@ -63,7 +73,7 @@ android {
             storeFile file('C:/Users/Dedi Dot/Videos/mamikos_agent_keystore/mamikos.keystore')
             storePassword 'gongsin123'
         }
-    }
+    }*/
 
 }
 

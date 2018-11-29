@@ -45,6 +45,7 @@ import kotlinx.android.synthetic.main.view_form_kost_step_2.view.*
 import kotlinx.android.synthetic.main.view_form_kost_step_3.*
 import kotlinx.android.synthetic.main.view_form_kost_step_3.view.*
 import kotlinx.android.synthetic.main.view_form_kost_step_4.view.*
+import kotlinx.android.synthetic.main.view_grey_square.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.startActivity
@@ -386,6 +387,11 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         try {
 
+            if (fullAddressLatLng == null) {
+                UtilsHelper.showSnackbar(contentSquareConstraintLayout, "titik lokasi kosong, mohon pilih kembali titik lokasi pada peta")
+                return
+            }
+
             loading.show()
 
             val saveKos = SaveKostEntity()
@@ -502,9 +508,9 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             }
 
             if (formKostStep44View.facBathRoom == "0") {
-                selectedFacBathRoom.add(4)
-            } else {
                 selectedFacBathRoom.add(1)
+            } else {
+                selectedFacBathRoom.add(4)
             }
 
             saveKos.facBath = selectedFacBathRoom
@@ -529,31 +535,29 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             UtilsHelper.log("wooooo " + apiSave.postParam)
 
             apiSave.exec(MessagesResponse::class.java) { response: MessagesResponse?, errorMessage: String? ->
-                when (response) {
-                    null -> errorMessage?.let {
-                        toast(it)
-                    }
-                    else -> {
-                        var msg = "Berhasil tambah kos, bersihkan form?"
-                        if (!response.status) {
-                            for (i in 0..response.messages?.size!! - 1) {
-                                msg += response.messages[i]
-                            }
-                        }
 
-                        UtilsHelper.showDialogYesNo(this, "", msg, Runnable {
-                            val intent = Intent(this, FormKostActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        }, 0)
+                var msg = ""
 
+                if (response?.status!!) {
+                    msg = "Berhasil tambah kos, bersihkan form?"
+                    UtilsHelper.showDialogYesNo(this, "", msg, Runnable {
+                        val intent = Intent(this, FormKostActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }, 0)
+                } else {
+                    for (i in 0 until response.messages?.size!!) {
+                        msg += response.messages[i] + " "
                     }
+                    UtilsHelper.showDialogYes(this, "", msg, Runnable {}, 0)
                 }
+
                 loading.hide()
             }
 
         } catch (e: Exception) {
             e.printStackTrace()
+            loading.hide()
         }
     }
 
