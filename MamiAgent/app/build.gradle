@@ -52,7 +52,7 @@ android {
             buildConfigField("boolean", "SHOW_FABRIC", "false")
             buildConfigField("String", "BASE_URL_OLD", "\"http://songturu2.mamikos.com/api/agent/giant\"")
             buildConfigField("String", "BASE_URL", "\"http://songturu2.mamikos.com/api/agent/groot\"")
-            buildConfigField("String", "BASE_URL_MEDIA", "\"http://songturu.mamikos.com/api/v1\"")
+            buildConfigField("String", "BASE_URL_MEDIA", "\"http://kay.mamikos.com/api/v1\"")
         }
         rilis {
             dimension "v1"
@@ -61,7 +61,7 @@ android {
             buildConfigField("boolean", "SHOW_FABRIC", "true")
             buildConfigField("String", "BASE_URL_OLD", "\"http://songturu2.mamikos.com/api/agent/giant\"")
             buildConfigField("String", "BASE_URL", "\"http://songturu2.mamikos.com/api/agent/groot\"")
-            buildConfigField("String", "BASE_URL_MEDIA", "\"http://songturu.mamikos.com/api/v1\"")
+            buildConfigField("String", "BASE_URL_MEDIA", "\"http://kay.mamikos.com/api/v1\"")
         }
     }
 

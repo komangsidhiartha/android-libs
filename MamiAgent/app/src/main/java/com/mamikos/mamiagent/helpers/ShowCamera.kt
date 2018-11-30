@@ -1,15 +1,19 @@
 package com.mamikos.mamiagent.helpers
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat
 import android.support.v4.content.FileProvider
+import android.widget.Toast
 
 import com.mamikos.mamiagent.BuildConfig
+import com.mamikos.mamiagent.activity.IntroCheckInActivity
 
 import java.io.File
 
@@ -20,7 +24,7 @@ import java.io.File
 
 class ShowCamera(private val mContext: Context) {
 
-    var fileCamera: File? = null
+    lateinit var fileCamera: File
 
     init {
         //createPathCache()
@@ -33,7 +37,7 @@ class ShowCamera(private val mContext: Context) {
                 path = Environment.getExternalStorageDirectory().path + "/Android/data/" + mContext.packageName + "/cache/images/"
             } else {
                 path = Environment.getDataDirectory().path + "/Android/data/" + mContext.packageName + "/cache/images/"
-            }// java.io.FileNotFoundException: /data/user/0/com.mamikos.mamiagent/cache/images (Is a directory)
+            } // java.io.FileNotFoundException: /data/user/0/com.mamikos.mamiagent/cache/images (Is a directory)
             val dir = File(path)
             if (!(dir.exists() && dir.isDirectory)) {
                 dir.mkdirs()
@@ -63,10 +67,11 @@ class ShowCamera(private val mContext: Context) {
 
     fun showNow(code: Int) {
         //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            showNowNougat(code)
+        //showNowNougat(code)
         /*} else {
             showNowRegular(code)
         }*/
+        launchCamera(mContext as Activity, code)
     }
 
     private fun showNowRegular(code: Int) {
@@ -100,6 +105,39 @@ class ShowCamera(private val mContext: Context) {
         val myUri = Uri.parse(path + UtilsHelper.getTimestamp() + ".png")
         return File(myUri.path!!)
         //return MediaHelper.createImageFile(mContext)
+    }
+
+    var mCurrentPhotoPath = ""
+    var photoURI: Uri? = null
+
+    fun launchCamera(context: Activity, code: Int) {
+
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(context, arrayOf(android.Manifest.permission.CAMERA), IntroCheckInActivity.SETTING_CAMERA)
+            return
+        }
+
+        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(context, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), IntroCheckInActivity.SETTING_CAMERA)
+            return
+        }
+
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(context.packageManager) != null) {
+            // Create the File where the photo should go
+            try {
+                fileCamera = MediaHelper.createImageFile(context)
+                mCurrentPhotoPath = fileCamera.absolutePath
+                photoURI = FileProvider.getUriForFile(context, "com.mamikos.mamiagent.provider", fileCamera)
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                context.startActivityForResult(takePictureIntent, code)
+            } catch (ex: Exception) {
+                Toast.makeText(context, "Capture Image Bug: " + ex.message.toString(), Toast.LENGTH_SHORT)
+                        .show()
+            }
+        } else {
+            Toast.makeText(context, "null", Toast.LENGTH_SHORT).show()
+        }
     }
 
     companion object {
