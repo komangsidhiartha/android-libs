@@ -27,97 +27,106 @@
                 android:textSize="14sp" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <HorizontalScrollView
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:fillViewport="true"
+
                     android:layout_marginLeft="30dp"
-                    android:layout_marginRight="16dp"
-                    android:orientation="horizontal">
+                    android:layout_marginRight="30dp"
+                    android:measureAllChildren="false"
+                    android:scrollbars="none">
 
-                    <FrameLayout
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1">
+                        android:orientation="horizontal">
 
-                        <View
-                            android:id="@+id/lineOneView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="5dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@color/apptheme_color" />
-
-                        <ImageView
-                            android:id="@+id/imageOneView"
-                            android:layout_width="wrap_content"
+                        <FrameLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:contentDescription="@string/app_name"
-                            app:srcCompat="@drawable/ic_check_circle_done" />
+                            android:layout_weight="1">
 
-                    </FrameLayout>
+                            <View
+                                android:id="@+id/lineOneView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="5dp"
+                                android:layout_gravity="center_vertical"
+                                android:background="@color/apptheme_color" />
 
-                    <FrameLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
+                            <ImageView
+                                android:id="@+id/imageOneView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/app_name"
+                                app:srcCompat="@drawable/ic_check_circle_done" />
 
-                        <View
-                            android:id="@+id/lineTwoView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="5dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@color/alto_solid" />
+                        </FrameLayout>
 
-                        <ImageView
-                            android:id="@+id/imageTwoView"
-                            android:layout_width="wrap_content"
+                        <FrameLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:contentDescription="@string/app_name"
-                            app:srcCompat="@drawable/ic_circle_undone" />
+                            android:layout_weight="1">
 
-                    </FrameLayout>
+                            <View
+                                android:id="@+id/lineTwoView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="5dp"
+                                android:layout_gravity="center_vertical"
+                                android:background="@color/alto_solid" />
 
-                    <FrameLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
+                            <ImageView
+                                android:id="@+id/imageTwoView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/app_name"
+                                app:srcCompat="@drawable/ic_circle_undone" />
 
-                        <View
-                            android:id="@+id/lineThreeView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="5dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@color/alto_solid" />
+                        </FrameLayout>
 
-                        <ImageView
-                            android:id="@+id/imageThreeView"
-                            android:layout_width="wrap_content"
+                        <FrameLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:contentDescription="@string/app_name"
-                            app:srcCompat="@drawable/ic_circle_grey" />
+                            android:layout_weight="1">
 
-                    </FrameLayout>
+                            <View
+                                android:id="@+id/lineThreeView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="5dp"
+                                android:layout_gravity="center_vertical"
+                                android:background="@color/alto_solid" />
 
-                    <FrameLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5">
+                            <ImageView
+                                android:id="@+id/imageThreeView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/app_name"
+                                app:srcCompat="@drawable/ic_circle_grey" />
 
-                        <ImageView
-                            android:id="@+id/imageFourView"
-                            android:layout_width="wrap_content"
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:contentDescription="@string/app_name"
-                            app:srcCompat="@drawable/ic_circle_grey" />
+                            android:layout_weight="0.5">
 
-                    </FrameLayout>
+                            <ImageView
+                                android:id="@+id/imageFourView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/app_name"
+                                app:srcCompat="@drawable/ic_circle_grey" />
 
-                </LinearLayout>
+                        </FrameLayout>
+
+                    </LinearLayout>
+                </HorizontalScrollView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -169,6 +178,7 @@
                         android:textSize="10sp" />
 
                 </LinearLayout>
+
 
             </LinearLayout>
 

@@ -84,9 +84,13 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         requestProvinceApi()
 
-        /*titleAddDataAds.setOnClickListener {
+        titleAddDataAds.setOnClickListener {
             startActivity<ListRoomActivity>()
-        }*/
+        }
+
+        buildGoogleApiClient()
+
+        setMap()
 
     }
 
@@ -184,6 +188,8 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             this.mMap = it
 
+            UtilsHelper.log("cek kesini5")
+
             mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
 
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -200,6 +206,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             mMap.setOnCameraMoveListener {
                 centerMarkerPinA1.visibility = View.GONE
                 centerMarkerPinA2.visibility = View.VISIBLE
+                UtilsHelper.log("cek kesini6")
             }
 
         }
@@ -212,6 +219,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             val reverseGeoCode = ReverseGeocodeTask(this)
             reverseGeoCode.setCallBack(object : ReverseGeocodeTask.GeoCodeTaskCallBack {
                 override fun getFullAddress(address: String, latLng: LatLng) {
+                    UtilsHelper.log("cek kesini9")
                     UtilsHelper.log("location full $address $latLng")
                     locationEditText.setText(address)
                     locationEditText.isFocusable = true
@@ -221,6 +229,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             })
 
             reverseGeoCode.run(mMap.cameraPosition.target)
+            UtilsHelper.log("cek kesini10")
 
         }
 
@@ -235,8 +244,9 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     private fun updateMarkerMyLocation() {
         UtilsHelper.makeHandler(1000, Runnable {
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
+                UtilsHelper.log("cek kesini3")
             } else {
+                UtilsHelper.log("cek kesini4")
                 val mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
                 mFusedLocationClient.lastLocation.addOnSuccessListener(this) {
                     val ltLng = LatLng(it.latitude, it.longitude)
@@ -252,8 +262,9 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     override fun onConnected(bundle: Bundle?) {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
+            UtilsHelper.log("cek kesini 1")
         } else {
+            UtilsHelper.log("cek kesini 2")
             updateMarkerMyLocation()
         }
     }
