@@ -33,7 +33,7 @@ class ShowCamera(private val mContext: Context) {
                 path = Environment.getExternalStorageDirectory().path + "/Android/data/" + mContext.packageName + "/cache/images/"
             } else {
                 path = Environment.getDataDirectory().path + "/Android/data/" + mContext.packageName + "/cache/images/"
-            }
+            }// java.io.FileNotFoundException: /data/user/0/com.mamikos.mamiagent/cache/images (Is a directory)
             val dir = File(path)
             if (!(dir.exists() && dir.isDirectory)) {
                 dir.mkdirs()
