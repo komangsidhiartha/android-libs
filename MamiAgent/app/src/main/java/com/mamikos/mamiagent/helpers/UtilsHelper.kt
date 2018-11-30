@@ -23,8 +23,8 @@ import java.security.NoSuchAlgorithmException
 import kotlin.experimental.and
 import android.content.DialogInterface
 import android.R.string.yes
-
-
+import android.app.Activity
+import android.view.inputmethod.InputMethodManager
 
 
 /**
@@ -205,6 +205,13 @@ class UtilsHelper {
             }
 
             return hex.toString()
+        }
+
+        fun hideSoftInput(activity: Activity) {
+            var view = activity.currentFocus
+            if (view == null) view = View(activity)
+            val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
     }

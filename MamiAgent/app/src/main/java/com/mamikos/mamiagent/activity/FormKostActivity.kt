@@ -309,6 +309,8 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             imageThreeView.setImageResource(R.drawable.ic_circle_undone)
             lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
 
+            UtilsHelper.hideSoftInput(this)
+
         })
 
         formKostStep22View.setNextOnClick(Runnable {
@@ -324,6 +326,8 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
             lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
 
+            UtilsHelper.hideSoftInput(this)
+
         })
 
         formKostStep33View.setNextOnClick(Runnable {
@@ -337,10 +341,13 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
             lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
 
+            UtilsHelper.hideSoftInput(this)
+
         })
 
         formKostStep44View.setNextOnClick(Runnable {
             UtilsHelper.showDialogYesNo(this, "", getString(R.string.msg_data_confirmation), Runnable {
+                UtilsHelper.hideSoftInput(this)
                 goSaveKos()
             }, 0)
         })
@@ -349,6 +356,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         formKostStep11View.setBackOnClick(Runnable {
             UtilsHelper.showDialogYesNo(this, "", getString(R.string.msg_exit), Runnable {
+                UtilsHelper.hideSoftInput(this)
                 finish()
             }, 0)
         })
@@ -363,6 +371,9 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             imageThreeView.setImageResource(R.drawable.ic_circle_grey)
             lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.alto_solid))
             lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.alto_solid))
+
+            UtilsHelper.hideSoftInput(this)
+
         })
 
         formKostStep33View.setBackOnClick(Runnable {
@@ -377,6 +388,8 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
             lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.alto_solid))
             imageFourView.setImageResource(R.drawable.ic_circle_grey)
+
+            UtilsHelper.hideSoftInput(this)
         })
 
         formKostStep44View.setBackOnClick(Runnable {
@@ -389,6 +402,8 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             imageFourView.setImageResource(R.drawable.ic_circle_undone)
             lineThreeView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
             lineTwoView.setBackgroundColor(ContextCompat.getColor(this, R.color.accent_brand_color))
+
+            UtilsHelper.hideSoftInput(this)
 
         })
 
@@ -735,6 +750,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         } catch (e: Exception) {
             toast("coba lagix ${e}")
+
             return
         }
 

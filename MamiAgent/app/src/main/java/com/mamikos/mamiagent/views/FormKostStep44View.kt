@@ -156,8 +156,14 @@ class FormKostStep44View : FrameLayout {
             val photoBuildingId = (context as FormKostActivity).photoKosBuildingId
             val photoBathroomBuildingId = (context as FormKostActivity).photoBathroomBuildingId
             val photoInsideBuildingId = (context as FormKostActivity).photoInsideBuildingId
-            if (photoBuildingId == 0 || photoBathroomBuildingId == 0 || photoInsideBuildingId == 0) {
-                UtilsHelper.showSnackbar(this, "Data foto tidak boleh kosong")
+            if (photoBuildingId == 0) {
+                UtilsHelper.showSnackbar(this, "Data foto bangunan tidak boleh kosong, mohon kirim ulang")
+                return
+            } else if (photoBathroomBuildingId == 0) {
+                UtilsHelper.showSnackbar(this, "Data foto kamar mandi tidak boleh kosong, mohon kirim ulang")
+                return
+            } else if (photoInsideBuildingId == 0) {
+                UtilsHelper.showSnackbar(this, "Data foto dalam kamar tidak boleh kosong, mohon kirim ulang")
                 return
             }
         }
