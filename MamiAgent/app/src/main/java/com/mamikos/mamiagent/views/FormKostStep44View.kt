@@ -264,7 +264,7 @@ class FormKostStep44View : FrameLayout {
             }
         })
 
-        parkSquareGreyView.setString(context.getString(R.string.msg_park))
+        parkSquareGreyView.setString(context.getString(R.string.msg_park_car))
         parkSquareGreyView.setImage(R.drawable.ic_parking_sign)
         parkSquareGreyView.setCheckList(false)
         parkSquareGreyView.setOnClick(Runnable {

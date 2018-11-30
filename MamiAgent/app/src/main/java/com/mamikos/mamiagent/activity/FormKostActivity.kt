@@ -539,6 +539,12 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                 var msg = ""
 
+                if (response == null) {
+                    UtilsHelper.showDialogYes(this, "", "Server lagi error, hubungi pihak developer", Runnable {}, 0)
+                    loading.hide()
+                    return@exec
+                }
+
                 if (response?.status!!) {
                     msg = "Berhasil tambah kos, bersihkan form?"
                     UtilsHelper.showDialogYesNo(this, "", msg, Runnable {
@@ -647,6 +653,10 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         try {
             if (uri != null) {
+
+                UtilsHelper.log("cek1 ${uri.path}")
+                UtilsHelper.log("cek2 ${UtilsHelper.getPathFromURI(this, uri)}")
+
                 val file = File(UtilsHelper.getPathFromURI(this, uri))
 
                 uploadImage(file, requestCode)
@@ -669,9 +679,11 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 }
             } else {
                 toast("Gagal mengambil foto, coba lagi")
+                return
             }
         } catch (e: Exception) {
             toast("coba lagi ${e}")
+            return
         }
 
     }
@@ -683,7 +695,10 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             try {
                 upload.fileUpload = MediaHelper.compressImage(this, file)
             } catch (e: Exception) {
-                toast("gagal mengambil gambar coba lagi bro")
+                toast("Gagal mengambil gambar coba lagi bro, atau coba ambil dari galeri")
+                e.printStackTrace()
+                loading.hide()
+                return
             }
             upload.formData = listOf(Pair("", ""))
 
@@ -709,6 +724,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         } catch (e: Exception) {
             toast("coba lagix ${e}")
+            return
         }
 
     }

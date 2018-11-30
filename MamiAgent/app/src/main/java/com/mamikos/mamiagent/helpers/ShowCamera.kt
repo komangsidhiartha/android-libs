@@ -22,7 +22,27 @@ class ShowCamera(private val mContext: Context) {
 
     var fileCamera: File? = null
 
+    init {
+        //createPathCache()
+    }
+
     private val path: String
+        get () {
+            var path = ""
+            if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
+                path = Environment.getExternalStorageDirectory().path + "/Android/data/" + mContext.packageName + "/cache/images/"
+            } else {
+                path = Environment.getDataDirectory().path + "/Android/data/" + mContext.packageName + "/cache/images/"
+            }
+            val dir = File(path)
+            if (!(dir.exists() && dir.isDirectory)) {
+                dir.mkdirs()
+            }
+            return path
+        }
+
+
+    private val pathx: String
         get() {
             val path: String
             if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
@@ -42,11 +62,11 @@ class ShowCamera(private val mContext: Context) {
     }
 
     fun showNow(code: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             showNowNougat(code)
-        } else {
+        /*} else {
             showNowRegular(code)
-        }
+        }*/
     }
 
     private fun showNowRegular(code: Int) {
@@ -70,6 +90,7 @@ class ShowCamera(private val mContext: Context) {
 
         } catch (e: Exception) {
             e.printStackTrace()
+            return
         }
 
     }
@@ -78,6 +99,7 @@ class ShowCamera(private val mContext: Context) {
     private fun createImageFile(): File {
         val myUri = Uri.parse(path + UtilsHelper.getTimestamp() + ".png")
         return File(myUri.path!!)
+        //return MediaHelper.createImageFile(mContext)
     }
 
     companion object {

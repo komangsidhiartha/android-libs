@@ -144,7 +144,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginRight="16dp"
-        android:text="@string/msg_other_facility_room"
+        android:text="@string/msg_other_facility"
         android:textColor="@color/dove_gray_approx"
         android:textSize="14sp" />
 

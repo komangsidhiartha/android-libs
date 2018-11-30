@@ -92,11 +92,12 @@
     <string name="msg_inside">Didalam</string>
     <string name="msg_outside">Diluar</string>
     <string name="msg_other_facility_room">Fasilitas kamar lainnya</string>
+    <string name="msg_other_facility">Fasilitas lainnya</string>
     <string name="msg_facility_room">Fasilitas kamar</string>
     <string name="msg_facility_bathroom">Fasilitas kamar mandi</string>
     <string name="msg_mbps">/ mbps</string>
     <string name="msg_bed">Kasur</string>
-    <string name="msg_park">Parkir</string>
+    <string name="msg_park_car">Parkir mobil</string>
     <string name="msg_twenty_four">Akses 24 jam</string>
     <string name="msg_can_couple">Bisa Pasutri</string>
     <string name="msg_cupboard">Lemari</string>
