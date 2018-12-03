@@ -3,6 +3,8 @@ package com.mamikos.mamiagent.apps
 import android.accounts.AccountManager
 import android.os.Build
 import android.provider.Settings
+import android.support.multidex.MultiDex
+import android.support.multidex.MultiDexApplication
 import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
@@ -13,7 +15,7 @@ import com.sidhiartha.libs.apps.BaseApplication
 import io.fabric.sdk.android.Fabric
 import java.util.*
 
-class MamiApp: BaseApplication()
+class MamiApp: MultiDexApplication()
 {
     companion object {
         lateinit var sessionManager: SessionManager
@@ -23,6 +25,8 @@ class MamiApp: BaseApplication()
     override fun onCreate() {
         sessionManager = SessionManager(applicationContext)
         super.onCreate()
+
+        MultiDex.install(this)
 
         if(BuildConfig.SHOW_FABRIC) {
             Fabric.with(this, Crashlytics())

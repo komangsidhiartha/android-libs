@@ -663,7 +663,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             if (requestCode == GlobalConst.CODE_CAMERA_BATHROOM || requestCode == GlobalConst.CODE_CAMERA_INSIDEROOM || requestCode == GlobalConst.CODE_CAMERA_BUILDING) {
 
-                successGetImage(Uri.parse(pathCamera), requestCode)
+                successGetImage(Uri.parse(data?.getStringExtra("camera_path")), requestCode)
 
             } else if (requestCode == GlobalConst.CODE_GALLERY_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
                 if (data == null) {
@@ -681,28 +681,34 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             if (uri != null) {
 
                 UtilsHelper.log("cek1 ${uri.path}")
-                UtilsHelper.log("cek2 ${UtilsHelper.getPathFromURI(this, uri)}")
 
-                val file = File(UtilsHelper.getPathFromURI(this, uri))
+                val file = File(MediaHelper.setImageResourceFromGallery(this, uri))
 
-                uploadImage(file, requestCode)
+                uploadImage(file, requestCode, object : OnClickInterfaceObject<Int> {
+                    override fun dataClicked(data: Int) {
+                        if (data == 1) {
+                            val options = BitmapFactory.Options()
+                            options.inSampleSize = 4
 
-                val options = BitmapFactory.Options()
-                options.inSampleSize = 4
+                            val path = file.path
+                            val bitmap = BitmapFactory.decodeFile(path, options)
 
-                val path = file.path
-                val bitmap = BitmapFactory.decodeFile(path, options)
+                            if (requestCode == GlobalConst.CODE_CAMERA_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_BATHROOM) {
+                                photoBathroomImageView.setImageBitmap(bitmap)
+                                photoBathroomImageView.visibility = View.VISIBLE
+                            } else if (requestCode == GlobalConst.CODE_CAMERA_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM) {
+                                photoInsideRoomImageView.setImageBitmap(bitmap)
+                                photoInsideRoomImageView.visibility = View.VISIBLE
+                            } else if (requestCode == GlobalConst.CODE_CAMERA_BUILDING || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
+                                photoBuildingImageView.setImageBitmap(bitmap)
+                                photoBuildingImageView.visibility = View.VISIBLE
+                            }
+                        } else {
+                            toast("gagal upload gambar, coba lagi")
+                        }
+                    }
+                })
 
-                if (requestCode == GlobalConst.CODE_CAMERA_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_BATHROOM) {
-                    photoBathroomImageView.setImageBitmap(bitmap)
-                    photoBathroomImageView.visibility = View.VISIBLE
-                } else if (requestCode == GlobalConst.CODE_CAMERA_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM) {
-                    photoInsideRoomImageView.setImageBitmap(bitmap)
-                    photoInsideRoomImageView.visibility = View.VISIBLE
-                } else if (requestCode == GlobalConst.CODE_CAMERA_BUILDING || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
-                    photoBuildingImageView.setImageBitmap(bitmap)
-                    photoBuildingImageView.visibility = View.VISIBLE
-                }
             } else {
                 toast("Gagal mengambil foto, coba lagi")
                 return
@@ -714,12 +720,12 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     }
 
-    private fun uploadImage(file: File, requestCode: Int) {
+    private fun uploadImage(file: File, requestCode: Int, status: OnClickInterfaceObject<Int>) {
         try {
             loading.show()
             val upload = PhotosApi.MediaApi()
             try {
-                upload.fileUpload = MediaHelper.compressImage(this, file)
+                upload.fileUpload = file//MediaHelper.compressImage(this, file)
             } catch (e: Exception) {
                 toast("Gagal mengambil gambar coba lagi bro, atau coba ambil dari galeri")
                 e.printStackTrace()
@@ -732,7 +738,10 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 hideLoadingBar()
                 UtilsHelper.log("errorMessage $errorMessage")
                 when (response) {
-                    null -> errorMessage?.let { toast(it) }
+                    null -> errorMessage?.let {
+                        toast(it)
+                        status.dataClicked(0)
+                    }
                     else -> {
                         UtilsHelper.log("data $response")
                         UtilsHelper.log("dataM ${response.media.id}")
@@ -743,6 +752,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                         } else if (requestCode == GlobalConst.CODE_CAMERA_BUILDING || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
                             photoKosBuildingId = response.media.id
                         }
+                        status.dataClicked(1)
                     }
                 }
                 loading.hide()

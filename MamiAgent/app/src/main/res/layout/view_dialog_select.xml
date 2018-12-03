@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             style="@style/Regular"

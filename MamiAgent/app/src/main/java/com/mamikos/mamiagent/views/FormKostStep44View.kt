@@ -2,12 +2,14 @@ package com.mamikos.mamiagent.views
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mamikos.mamiagent.R
+import com.mamikos.mamiagent.activity.CameraActivity
 import com.mamikos.mamiagent.activity.FormKostActivity
 import com.mamikos.mamiagent.helpers.GlobalConst
 import com.mamikos.mamiagent.helpers.ShowCamera
@@ -68,13 +70,8 @@ class FormKostStep44View : FrameLayout {
                 override fun dataClicked(data: Int) {
                     dialogSelectImage.dismiss()
                     if (ShowCamera.CODE_CAMERA == data) {
-                        val showCamera = ShowCamera(context)
-                        showCamera.showNow(GlobalConst.CODE_CAMERA_BATHROOM)
 
-                        val file = showCamera.fileCamera
-                        val bundle = Bundle()
-                        bundle.putString("path", file?.path)
-                        EventBus.getDefault().post(bundle)
+                        showCameraPure(GlobalConst.CODE_CAMERA_BATHROOM)
 
                     } else if (ShowGallery.CODE_GALLERY == data) {
                         val showGallery = ShowGallery(context)
@@ -91,13 +88,8 @@ class FormKostStep44View : FrameLayout {
                 override fun dataClicked(data: Int) {
                     dialogSelectImage.dismiss()
                     if (ShowCamera.CODE_CAMERA == data) {
-                        val showCamera = ShowCamera(context)
-                        showCamera.showNow(GlobalConst.CODE_CAMERA_INSIDEROOM)
 
-                        val file = showCamera.fileCamera
-                        val bundle = Bundle()
-                        bundle.putString("path", file?.path)
-                        EventBus.getDefault().post(bundle)
+                        showCameraPure(GlobalConst.CODE_CAMERA_INSIDEROOM)
 
                     } else if (ShowGallery.CODE_GALLERY == data) {
                         val showGallery = ShowGallery(context)
@@ -114,13 +106,8 @@ class FormKostStep44View : FrameLayout {
                 override fun dataClicked(data: Int) {
                     dialogSelectImage.dismiss()
                     if (ShowCamera.CODE_CAMERA == data) {
-                        val showCamera = ShowCamera(context)
-                        showCamera.showNow(GlobalConst.CODE_CAMERA_BUILDING)
 
-                        val file = showCamera.fileCamera
-                        val bundle = Bundle()
-                        bundle.putString("path", file?.path)
-                        EventBus.getDefault().post(bundle)
+                        showCameraPure(GlobalConst.CODE_CAMERA_BUILDING)
 
                     } else if (ShowGallery.CODE_GALLERY == data) {
                         val showGallery = ShowGallery(context)
@@ -131,6 +118,21 @@ class FormKostStep44View : FrameLayout {
             dialogSelectImage.showDialog()
         }
 
+    }
+
+    private fun showCameraPure(code: Int) {
+
+        val intent = Intent(context, CameraActivity::class.java)
+
+        (context as Activity).startActivityForResult(intent, code)
+
+        /*val showCamera = ShowCamera(context)
+        showCamera.showNow(code)
+
+        val file = showCamera.fileCamera
+        val bundle = Bundle()
+        bundle.putString("path", file?.path)
+        EventBus.getDefault().post(bundle)*/
     }
 
     private fun validation() {
