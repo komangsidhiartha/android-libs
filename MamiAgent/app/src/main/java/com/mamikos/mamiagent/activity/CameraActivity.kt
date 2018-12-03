@@ -111,14 +111,18 @@ class CameraActivity : AppCompatActivity() {
 
         photoResult.toBitmap(scaled(scaleFactor = 0.25f)).whenAvailable { photo ->
 
-            if (photo != null) {
-                Log.i(LOGGING_TAG, "New photo captured. Bitmap length: ${photo.bitmap.byteCount}")
-                capturedResultImageView.setImageBitmap(photo.bitmap)
-                capturedResultImageView.rotation = (-photo.rotationDegrees).toFloat()
-            } else {
-                toast("kamera tidak support 2")
-                mainLooper.quit()
-                return@whenAvailable
+            try {
+                if (photo != null) {
+                    Log.i(LOGGING_TAG, "New photo captured. Bitmap length: ${photo.bitmap.byteCount}")
+                    capturedResultImageView.setImageBitmap(photo.bitmap)
+                    capturedResultImageView.rotation = (-photo.rotationDegrees).toFloat()
+                } else {
+                    mainLooper.quit()
+                    toast("kamera tidak support 2")
+                    return@whenAvailable
+                }
+            }catch (e: Exception){
+                toast("Coba lagi")
             }
         }
     }

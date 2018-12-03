@@ -2,35 +2,52 @@ package com.mamikos.mamiagent.apps
 
 import android.accounts.AccountManager
 import android.os.Build
+import android.os.Bundle
 import android.provider.Settings
 import android.support.multidex.MultiDex
 import android.support.multidex.MultiDexApplication
-import android.text.TextUtils
-import android.util.Log
 import android.util.Patterns
 import com.crashlytics.android.Crashlytics
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.mamikos.mamiagent.BuildConfig
 import com.mamikos.mamiagent.interfaces.Constants
-import com.sidhiartha.libs.apps.BaseApplication
 import io.fabric.sdk.android.Fabric
 import java.util.*
 
-class MamiApp: MultiDexApplication()
-{
+class MamiApp : MultiDexApplication() {
+
+    private var firebaseAnalytics: FirebaseAnalytics? = null
+
     companion object {
         lateinit var sessionManager: SessionManager
-        var app = MamiApp()
+        var instance: MamiApp? = null
     }
 
     override fun onCreate() {
         sessionManager = SessionManager(applicationContext)
         super.onCreate()
 
+        instance = this
         MultiDex.install(this)
 
-        if(BuildConfig.SHOW_FABRIC) {
+        if (BuildConfig.SHOW_FABRIC) {
             Fabric.with(this, Crashlytics())
             Crashlytics.setUserIdentifier(MamiApp.sessionManager.agentPhoneNumber)
+            firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        }
+    }
+
+    override fun onTerminate() {
+        instance = null
+        super.onTerminate()
+    }
+
+    fun sendEvent(id: String, name: String) {
+        if (BuildConfig.SHOW_FABRIC) {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id)
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name)
+            firebaseAnalytics?.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
         }
     }
 
@@ -53,7 +70,7 @@ class MamiApp: MultiDexApplication()
 
             //TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
             iid = Settings.Secure.getString(applicationContext.contentResolver, Settings.Secure.ANDROID_ID)
-            val tmDevice = "" + iid// get device_id
+            val tmDevice = "" + iid // get device_id
             mUUID = UUID.randomUUID().toString() + tmDevice
             sessionManager!!.uuid = mUUID
         } else {
@@ -63,8 +80,7 @@ class MamiApp: MultiDexApplication()
     }
 
     fun getAndroidId(): String {
-        return Settings.Secure.getString(applicationContext.contentResolver,
-                Settings.Secure.ANDROID_ID)
+        return Settings.Secure.getString(applicationContext.contentResolver, Settings.Secure.ANDROID_ID)
     }
 
     fun getModel(): String {
@@ -91,4 +107,5 @@ class MamiApp: MultiDexApplication()
     fun isValidPhone(phone: String): Boolean {
         return android.util.Patterns.PHONE.matcher(phone).matches()
     }
+
 }

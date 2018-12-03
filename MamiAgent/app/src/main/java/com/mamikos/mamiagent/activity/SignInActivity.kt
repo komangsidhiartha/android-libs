@@ -24,7 +24,7 @@ class SignInActivity : BaseActivity()
         btn_sign_in.onClick {
             if (et_phone.text.toString().isEmpty())
                 et_phone.error = "Harap isi no HP dengan benar."
-            else if (MamiApp.app.isValidPhone(et_phone.text.toString()))
+            else if (MamiApp.instance!!.isValidPhone(et_phone.text.toString()))
                 signIn()
             else
                 et_phone.error = "Isi no HP yang valid"

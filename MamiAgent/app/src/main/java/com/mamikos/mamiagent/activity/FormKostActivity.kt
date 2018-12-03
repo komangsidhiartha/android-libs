@@ -17,7 +17,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.mamikos.mamiagent.R
-import com.sidhiartha.libs.activities.BaseActivity
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.mamikos.mamiagent.entities.AreaEntity
@@ -32,6 +31,7 @@ import kotlinx.android.synthetic.main.view_form_kost_step_1.view.*
 import org.jetbrains.anko.toast
 
 import android.support.annotation.NonNull
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.mamikos.mamiagent.apps.MamiApp
 import com.mamikos.mamiagent.entities.PhotoFormEntity
@@ -49,7 +49,6 @@ import kotlinx.android.synthetic.main.view_form_kost_step_4.view.*
 import kotlinx.android.synthetic.main.view_grey_square.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import org.jetbrains.anko.startActivity
 import java.io.File
 
 /**
@@ -57,7 +56,7 @@ import java.io.File
  * Happy Coding!
  */
 
-class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
+class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
         TouchableWrapper.TouchAction {
 
     private lateinit var mMap: GoogleMap
@@ -69,10 +68,10 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     var photoBathroomBuildingId = 0
     var photoInsideBuildingId = 0
 
-    override val layoutResource: Int
-        get() = R.layout.activity_form_kost
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun viewDidLoad() {
+        setContentView(R.layout.activity_form_kost)
 
         EventBus.getDefault().register(this)
 
@@ -86,14 +85,13 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         requestProvinceApi()
 
-        titleAddDataAds.setOnClickListener {
+        /*titleAddDataAds.setOnClickListener {
             startActivity<ListRoomActivity>()
-        }
+        }*/
 
         buildGoogleApiClient()
 
         setMap()
-
     }
 
     private fun requestProvinceApi() {
@@ -592,6 +590,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         } catch (e: Exception) {
             e.printStackTrace()
+            MamiApp.instance?.sendEvent("errorAAA", e.toString())
             loading.hide()
         }
     }
@@ -603,12 +602,10 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     }
 
     override fun onBackPressed() {
-        if (isNeedToShowCloseWarning()) {
-            Toast.makeText(this, R.string.msg_back_pressed, Toast.LENGTH_SHORT).show()
-        } else {
-            super.onBackPressed()
-        }
-        lastBackPressedTimeInMillis = System.currentTimeMillis()
+        UtilsHelper.showDialogYesNo(this, "", getString(R.string.msg_exit), Runnable {
+            finish()
+            return@Runnable
+        }, 0)
     }
 
 
@@ -662,25 +659,30 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         UtilsHelper.log("resultCode $resultCode")
         UtilsHelper.log("data " + data)
 
-        if (resultCode == Activity.RESULT_OK) {
+        try {
+            if (resultCode == Activity.RESULT_OK) {
 
-            if (requestCode == GlobalConst.CODE_CAMERA_BATHROOM || requestCode == GlobalConst.CODE_CAMERA_INSIDEROOM || requestCode == GlobalConst.CODE_CAMERA_BUILDING) {
+                if (requestCode == GlobalConst.CODE_CAMERA_BATHROOM || requestCode == GlobalConst.CODE_CAMERA_INSIDEROOM || requestCode == GlobalConst.CODE_CAMERA_BUILDING) {
 
-                if (pathCamera.isNotEmpty()) {
-                    successGetImage(Uri.parse(pathCamera), requestCode)
-                } else if (data?.getStringExtra("camera_path") != null) {
-                    successGetImage(Uri.parse(data.getStringExtra("camera_path")), requestCode)
-                } else {
-                    UtilsHelper.log("gagal mengambil gambar ambil path dari session")
-                    successGetImage(Uri.parse(MamiApp.sessionManager.pathCamera), requestCode)
+                    if (pathCamera.isNotEmpty()) {
+                        successGetImage(Uri.parse(pathCamera), requestCode)
+                    } else if (data?.getStringExtra("camera_path") != null) {
+                        successGetImage(Uri.parse(data.getStringExtra("camera_path")), requestCode)
+                    } else {
+                        UtilsHelper.log("gagal mengambil gambar ambil path dari session")
+                        successGetImage(Uri.parse(MamiApp.sessionManager.pathCamera), requestCode)
+                    }
+
+                } else if (requestCode == GlobalConst.CODE_GALLERY_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
+                    if (data == null) {
+                        return
+                    }
+                    successGetImage(data.data, requestCode)
                 }
-
-            } else if (requestCode == GlobalConst.CODE_GALLERY_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
-                if (data == null) {
-                    return
-                }
-                successGetImage(data.data, requestCode)
             }
+        } catch (e: Exception) {
+            MamiApp.instance?.sendEvent("errorXXX", e.toString())
+            return
         }
 
     }
@@ -723,16 +725,19 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                             }
                         } else {
                             toast("gagal upload gambar, coba lagi")
+                            MamiApp.instance?.sendEvent("errorXXXX", "gagal mengambil foto  V")
                         }
                     }
                 })
 
             } else {
                 toast("Gagal mengambil foto, coba lagi")
+                MamiApp.instance?.sendEvent("errorXX", "gagal mengambil foto")
                 return
             }
         } catch (e: Exception) {
             toast("coba lagi ${e}")
+            MamiApp.instance?.sendEvent("errorX", e.toString())
             return
         }
 
@@ -752,12 +757,12 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 toast("Gagal mengambil gambar coba lagi bro, atau coba ambil dari galeri")
                 e.printStackTrace()
                 loading.hide()
+                MamiApp.instance?.sendEvent("errorA", e.toString())
                 return
             }
             upload.formData = listOf(Pair("", ""))
 
             upload.exec(MediaResponse::class.java) { response: MediaResponse?, errorMessage: String? ->
-                hideLoadingBar()
                 UtilsHelper.log("errorMessage $errorMessage")
                 when (response) {
                     null -> errorMessage?.let {
@@ -782,7 +787,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         } catch (e: Exception) {
             toast("coba lagix ${e}")
-
+            MamiApp.instance?.sendEvent("errorAA", e.toString())
             return
         }
 
