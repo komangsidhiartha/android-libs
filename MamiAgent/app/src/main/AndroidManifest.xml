@@ -51,7 +51,7 @@
             android:value="AIzaSyCQIkeKDefYAlUkmylMHnSL9EhbISYCHK0" />
 
         <activity
-            android:name=".activity.FormKostActivity"
+            android:name=".activity.PassCodeActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,7 +63,7 @@
             android:name=".activity.SignInActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.PassCodeActivity"
+            android:name=".activity.FormKostActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.VerifyPhoneActivity"

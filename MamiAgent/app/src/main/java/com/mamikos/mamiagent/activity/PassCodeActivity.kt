@@ -1,6 +1,7 @@
 package com.mamikos.mamiagent.activity
 
 import `in`.arjsna.passcodeview.PassCodeView
+import android.content.Intent
 import com.mamikos.mamiagent.R
 import com.mamikos.mamiagent.apps.MamiApp
 import com.mamikos.mamiagent.helpers.UtilsHelper
@@ -57,7 +58,8 @@ class PassCodeActivity : BaseActivity() {
                     UtilsHelper.log("sip ${GSONManager.toJson(response)}")
                     if (response.status) {
                         MamiApp.sessionManager.agentPhoneNumber = response.data.phoneNumber
-                        startActivity<FormKostActivity>()
+                        val intent = Intent(this, FormKostActivity::class.java)
+                        startActivity(intent)
                         finish()
                     } else {
                         toast(response.message + "")

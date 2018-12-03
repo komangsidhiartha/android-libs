@@ -105,7 +105,7 @@ class CameraActivity : AppCompatActivity() {
 
         val photoResult = fotoApparat.autoFocus().takePicture()
 
-        file = File(getExternalFilesDir("photos"), "photo" + UtilsHelper.getTimestamp() + ".jpg")
+        file = UtilsHelper.createImageFile(this)
 
         photoResult.saveToFile(file)
 
@@ -203,7 +203,6 @@ class CameraActivity : AppCompatActivity() {
     private sealed class Camera(val lensPosition: LensPositionSelector,
                                 val configuration: CameraConfiguration) {
 
-
         object BackNotSupportFocus :
                 Camera(lensPosition = back(), configuration = CameraConfiguration(previewResolution = firstAvailable(wideRatio(highestResolution()), standardRatio(highestResolution())), previewFpsRange = highestFps(), flashMode = off(), frameProcessor = {
                     // Do something with the preview frame
@@ -219,7 +218,6 @@ class CameraActivity : AppCompatActivity() {
 
         object FrontNotSupportFocus :
                 Camera(lensPosition = front(), configuration = CameraConfiguration(previewResolution = firstAvailable(wideRatio(highestResolution()), standardRatio(highestResolution())), previewFpsRange = highestFps(), flashMode = off()))
-
 
     }
 

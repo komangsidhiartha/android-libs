@@ -56,6 +56,15 @@ android {
             buildConfigField("String", "BASE_URL", "\"http://songturu2.mamikos.com/api/agent/groot\"")
             buildConfigField("String", "BASE_URL_MEDIA", "\"http://kay.mamikos.com/api/v1\"")
         }
+        mediaDevel {
+            dimension "v1"
+            versionName "0.0.2-beta"
+            buildConfigField("boolean", "SHOW_LOG", "true")
+            buildConfigField("boolean", "SHOW_FABRIC", "false")
+            buildConfigField("String", "BASE_URL_OLD", "\"http://songturu2.mamikos.com/api/agent/giant\"")
+            buildConfigField("String", "BASE_URL", "\"http://songturu2.mamikos.com/api/agent/groot\"")
+            buildConfigField("String", "BASE_URL_MEDIA", "\"http://songturu.mamikos.com/api/v1\"")
+        }
         rilis {
             dimension "v1"
             versionName "0.0.2-beta"

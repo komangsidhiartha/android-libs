@@ -27,7 +27,7 @@
 
 
     <LinearLayout
-        android:id="@+id/selectCameraLinearLayout"
+        android:id="@+id/selectCamera1LinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -41,7 +41,28 @@
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:lineSpacingExtra="2sp"
-            android:text="@string/msg_select_camera"
+            android:text="@string/msg_select_camera_1"
+            android:textColor="@color/dove_gray_approx"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/selectCamera2LinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:visibility="visible">
+
+        <TextView
+            style="@style/Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="2sp"
+            android:text="@string/msg_select_camera_2"
             android:textColor="@color/dove_gray_approx"
             android:textSize="14sp" />
 

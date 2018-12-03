@@ -33,6 +33,7 @@ import org.jetbrains.anko.toast
 
 import android.support.annotation.NonNull
 import android.widget.Toast
+import com.mamikos.mamiagent.apps.MamiApp
 import com.mamikos.mamiagent.entities.PhotoFormEntity
 import com.mamikos.mamiagent.entities.SaveKostEntity
 import com.mamikos.mamiagent.helpers.*
@@ -77,8 +78,9 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         UtilsPermission.checkPermissionGps(this)
 
+        UtilsPermission.checkPermissionStorageAndCamera(this)
+
         loading = CustomLoadingView(this)
-        loading.show()
 
         setLayoutNextBack()
 
@@ -648,6 +650,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         UtilsHelper.log("afaas asfas asf $bundle")
 
         pathCamera = bundle.getString("path")
+        MamiApp.sessionManager.pathCamera = pathCamera
     }
 
     var pathCamera = ""
@@ -663,7 +666,14 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             if (requestCode == GlobalConst.CODE_CAMERA_BATHROOM || requestCode == GlobalConst.CODE_CAMERA_INSIDEROOM || requestCode == GlobalConst.CODE_CAMERA_BUILDING) {
 
-                successGetImage(Uri.parse(data?.getStringExtra("camera_path")), requestCode)
+                if (pathCamera.isNotEmpty()) {
+                    successGetImage(Uri.parse(pathCamera), requestCode)
+                } else if (data?.getStringExtra("camera_path") != null) {
+                    successGetImage(Uri.parse(data.getStringExtra("camera_path")), requestCode)
+                } else {
+                    UtilsHelper.log("gagal mengambil gambar ambil path dari session")
+                    successGetImage(Uri.parse(MamiApp.sessionManager.pathCamera), requestCode)
+                }
 
             } else if (requestCode == GlobalConst.CODE_GALLERY_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
                 if (data == null) {
@@ -682,7 +692,15 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                 UtilsHelper.log("cek1 ${uri.path}")
 
-                val file = File(MediaHelper.setImageResourceFromGallery(this, uri))
+                val file: File
+
+                if (requestCode == GlobalConst.CODE_GALLERY_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
+                    file = File(MediaHelper.setImageResourceFromGallery(this, uri))
+                } else {
+                    file = File(uri.path)
+                }
+
+                UtilsHelper.log("cek2 ${file.path}")
 
                 uploadImage(file, requestCode, object : OnClickInterfaceObject<Int> {
                     override fun dataClicked(data: Int) {
@@ -725,7 +743,11 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             loading.show()
             val upload = PhotosApi.MediaApi()
             try {
-                upload.fileUpload = file//MediaHelper.compressImage(this, file)
+                upload.fileUpload = MediaHelper.compressImage(this, file)
+                if (upload.fileUpload == null) {
+                    UtilsHelper.log("kompres gambar tidak support, gambar akan pakai yang asli")
+                    upload.fileUpload = file
+                }
             } catch (e: Exception) {
                 toast("Gagal mengambil gambar coba lagi bro, atau coba ambil dari galeri")
                 e.printStackTrace()

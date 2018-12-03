@@ -13,6 +13,7 @@ class SessionManager(context: Context)
     private val USER_ID = "user_id"
     private val IS_LOGIN = "is_login"
     private val AGENT_PHONE_NUMBER = "agent_phone_number"
+    private val PATH_CAMERA = "path_camera"
 
     val pref: SharedPreferences = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
     val editor: SharedPreferences.Editor = pref.edit()
@@ -40,4 +41,8 @@ class SessionManager(context: Context)
     var agentPhoneNumber: String
         get() = pref.getString(AGENT_PHONE_NUMBER, "087839439584")
         set(value) = editor.putString(AGENT_PHONE_NUMBER, value).apply()
+
+    var pathCamera: String
+        get() = pref.getString(PATH_CAMERA, "")
+        set(value) = editor.putString(PATH_CAMERA, value).apply()
 }

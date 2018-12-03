@@ -6,9 +6,7 @@ import android.content.Intent
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import com.mamikos.mamiagent.BuildConfig
-
-import com.mamikos.mamiagent.activity.CameraActivity
-import com.mamikos.mamiagent.helpers.MediaHelper.createImageFile
+import org.jetbrains.anko.toast
 
 import java.io.File
 
@@ -29,11 +27,12 @@ class ShowCamera(private val mContext: Context) {
     private fun takePicture(context: Activity, code: Int) {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
-            fileCamera = createImageFile(context)
+            fileCamera = UtilsHelper.createImageFile(context)
             val photoURI = FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", fileCamera)
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
         } catch (e: Exception) {
             e.printStackTrace()
+            context.toast("Kamera tidak support")
             return
         }
         context.startActivityForResult(intent, code)
@@ -41,6 +40,7 @@ class ShowCamera(private val mContext: Context) {
 
     companion object {
         var CODE_CAMERA = 63
+        var CODE_CAMERA_2 = 633
     }
 
 }

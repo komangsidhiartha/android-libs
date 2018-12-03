@@ -24,7 +24,10 @@ import kotlin.experimental.and
 import android.content.DialogInterface
 import android.R.string.yes
 import android.app.Activity
+import android.os.Build
+import android.os.Environment
 import android.view.inputmethod.InputMethodManager
+import java.io.File
 
 
 /**
@@ -140,7 +143,7 @@ class UtilsHelper {
         fun getTimestamp(): String {
             val timeStamp = SimpleDateFormat("HH_mm_ss_SSS")
             val now = Date()
-            return timeStamp.format(now)+""
+            return timeStamp.format(now) + ""
         }
 
         fun getPathFromURI(context: Context, contentUri: Uri): String? {
@@ -212,6 +215,58 @@ class UtilsHelper {
             if (view == null) view = View(activity)
             val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+
+        fun createFolder(mContext: Context): String {
+            var path: String
+            if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
+                path = Environment.getExternalStorageDirectory().path + "/Android/data/" + mContext.packageName + "/camera/"
+            } else {
+                path = Environment.getDataDirectory().path + "/Android/data/" + mContext.packageName + "/camera/"
+            }
+            var dir = File(path)
+            if (!(dir.exists() && dir.isDirectory)) {
+                dir.mkdirs()
+            } else {
+                path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).path + "/Android/data/" + mContext.packageName + "/camera/"
+                dir = File(path)
+                if (!(dir.exists() && dir.isDirectory)) {
+                    dir.mkdirs()
+                } else {
+                    path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).path + "/" +mContext.packageName + "/camera/"
+                    dir = File(path)
+                    if (!(dir.exists() && dir.isDirectory)) {
+                        dir.mkdirs()
+                    } else {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            path = mContext.dataDir.path + "/" + mContext.packageName + "/camera/"
+                        }
+                        dir = File(path)
+                        if (!(dir.exists() && dir.isDirectory)) {
+                            dir.mkdirs()
+                        } else {
+                            path = mContext.filesDir.path + "/" + mContext.packageName + "/camera/"
+                            dir = File(path)
+                            if (!(dir.exists() && dir.isDirectory)) {
+                                dir.mkdirs()
+                            } else {
+                                path = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES).path + "/" +   "/camera/"
+                                dir = File(path)
+                                if (!(dir.exists() && dir.isDirectory)) {
+                                    dir.mkdirs()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return path
+        }
+
+        fun createImageFile(context: Context): File {
+            val myUri = Uri.parse(createFolder(context) + getTimestamp() + ".png")
+            return File(myUri.path).absoluteFile
         }
 
     }

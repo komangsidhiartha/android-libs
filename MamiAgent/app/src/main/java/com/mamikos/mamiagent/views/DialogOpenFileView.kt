@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.view_dialog_select.view.*
  * Happy Coding!
  */
 
-class DialogOpenFileView: FrameLayout {
+class DialogOpenFileView : FrameLayout {
 
     private var built: AlertDialog.Builder? = null
     private var click: OnClickInterfaceObject<Int>? = null
@@ -42,8 +42,11 @@ class DialogOpenFileView: FrameLayout {
         built = AlertDialog.Builder(context)
         built!!.setView(this)
         dialog = built!!.create()
-        selectCameraLinearLayout.setOnClickListener {
+        selectCamera1LinearLayout.setOnClickListener {
             click!!.dataClicked(ShowCamera.CODE_CAMERA)
+        }
+        selectCamera2LinearLayout.setOnClickListener {
+            click!!.dataClicked(ShowCamera.CODE_CAMERA_2)
         }
         selectGalleryLinearLayout.setOnClickListener {
             click!!.dataClicked(ShowGallery.CODE_GALLERY)

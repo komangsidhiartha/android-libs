@@ -70,9 +70,9 @@ class FormKostStep44View : FrameLayout {
                 override fun dataClicked(data: Int) {
                     dialogSelectImage.dismiss()
                     if (ShowCamera.CODE_CAMERA == data) {
-
-                        showCameraPure(GlobalConst.CODE_CAMERA_BATHROOM)
-
+                        showCamera1(GlobalConst.CODE_CAMERA_BATHROOM)
+                    } else if (ShowCamera.CODE_CAMERA_2 == data) {
+                        showCamera2(GlobalConst.CODE_CAMERA_BATHROOM)
                     } else if (ShowGallery.CODE_GALLERY == data) {
                         val showGallery = ShowGallery(context)
                         showGallery.showNow(GlobalConst.CODE_GALLERY_BATHROOM)
@@ -88,9 +88,9 @@ class FormKostStep44View : FrameLayout {
                 override fun dataClicked(data: Int) {
                     dialogSelectImage.dismiss()
                     if (ShowCamera.CODE_CAMERA == data) {
-
-                        showCameraPure(GlobalConst.CODE_CAMERA_INSIDEROOM)
-
+                        showCamera1(GlobalConst.CODE_CAMERA_INSIDEROOM)
+                    } else if (ShowCamera.CODE_CAMERA_2 == data) {
+                        showCamera2(GlobalConst.CODE_CAMERA_INSIDEROOM)
                     } else if (ShowGallery.CODE_GALLERY == data) {
                         val showGallery = ShowGallery(context)
                         showGallery.showNow(GlobalConst.CODE_GALLERY_INSIDEROOM)
@@ -106,9 +106,9 @@ class FormKostStep44View : FrameLayout {
                 override fun dataClicked(data: Int) {
                     dialogSelectImage.dismiss()
                     if (ShowCamera.CODE_CAMERA == data) {
-
-                        showCameraPure(GlobalConst.CODE_CAMERA_BUILDING)
-
+                        showCamera1(GlobalConst.CODE_CAMERA_BUILDING)
+                    } else if (ShowCamera.CODE_CAMERA_2 == data) {
+                        showCamera2(GlobalConst.CODE_CAMERA_BUILDING)
                     } else if (ShowGallery.CODE_GALLERY == data) {
                         val showGallery = ShowGallery(context)
                         showGallery.showNow(GlobalConst.CODE_GALLERY_BUILDING)
@@ -120,19 +120,18 @@ class FormKostStep44View : FrameLayout {
 
     }
 
-    private fun showCameraPure(code: Int) {
-
+    private fun showCamera1(code: Int) {
         val intent = Intent(context, CameraActivity::class.java)
-
         (context as Activity).startActivityForResult(intent, code)
+    }
 
-        /*val showCamera = ShowCamera(context)
+    private fun showCamera2(code: Int) {
+        val showCamera = ShowCamera(context)
         showCamera.showNow(code)
-
         val file = showCamera.fileCamera
         val bundle = Bundle()
         bundle.putString("path", file?.path)
-        EventBus.getDefault().post(bundle)*/
+        EventBus.getDefault().post(bundle)
     }
 
     private fun validation() {

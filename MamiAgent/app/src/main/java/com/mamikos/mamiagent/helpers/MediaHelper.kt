@@ -33,17 +33,15 @@ object MediaHelper {
 
     @Throws(IOException::class)
     fun createImageFile(context: Context): File {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss",
-                Locale.getDefault()).format(Date())
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val imageFileName = "IMG_" + timeStamp + "_"
         val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val image = File.createTempFile(
-                imageFileName, /* prefix */
+        val image = File.createTempFile(imageFileName, /* prefix */
                 ".jpg", /* suffix */
-                storageDir      /* directory */
-        )
+                storageDir      /* directory */)
         return image
     }
+
     /**
      * use this to create file to save captured image or video from camera.
      *
@@ -66,16 +64,14 @@ object MediaHelper {
      * @param reqHeight required height
      * @return bitmap scaled bitmap with the same or closest width and height
      */
-    fun decodeScaledBitmapFromSdCard(filePath: String,
-                                     reqWidth: Int, reqHeight: Int): Bitmap {
+    fun decodeScaledBitmapFromSdCard(filePath: String, reqWidth: Int, reqHeight: Int): Bitmap {
         // First decode with inJustDecodeBounds=true to check dimensions
         val options = BitmapFactory.Options()
         options.inJustDecodeBounds = true
         BitmapFactory.decodeFile(filePath, options)
 
         // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth,
-                reqHeight)
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight)
 
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false
@@ -91,8 +87,7 @@ object MediaHelper {
         }
 
         if (ei != null) {
-            val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_NORMAL)
+            val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
             when (orientation) {
                 ExifInterface.ORIENTATION_ROTATE_90 -> decodedBitmap = MediaHelper.rotateBitmap(decodedBitmap, 90)
                 ExifInterface.ORIENTATION_ROTATE_180 -> decodedBitmap = MediaHelper.rotateBitmap(decodedBitmap, 180)
@@ -105,8 +100,7 @@ object MediaHelper {
         val proj = arrayOf(MediaStore.Images.Media.DATA)
         val cursor = context.contentResolver.query(contentUri, proj, null, null, null)
         if (cursor != null) {
-            val column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
             cursor.moveToFirst()
             val columnName = cursor.getString(column_index)
             cursor.close()
@@ -165,8 +159,7 @@ object MediaHelper {
         var image = image
         val matrix = Matrix()
         matrix.postRotate(rotation.toFloat())
-        image = Bitmap.createBitmap(image, 0, 0, image.width,
-                image.height, matrix, true)
+        image = Bitmap.createBitmap(image, 0, 0, image.width, image.height, matrix, true)
         return image
     }
 
@@ -179,8 +172,7 @@ object MediaHelper {
      * @param reqHeight required height
      * @return
      */
-    fun calculateInSampleSize(options: BitmapFactory.Options,
-                              reqWidth: Int, reqHeight: Int): Int {
+    fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
         // Raw height and width of image
         val height = options.outHeight
         val width = options.outWidth
@@ -219,9 +211,7 @@ object MediaHelper {
             // shared
             // between applications and persist after your app has been
             // uninstalled.
-            mediaStorageDir = File(
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                    appName)
+            mediaStorageDir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), appName)
         }
 
         // check whether can write to external storage
@@ -245,11 +235,9 @@ object MediaHelper {
 
         val mediaFile: File
         if (type == MEDIA_TYPE_IMAGE) {
-            mediaFile = File(mediaStorageDir.path + File.separator
-                    + "IMG_" + timeStamp + ".jpg")
+            mediaFile = File(mediaStorageDir.path + File.separator + "IMG_" + timeStamp + ".jpg")
         } else if (type == MEDIA_TYPE_VIDEO) {
-            mediaFile = File(mediaStorageDir.path + File.separator
-                    + "VID_" + timeStamp + ".mp4")
+            mediaFile = File(mediaStorageDir.path + File.separator + "VID_" + timeStamp + ".mp4")
         } else {
             return null
         }
@@ -566,8 +554,7 @@ object MediaHelper {
             } else if (isDownloadsDocument(uri)) {
 
                 val id = DocumentsContract.getDocumentId(uri)
-                val contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id))
+                val contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id))
 
                 return getDataColumn(context, contentUri, null, null)
             } else if (isMediaDocument(uri)) {
@@ -588,7 +575,7 @@ object MediaHelper {
                 val selectionArgs = arrayOf(split[1])
 
                 return getDataColumn(context, contentUri, selection, selectionArgs)
-            }// MediaProvider
+            } // MediaProvider
             // DownloadsProvider
         } else if ("content".equals(uri.scheme, ignoreCase = true)) {
 
@@ -597,7 +584,7 @@ object MediaHelper {
 
         } else if ("file".equals(uri.scheme, ignoreCase = true)) {
             return uri.path
-        }// File
+        } // File
         // MediaStore (and general)
 
         return null
@@ -627,8 +614,7 @@ object MediaHelper {
                 return cursor!!.getString(index)
             }
         } finally {
-            if (cursor != null)
-                cursor!!.close()
+            if (cursor != null) cursor!!.close()
         }
         return null
     }
@@ -711,8 +697,24 @@ object MediaHelper {
         return rotate
     }
 
-    fun compressImage(context: Context?, fileToCompress: File?) : File
-    {
-        return Compressor(context).setQuality(75).compressToFile(fileToCompress)
+    fun compressImage(context: Context?, fileToCompress: File?): File? {
+
+        UtilsHelper.log("piye tohX $fileToCompress")
+        UtilsHelper.log("piye tohXX ${fileToCompress?.path}")
+        UtilsHelper.log("piye tohXXX ${fileToCompress?.absolutePath}")
+
+        try {
+            return Compressor(context).setQuality(75).setCompressFormat(Bitmap.CompressFormat.JPEG)
+                   // .setDestinationDirectoryPath(fileToCompress?.absolutePath)
+                    .compressToFile(fileToCompress)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            try {
+                return null
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return null
+            }
+        }
     }
 }
