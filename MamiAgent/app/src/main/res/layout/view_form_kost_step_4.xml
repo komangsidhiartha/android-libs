@@ -167,11 +167,17 @@
 
     </LinearLayout>
 
-    <include
-        android:id="@+id/viewBtnBackNextStep4"
-        layout="@layout/view_btn_back_next"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="32dp">
+
+        <include
+            android:id="@+id/viewBtnBackNextStep4"
+            layout="@layout/view_btn_back_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
 
 </LinearLayout>

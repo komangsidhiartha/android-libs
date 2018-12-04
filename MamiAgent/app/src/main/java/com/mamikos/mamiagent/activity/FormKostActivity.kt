@@ -100,6 +100,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
             when (response) {
                 null -> errorMessage?.let {
                     toast(it)
+                    requestProvinceApi()
                 }
                 else -> {
                     if (response.status) {
@@ -117,6 +118,8 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
 
                             }
                         })
+                    } else {
+                        requestProvinceApi()
                     }
                 }
             }
@@ -131,6 +134,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
             when (response) {
                 null -> errorMessage?.let {
                     toast(it)
+                    requestCityApi(cityId)
                 }
                 else -> {
                     if (response.status) {
@@ -142,6 +146,8 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
                                 formKostStep22View.citySpinnerCustomView.setName("${data.name}")
                             }
                         })
+                    } else {
+                        requestCityApi(cityId)
                     }
                 }
             }
@@ -157,6 +163,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
             when (response) {
                 null -> errorMessage?.let {
                     toast(it)
+                    requestSubDistrictApi(subDistrictId)
                 }
                 else -> {
                     if (response.status) {
@@ -166,6 +173,8 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
                                 formKostStep22View.districtSpinnerCustomView.setName("${data.name}")
                             }
                         })
+                    } else {
+                        requestSubDistrictApi(subDistrictId)
                     }
                 }
             }

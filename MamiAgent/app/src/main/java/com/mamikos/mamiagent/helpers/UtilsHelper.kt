@@ -218,7 +218,7 @@ class UtilsHelper {
         }
 
         fun createFolder(mContext: Context): String {
-            var path: String
+            val path: String
             if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
                 path = Environment.getExternalStorageDirectory().path + "/Android/data/" + mContext.packageName + "/camera/"
             } else {
@@ -228,39 +228,11 @@ class UtilsHelper {
             if (!(dir.exists() && dir.isDirectory)) {
                 dir.mkdirs()
             } else {
-                path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).path + "/Android/data/" + mContext.packageName + "/camera/"
-                dir = File(path)
-                if (!(dir.exists() && dir.isDirectory)) {
+                dir = File(mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "camera")
+                if (!dir.exists()) {
                     dir.mkdirs()
-                } else {
-                    path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).path + "/" +mContext.packageName + "/camera/"
-                    dir = File(path)
-                    if (!(dir.exists() && dir.isDirectory)) {
-                        dir.mkdirs()
-                    } else {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            path = mContext.dataDir.path + "/" + mContext.packageName + "/camera/"
-                        }
-                        dir = File(path)
-                        if (!(dir.exists() && dir.isDirectory)) {
-                            dir.mkdirs()
-                        } else {
-                            path = mContext.filesDir.path + "/" + mContext.packageName + "/camera/"
-                            dir = File(path)
-                            if (!(dir.exists() && dir.isDirectory)) {
-                                dir.mkdirs()
-                            } else {
-                                path = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES).path + "/" +   "/camera/"
-                                dir = File(path)
-                                if (!(dir.exists() && dir.isDirectory)) {
-                                    dir.mkdirs()
-                                }
-                            }
-                        }
-                    }
                 }
             }
-
             return path
         }
 

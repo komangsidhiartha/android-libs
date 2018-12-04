@@ -1,5 +1,6 @@
 package com.mamikos.mamiagent.views
 
+import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.view.ViewGroup
@@ -39,8 +40,10 @@ class SpinnerCustomView : FrameLayout {
         ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         setOnClickListener {
 
+            UtilsHelper.hideSoftInput(context as Activity)
+
             if (response == null || response?.data?.size == 0) {
-                Toast.makeText(context, "data kosong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Data kosong, coba klik lagi!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
