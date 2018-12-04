@@ -26,6 +26,9 @@ import android.R.string.yes
 import android.app.Activity
 import android.os.Build
 import android.os.Environment
+import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.view.inputmethod.InputMethodManager
 import com.mamikos.mamiagent.apps.SessionManager
 import java.io.File
@@ -251,6 +254,26 @@ class UtilsHelper {
                 val ss = SessionManager(context)
                 ss.pathCamera = absolutePath
             }
+        }
+
+        fun setupToolbar(context: AppCompatActivity, toolbar: Toolbar, title: String,
+                         subtitle: String, icon: Int, actionClick: Runnable) {
+
+            toolbar.title = title
+
+            if (!subtitle.isEmpty()) {
+                toolbar.subtitle = subtitle
+            }
+
+            if (icon != 0) {
+                toolbar.navigationIcon = ContextCompat.getDrawable(context, icon)
+            }
+
+            context.setSupportActionBar(toolbar)
+            context.supportActionBar?.setDisplayShowHomeEnabled(true)
+
+            toolbar.setNavigationOnClickListener { actionClick.run() }
+
         }
 
     }

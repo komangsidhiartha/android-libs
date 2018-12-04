@@ -14,6 +14,7 @@ class GlobalConst {
         val CODE_CAMERA_BATHROOM = 70
         val CODE_CAMERA_INSIDEROOM = 71
         val CODE_CAMERA_BUILDING = 72
+        val KEY_REALM = "okesip"
     }
 
 }

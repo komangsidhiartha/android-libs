@@ -10,13 +10,19 @@ import android.util.Patterns
 import com.crashlytics.android.Crashlytics
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.mamikos.mamiagent.BuildConfig
+import com.mamikos.mamiagent.helpers.GlobalConst
 import com.mamikos.mamiagent.interfaces.Constants
 import io.fabric.sdk.android.Fabric
+import io.realm.Realm
 import java.util.*
+import io.realm.Realm.setDefaultConfiguration
+import io.realm.RealmConfiguration
+
 
 class MamiApp : MultiDexApplication() {
 
     private var firebaseAnalytics: FirebaseAnalytics? = null
+
 
     companion object {
         lateinit var sessionManager: SessionManager
@@ -35,6 +41,14 @@ class MamiApp : MultiDexApplication() {
             Crashlytics.setUserIdentifier(MamiApp.sessionManager.agentPhoneNumber)
             firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         }
+
+        val config = RealmConfiguration.Builder()
+                .name("mamiagent.realm")
+                .encryptionKey(GlobalConst.KEY_REALM.toByteArray())
+                .schemaVersion(BuildConfig.VERSION_CODE.toLong())
+                .build()
+        Realm.getInstance(config)
+
     }
 
     override fun onTerminate() {

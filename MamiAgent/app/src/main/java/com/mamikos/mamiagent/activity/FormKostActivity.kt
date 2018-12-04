@@ -388,7 +388,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
         formKostStep11View.setBackOnClick(Runnable {
             UtilsHelper.showDialogYesNo(this, "", getString(R.string.msg_exit), Runnable {
                 UtilsHelper.hideSoftInput(this)
-                finish()
+                onBackPressed()
             }, 0)
         })
 
