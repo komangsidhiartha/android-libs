@@ -87,6 +87,9 @@
             android:name=".activity.SuccessInputActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.ErrorReportActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.StatisticActivity"
             android:screenOrientation="portrait" />
         <activity

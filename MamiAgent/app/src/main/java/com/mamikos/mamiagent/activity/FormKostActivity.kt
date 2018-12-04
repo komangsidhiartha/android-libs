@@ -71,6 +71,12 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler(this))
+
+        if (checkError()) {
+            return
+        }
+
         setContentView(R.layout.activity_form_kost)
 
         EventBus.getDefault().register(this)
@@ -92,6 +98,22 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
         buildGoogleApiClient()
 
         setMap()
+    }
+
+    private fun checkError(): Boolean {
+        if (intent != null) {
+            if (intent.getStringExtra("error") != null && intent.getStringExtra("error").isNotEmpty()) {
+                UtilsHelper.showDialogYes(this, "", intent.getStringExtra("error"), Runnable {
+                    val intents = Intent(this, FormKostActivity::class.java)
+                    intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intents)
+                    android.os.Process.killProcess(android.os.Process.myPid())
+                    System.exit(10)
+                }, 0)
+                return true
+            }
+        }
+        return false
     }
 
     private fun requestProvinceApi() {

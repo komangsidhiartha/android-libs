@@ -237,7 +237,7 @@ class UtilsHelper {
         }
 
         fun createImageFile(context: Context): File {
-            val myUri = Uri.parse(createFolder(context) + getTimestamp() + ".png")
+            val myUri = Uri.parse(createFolder(context) +"photo"+ getTimestamp() + ".png")
             return File(myUri.path).absoluteFile
         }
 
