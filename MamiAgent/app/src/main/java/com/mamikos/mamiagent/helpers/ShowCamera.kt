@@ -3,6 +3,7 @@ package com.mamikos.mamiagent.helpers
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import com.mamikos.mamiagent.BuildConfig
@@ -25,17 +26,25 @@ class ShowCamera(private val mContext: Context) {
     }
 
     private fun takePicture(context: Activity, code: Int) {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        try {
-            fileCamera = UtilsHelper.createImageFile(context)
-            val photoURI = FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", fileCamera)
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            context.toast("Kamera tidak support")
-            return
+
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(context.packageManager)?.also {
+                val photoFile: File? = try {
+                    UtilsHelper.createImageFile(context)
+                } catch (ex: Exception) {
+                    context.toast("Gagal membuat folder")
+                    null
+                }
+                if (photoFile != null) {
+                    val photoURI: Uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", photoFile)
+                    fileCamera = photoFile
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    context.startActivityForResult(takePictureIntent, code)
+                } else {
+                    context.toast("Kamera not support")
+                }
+            }
         }
-        context.startActivityForResult(intent, code)
     }
 
     companion object {

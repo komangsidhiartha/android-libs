@@ -70,7 +70,6 @@ class CameraActivity : AppCompatActivity() {
             UtilsHelper.log("data fileXX ${file.absolutePath}")
             UtilsHelper.log("data fileXXX ${file.canonicalPath}")
             val intent = Intent()
-            intent.putExtra("camera_path", file.path)
             setResult(Activity.RESULT_OK, intent)
             finish()
         }

@@ -27,7 +27,9 @@ import android.app.Activity
 import android.os.Build
 import android.os.Environment
 import android.view.inputmethod.InputMethodManager
+import com.mamikos.mamiagent.apps.SessionManager
 import java.io.File
+import java.io.IOException
 
 
 /**
@@ -236,9 +238,19 @@ class UtilsHelper {
             return path
         }
 
+
+        @Throws(IOException::class)
         fun createImageFile(context: Context): File {
-            val myUri = Uri.parse(createFolder(context) +"photo"+ getTimestamp() + ".png")
-            return File(myUri.path).absoluteFile
+            // Create an image file name
+            val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+            val storageDir: File = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            return File.createTempFile("JPEG_${timeStamp}_", /* prefix */
+                    ".jpg", /* suffix */
+                    storageDir /* directory */).apply {
+                // Save a file: path for use with ACTION_VIEW intents
+                val ss = SessionManager(context)
+                ss.pathCamera = absolutePath
+            }
         }
 
     }

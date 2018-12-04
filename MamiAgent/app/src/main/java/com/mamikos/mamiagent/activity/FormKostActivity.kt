@@ -675,13 +675,8 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
 
     @Subscribe
     fun onEvent(bundle: Bundle) {
-        UtilsHelper.log("afaas asfas asf $bundle")
 
-        pathCamera = bundle.getString("path")
-        MamiApp.sessionManager.pathCamera = pathCamera
     }
-
-    var pathCamera = ""
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -692,18 +687,13 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
 
         try {
             if (resultCode == Activity.RESULT_OK) {
-
                 if (requestCode == GlobalConst.CODE_CAMERA_BATHROOM || requestCode == GlobalConst.CODE_CAMERA_INSIDEROOM || requestCode == GlobalConst.CODE_CAMERA_BUILDING) {
-
-                    if (pathCamera.isNotEmpty()) {
-                        successGetImage(Uri.parse(pathCamera), requestCode)
-                    } else if (data?.getStringExtra("camera_path") != null) {
-                        successGetImage(Uri.parse(data.getStringExtra("camera_path")), requestCode)
-                    } else {
-                        UtilsHelper.log("gagal mengambil gambar ambil path dari session")
+                    try {
                         successGetImage(Uri.parse(MamiApp.sessionManager.pathCamera), requestCode)
+                    } catch (e: Exception) {
+                        toast("Gagal mengambil kamera")
+                        return
                     }
-
                 } else if (requestCode == GlobalConst.CODE_GALLERY_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
                     if (data == null) {
                         return
