@@ -39,6 +39,7 @@ import com.mamikos.mamiagent.entities.SaveKostEntity
 import com.mamikos.mamiagent.helpers.*
 import com.mamikos.mamiagent.networks.apis.PhotosApi
 import com.mamikos.mamiagent.networks.apis.SaveKosApi
+import com.mamikos.mamiagent.networks.apis.TelegramApi
 import com.mamikos.mamiagent.networks.responses.MediaResponse
 import com.mamikos.mamiagent.networks.responses.MessagesResponse
 import com.sidhiartha.libs.utils.GSONManager
@@ -73,7 +74,6 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
         super.onCreate(savedInstanceState)
 
         saved = savedInstanceState
-
         Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler(this))
 
         if (checkError()) {
@@ -106,6 +106,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
     private fun checkError(): Boolean {
         if (intent != null) {
             if (intent.getStringExtra("error") != null && intent.getStringExtra("error").isNotEmpty()) {
+                sendReport(intent.getStringExtra("error"))
                 UtilsHelper.showDialogYes(this, "", intent.getStringExtra("error"), Runnable {
                     val intents = Intent(this, FormKostActivity::class.java)
                     intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -117,6 +118,11 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
             }
         }
         return false
+    }
+
+    private fun sendReport(s: String) {
+        val reportApi = TelegramApi.SendReport(s)
+        reportApi.exec(MessagesResponse::class.java) { _: MessagesResponse?, _: String? -> }
     }
 
     private fun requestProvinceApi() {
