@@ -2,8 +2,8 @@ package com.mamikos.mamiagent.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import com.git.dabang.database.table.FormDataTable
 import com.mamikos.mamiagent.views.ListDataFormView
-
 
 /**
  * Created by Dedi Dot on 12/4/2018.
@@ -12,18 +12,26 @@ import com.mamikos.mamiagent.views.ListDataFormView
 
 class ListDataFormAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private lateinit var listDataFormView: ListDataFormView
+    private var listDataFormView: ListDataFormView? = null
+    private var dataKos: List<FormDataTable>? = null
+
+    fun setData(newData: List<FormDataTable>?) {
+        dataKos = newData
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         listDataFormView = ListDataFormView(parent.context)
-        return listDataFormView.viewHolder
+        return listDataFormView?.viewHolder!!
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
+        (holder as ListDataFormView.ViewHolder).setData(dataKos?.get(position))
     }
 
     override fun getItemCount(): Int {
+        dataKos?.let {
+            return it.size
+        }
         return 0
     }
 }

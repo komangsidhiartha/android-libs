@@ -44,9 +44,12 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@color/white"
-                android:visibility="gone"
-                android:padding="5dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="10dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="10dp"
                 android:scaleType="centerCrop"
+                android:visibility="gone"
                 tools:ignore="ContentDescription,RtlHardcoded" />
         </FrameLayout>
 

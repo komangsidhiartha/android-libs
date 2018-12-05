@@ -7,7 +7,6 @@ import com.mamikos.mamiagent.apps.MamiApp
 import com.mamikos.mamiagent.helpers.UtilsHelper
 import com.mamikos.mamiagent.networks.apis.PassCodeApi
 import com.mamikos.mamiagent.networks.responses.PassCodeResponse
-import com.mamikos.mamiagent.views.CustomLoadingView
 import com.sidhiartha.libs.activities.BaseActivity
 import com.sidhiartha.libs.utils.GSONManager
 import kotlinx.android.synthetic.main.activity_pass_code.*
@@ -21,13 +20,11 @@ import org.json.JSONObject
 
 class PassCodeActivity : BaseActivity() {
 
-    private var loading: CustomLoadingView? = null
     private var da: PassCodeView? = null
 
     override val layoutResource: Int = R.layout.activity_pass_code
 
     override fun viewDidLoad() {
-        loading = CustomLoadingView(this)
         da = PassCodeView(this)
         da?.digitLength = 6
         da?.setTypeFace(UtilsHelper.getFontRegular(this))

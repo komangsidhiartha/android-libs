@@ -16,7 +16,6 @@ import android.widget.ScrollView
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.mamikos.mamiagent.R
 import com.google.android.gms.maps.model.MarkerOptions
@@ -26,25 +25,25 @@ import com.mamikos.mamiagent.googleapi.TouchableWrapper
 import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
 import com.mamikos.mamiagent.networks.apis.LocationApi
 import com.mamikos.mamiagent.networks.responses.AreaResponse
-import com.mamikos.mamiagent.views.CustomLoadingView
 import kotlinx.android.synthetic.main.activity_form_kost.*
 import kotlinx.android.synthetic.main.view_form_kost_step_1.*
 import kotlinx.android.synthetic.main.view_form_kost_step_1.view.*
 import org.jetbrains.anko.toast
 
 import android.support.annotation.NonNull
-import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.git.dabang.database.table.FormDataTable
 import com.mamikos.mamiagent.apps.MamiApp
 import com.mamikos.mamiagent.entities.PhotoFormEntity
 import com.mamikos.mamiagent.entities.SaveKostEntity
+import com.mamikos.mamiagent.googleapi.DabangMapFragment
 import com.mamikos.mamiagent.helpers.*
 import com.mamikos.mamiagent.networks.apis.PhotosApi
 import com.mamikos.mamiagent.networks.apis.SaveKosApi
 import com.mamikos.mamiagent.networks.apis.TelegramApi
 import com.mamikos.mamiagent.networks.responses.MediaResponse
 import com.mamikos.mamiagent.networks.responses.MessagesResponse
+import com.sidhiartha.libs.activities.BaseActivity
 import com.sidhiartha.libs.utils.GSONManager
 import kotlinx.android.synthetic.main.view_form_kost_step_2.view.*
 import kotlinx.android.synthetic.main.view_form_kost_step_3.*
@@ -60,26 +59,24 @@ import java.io.File
  * Happy Coding!
  */
 
-class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
+class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         TouchableWrapper.TouchAction {
 
-    private lateinit var mMap: GoogleMap
-    private lateinit var loading: CustomLoadingView
+    private var mMap: GoogleMap? = null
     private var googleApiClient: GoogleApiClient? = null
-    var fullAddressLatLng: LatLng? = null
-    var myLatLng: LatLng? = null
+    private var fullAddressLatLng: LatLng? = null
+    private var myLatLng: LatLng? = null
     var photoKosBuildingId = 0
     var photoBathroomBuildingId = 0
     var photoInsideBuildingId = 0
-    var saved: Bundle? = null
-    var photoKosBuildingDao = ""
-    var photoBathroomBuildingDao = ""
-    var photoInsideBuildingDao = ""
+    private var photoKosBuildingDao = ""
+    private var photoBathroomBuildingDao = ""
+    private var photoInsideBuildingDao = ""
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override val layoutResource: Int = R.layout.activity_form_kost
 
-        saved = savedInstanceState
+    override fun viewDidLoad() {
+
         Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler(this))
 
         if (checkError()) {
@@ -94,19 +91,18 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
 
         UtilsPermission.checkPermissionStorageAndCamera(this)
 
-        loading = CustomLoadingView(this)
-
         setLayoutNextBack()
 
         requestProvinceApi()
 
-        /*titleAddDataAds.setOnClickListener {
-            startActivity<ListRoomActivity>()
-        }*/
-
         buildGoogleApiClient()
 
         setMap()
+
+        titleAddDataAds.setOnClickListener {
+            val intent = Intent(this, ListDataFormActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
@@ -145,7 +141,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
                         formKostStep22View.setProvince(response, object :
                                 OnClickInterfaceObject<AreaEntity> {
                             override fun dataClicked(data: AreaEntity) {
-                                loading.show()
+                                loading?.show()
                                 formKostStep22View.provinceSpinnerCustomView.setName("${data.name}")
                                 requestCityApi(data.id)
 
@@ -162,7 +158,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
                 }
             }
             formKostStep22View.provinceSpinnerCustomView.setName("")
-            loading.hide()
+            loading?.hide()
         }
     }
 
@@ -179,7 +175,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
                         formKostStep22View.setCity(response, object :
                                 OnClickInterfaceObject<AreaEntity> {
                             override fun dataClicked(data: AreaEntity) {
-                                loading.show()
+                                loading?.show()
                                 requestSubDistrictApi(data.id)
                                 formKostStep22View.citySpinnerCustomView.setName("${data.name}")
                             }
@@ -191,7 +187,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
             }
             formKostStep22View.citySpinnerCustomView.setName("")
             formKostStep22View.districtSpinnerCustomView.setName("")
-            loading.hide()
+            loading?.hide()
         }
     }
 
@@ -217,7 +213,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
                 }
             }
             formKostStep22View.districtSpinnerCustomView.setName("")
-            loading.hide()
+            loading?.hide()
         }
     }
 
@@ -229,27 +225,31 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
 
     private fun setMap() {
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.mapKostStep1Fragments) as SupportMapFragment
-        mapFragment.getMapAsync {
+        val fragment = DabangMapFragment()
+        val fm = supportFragmentManager
+        val ft = fm.beginTransaction()
+        ft.replace(R.id.mapKostStep1FrameLayout, fragment)
+        ft.commit()
+        fragment.getMapAsync {
 
             this.mMap = it
 
             UtilsHelper.log("cek kesini5")
 
-            mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+            mMap?.mapType = GoogleMap.MAP_TYPE_NORMAL
 
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             } else {
-                mMap.isMyLocationEnabled = true
+                mMap?.isMyLocationEnabled = true
             }
 
-            mMap.isBuildingsEnabled = true
-            mMap.isTrafficEnabled = true
-            mMap.uiSettings.isZoomControlsEnabled = true
-            mMap.uiSettings.isMyLocationButtonEnabled = true
+            mMap?.isBuildingsEnabled = true
+            mMap?.isTrafficEnabled = true
+            mMap?.uiSettings?.isZoomControlsEnabled = true
+            mMap?.uiSettings?.isMyLocationButtonEnabled = true
 
-            mMap.setOnCameraMoveListener {
+            mMap?.setOnCameraMoveListener {
                 centerMarkerPinA1.visibility = View.GONE
                 centerMarkerPinA2.visibility = View.VISIBLE
                 UtilsHelper.log("cek kesini6")
@@ -274,7 +274,10 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
                 }
             })
 
-            reverseGeoCode.run(mMap.cameraPosition.target)
+            val cp = mMap?.cameraPosition
+            cp?.let { cm ->
+                reverseGeoCode.run(cm.target)
+            }
             UtilsHelper.log("cek kesini10")
 
         }
@@ -297,9 +300,9 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
                 mFusedLocationClient.lastLocation.addOnSuccessListener(this) {
                     val ltLng = LatLng(it.latitude, it.longitude)
                     myLatLng = ltLng
-                    mMap.addMarker(MarkerOptions().position(ltLng).title("Saya disini"))
+                    mMap?.addMarker(MarkerOptions().position(ltLng).title("Saya disini"))
                     //.isDraggable = true
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ltLng, 15.0f))
+                    mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(ltLng, 15.0f))
                     UtilsHelper.log("my location ${it.latitude}, ${it.longitude}")
                 }
             }
@@ -605,7 +608,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
 
             if (code == 1) {
                 val apiSave = SaveKosApi.SaveKost()
-                loading.show()
+                loading?.show()
                 apiSave.postParam = GSONManager.toJson(saveKos)
                 UtilsHelper.log("wooooo " + apiSave.postParam)
 
@@ -615,7 +618,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
 
                     if (response == null) {
                         UtilsHelper.showDialogYes(this, "", "Server lagi error, hubungi pihak developer", Runnable {}, 0)
-                        loading.hide()
+                        loading?.hide()
                         return@exec
                     }
 
@@ -633,7 +636,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
                         UtilsHelper.showDialogYes(this, "", msg, Runnable {}, 0)
                     }
 
-                    loading.hide()
+                    loading?.hide()
                 }
             } else {
                 SavingDataLocal().execute(saveKos)
@@ -642,7 +645,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
         } catch (e: Exception) {
             e.printStackTrace()
             MamiApp.instance?.sendEvent("errorAAA", e.toString())
-            loading.hide()
+            loading?.hide()
             sendReport(e.toString())
         }
     }
@@ -793,7 +796,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
 
     private fun uploadImage(file: File, requestCode: Int, status: OnClickInterfaceObject<Int>) {
         try {
-            loading.show()
+            loading?.show()
             val upload = PhotosApi.MediaApi()
             try {
                 upload.fileUpload = MediaHelper.compressImage(this, file)
@@ -804,7 +807,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
             } catch (e: Exception) {
                 toast("Gagal mengambil gambar coba lagi bro, atau coba ambil dari galeri")
                 e.printStackTrace()
-                loading.hide()
+                loading?.hide()
                 MamiApp.instance?.sendEvent("errorA", e.toString())
                 sendReport(e.toString())
                 return
@@ -834,7 +837,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
                         status.dataClicked(1)
                     }
                 }
-                loading.hide()
+                loading?.hide()
             }
 
         } catch (e: Exception) {
@@ -854,7 +857,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
         var facBathRoomData = ""
 
         override fun doInBackground(vararg data: SaveKostEntity): String? {
-            //for (x in 0 until 1000) {
+            for (x in 0 until 1000) {
                 val saveKos = data[0]
                 for (i in 0 until saveKos.facRoom.size) {
                     facRoomData += "${saveKos.facRoom[i]},"
@@ -864,7 +867,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
                 }
                 val formDataTable = FormDataTable(saveKos.province, saveKos.city, saveKos.subdistrict, saveKos.latitude, saveKos.longitude, saveKos.agentLat, saveKos.agentLong, saveKos.address, saveKos.name, saveKos.gender, "${saveKos.roomSize[0]},${saveKos.roomSize[1]}", saveKos.roomCount, saveKos.roomAvailable.toString(), saveKos.priceDaily.toString(), saveKos.priceWeekly.toString(), saveKos.priceMonthly.toString(), saveKos.roomCount.toString(), saveKos.minMonth, saveKos.roomCount.toString(), facRoomData, facBathRoomData, photoBathroomBuildingDao, photoInsideBuildingDao, photoKosBuildingDao, saveKos.ownerName, saveKos.ownerEmail, saveKos.ownerPhone)
                 MamiApp.instance?.appDatabase?.formDataDao()?.insert(formDataTable)
-            //}
+            }
             return ""
         }
 

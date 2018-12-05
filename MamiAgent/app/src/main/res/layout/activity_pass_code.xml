@@ -3,14 +3,13 @@
     android:id="@+id/passCodeLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_vertical"
     android:background="@color/white"
+    android:gravity="center_vertical"
     android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="18dp">
+        android:layout_height="100dp">
 
         <ImageView
             android:layout_width="100dp"

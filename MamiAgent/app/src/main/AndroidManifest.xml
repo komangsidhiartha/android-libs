@@ -41,6 +41,7 @@
 
     <application
         android:name=".apps.MamiApp"
+        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -52,6 +53,7 @@
 
         <activity
             android:name=".activity.PassCodeActivity"
+            android:theme="@style/AppTheme.NoActionBar2"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

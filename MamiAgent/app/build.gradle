@@ -21,6 +21,9 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 27
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
     defaultConfig {
         applicationId "com.mamikos.mamiagent"
         minSdkVersion 15
