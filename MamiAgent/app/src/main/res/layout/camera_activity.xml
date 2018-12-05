@@ -43,8 +43,10 @@
                 android:id="@+id/capturedResultImageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginBottom="5dp"
-                android:visibility="visible"
+                android:background="@color/white"
+                android:visibility="gone"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
                 tools:ignore="ContentDescription,RtlHardcoded" />
         </FrameLayout>
 

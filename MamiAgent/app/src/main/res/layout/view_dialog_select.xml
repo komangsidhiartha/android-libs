@@ -41,7 +41,7 @@
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:lineSpacingExtra="2sp"
-            android:text="@string/msg_select_camera_1"
+            android:text="@string/msg_select_camera"
             android:textColor="@color/dove_gray_approx"
             android:textSize="14sp" />
 
@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             style="@style/Regular"

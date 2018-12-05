@@ -3,6 +3,7 @@ package com.mamikos.mamiagent.views
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
 import kotlinx.android.synthetic.main.activity_form_kost.*
 import kotlinx.android.synthetic.main.view_btn_back_next.view.*
 import kotlinx.android.synthetic.main.view_form_kost_step_3.view.*
+import org.greenrobot.eventbus.EventBus
 import org.jetbrains.anko.onCheckedChange
 
 /**
@@ -126,6 +128,7 @@ class FormKostStep44View : FrameLayout {
     private fun showCamera2(code: Int) {
         val showCamera = ShowCamera(context)
         showCamera.showNow(code)
+        EventBus.getDefault().post(Bundle())
     }
 
     private fun validation() {

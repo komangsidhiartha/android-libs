@@ -23,7 +23,6 @@ class MamiApp : MultiDexApplication() {
 
     private var firebaseAnalytics: FirebaseAnalytics? = null
 
-
     companion object {
         lateinit var sessionManager: SessionManager
         var instance: MamiApp? = null
@@ -42,12 +41,13 @@ class MamiApp : MultiDexApplication() {
             firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         }
 
+        Realm.init(this)
         val config = RealmConfiguration.Builder()
                 .name("mamiagent.realm")
                 .encryptionKey(GlobalConst.KEY_REALM.toByteArray())
                 .schemaVersion(BuildConfig.VERSION_CODE.toLong())
                 .build()
-        Realm.getInstance(config)
+        Realm.setDefaultConfiguration(config)
 
     }
 

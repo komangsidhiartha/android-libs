@@ -67,9 +67,12 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
     var photoKosBuildingId = 0
     var photoBathroomBuildingId = 0
     var photoInsideBuildingId = 0
+    var saved: Bundle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        saved = savedInstanceState
 
         Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler(this))
 
@@ -635,10 +638,11 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
     override fun onBackPressed() {
         UtilsHelper.showDialogYesNo(this, "", getString(R.string.msg_exit), Runnable {
             finish()
+            android.os.Process.killProcess(android.os.Process.myPid())
+            System.exit(10)
             return@Runnable
         }, 0)
     }
-
 
     override fun onRequestPermissionsResult(
             requestCode: Int, @NonNull permissions: Array<String>, @NonNull grantResults: IntArray) {
@@ -692,6 +696,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
                         successGetImage(Uri.parse(MamiApp.sessionManager.pathCamera), requestCode)
                     } catch (e: Exception) {
                         toast("Gagal mengambil kamera")
+                        e.printStackTrace()
                         return
                     }
                 } else if (requestCode == GlobalConst.CODE_GALLERY_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
@@ -703,6 +708,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
             }
         } catch (e: Exception) {
             MamiApp.instance?.sendEvent("errorXXX", e.toString())
+            e.printStackTrace()
             return
         }
 
@@ -759,6 +765,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
         } catch (e: Exception) {
             toast("coba lagi ${e}")
             MamiApp.instance?.sendEvent("errorX", e.toString())
+            e.printStackTrace()
             return
         }
 
@@ -809,6 +816,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
         } catch (e: Exception) {
             toast("coba lagix ${e}")
             MamiApp.instance?.sendEvent("errorAA", e.toString())
+            e.printStackTrace()
             return
         }
 

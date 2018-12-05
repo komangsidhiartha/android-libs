@@ -124,6 +124,7 @@
     <string name="msg_image_inside_room">Foto dalam kamar</string>
     <string name="msg_select_file">Pilih gambar</string>
     <string name="msg_select_gallery">Pilih dari gallery</string>
+    <string name="msg_select_camera">Pilih dari kamera</string>
     <string name="msg_select_camera_1">Pilih dari kamera 1</string>
     <string name="msg_select_camera_2">Pilih dari kamera 2</string>
     <string name="msg_exit">Yakin kamu mau keluar?</string>

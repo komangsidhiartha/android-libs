@@ -699,10 +699,6 @@ object MediaHelper {
 
     fun compressImage(context: Context?, fileToCompress: File?): File? {
 
-        UtilsHelper.log("piye tohX $fileToCompress")
-        UtilsHelper.log("piye tohXX ${fileToCompress?.path}")
-        UtilsHelper.log("piye tohXXX ${fileToCompress?.absolutePath}")
-
         try {
             return Compressor(context).setQuality(75).setCompressFormat(Bitmap.CompressFormat.JPEG)
                    // .setDestinationDirectoryPath(fileToCompress?.absolutePath)

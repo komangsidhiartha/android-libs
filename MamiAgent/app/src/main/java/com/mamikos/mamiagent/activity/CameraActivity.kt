@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.SeekBar
 import com.mamikos.mamiagent.R
 import com.mamikos.mamiagent.helpers.UtilsHelper
@@ -20,7 +22,6 @@ import io.fotoapparat.result.transformer.scaled
 import io.fotoapparat.selector.*
 import kotlinx.android.synthetic.main.camera_activity.*
 import org.jetbrains.anko.toast
-import java.io.File
 import kotlin.math.roundToInt
 
 /**
@@ -34,12 +35,15 @@ class CameraActivity : AppCompatActivity() {
 
     private lateinit var fotoApparat: Fotoapparat
     private lateinit var cameraZoom: Zoom.VariableZoom
-    private lateinit var file: File
     var isSupportAutoFocus1 = false
     var isSupportAutoFocus2 = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
         setContentView(R.layout.camera_activity)
 
         isSupportAutoFocus1 = packageManager.hasSystemFeature("android.hardware.camera.autofocus")
@@ -66,9 +70,6 @@ class CameraActivity : AppCompatActivity() {
         }
 
         capturedResultImageView.setOnClickListener {
-            UtilsHelper.log("data fileX ${file.path}")
-            UtilsHelper.log("data fileXX ${file.absolutePath}")
-            UtilsHelper.log("data fileXXX ${file.canonicalPath}")
             val intent = Intent()
             setResult(Activity.RESULT_OK, intent)
             finish()
@@ -104,9 +105,7 @@ class CameraActivity : AppCompatActivity() {
 
         val photoResult = fotoApparat.autoFocus().takePicture()
 
-        file = UtilsHelper.createImageFile(this)
-
-        photoResult.saveToFile(file)
+        photoResult.saveToFile(UtilsHelper.createImageFile(this))
 
         photoResult.toBitmap(scaled(scaleFactor = 0.25f)).whenAvailable { photo ->
 
@@ -115,12 +114,13 @@ class CameraActivity : AppCompatActivity() {
                     Log.i(LOGGING_TAG, "New photo captured. Bitmap length: ${photo.bitmap.byteCount}")
                     capturedResultImageView.setImageBitmap(photo.bitmap)
                     capturedResultImageView.rotation = (-photo.rotationDegrees).toFloat()
+                    capturedResultImageView.visibility = View.VISIBLE
                 } else {
                     mainLooper.quit()
                     toast("kamera tidak support 2")
                     return@whenAvailable
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 toast("Coba lagi")
             }
         }
