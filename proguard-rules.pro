@@ -16,3 +16,7 @@
 #   public *;
 #}
 -ignorewarnings
+-keep class com.sidhiartha.libs.networks.StatusResponse
+
+# Fuel
+-keep class com.github.kittinunf.fuel.android.util.AndroidEnvironment
