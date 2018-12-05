@@ -1,11 +1,13 @@
 package com.mamikos.mamiagent.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
@@ -33,6 +35,7 @@ import org.jetbrains.anko.toast
 import android.support.annotation.NonNull
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import com.git.dabang.database.table.FormDataTable
 import com.mamikos.mamiagent.apps.MamiApp
 import com.mamikos.mamiagent.entities.PhotoFormEntity
 import com.mamikos.mamiagent.entities.SaveKostEntity
@@ -69,6 +72,9 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
     var photoBathroomBuildingId = 0
     var photoInsideBuildingId = 0
     var saved: Bundle? = null
+    var photoKosBuildingDao = ""
+    var photoBathroomBuildingDao = ""
+    var photoInsideBuildingDao = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,6 +107,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
         buildGoogleApiClient()
 
         setMap()
+
     }
 
     private fun checkError(): Boolean {
@@ -214,8 +221,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
         }
     }
 
-    @Synchronized
-    private fun buildGoogleApiClient() {
+    @Synchronized private fun buildGoogleApiClient() {
         googleApiClient = GoogleApiClient.Builder(this).addConnectionCallbacks(this)
                 .addApi(LocationServices.API).build()
         googleApiClient?.connect()
@@ -386,9 +392,12 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
         })
 
         formKostStep44View.setNextOnClick(Runnable {
-            UtilsHelper.showDialogYesNo(this, "", getString(R.string.msg_data_confirmation), Runnable {
-                UtilsHelper.hideSoftInput(this)
-                goSaveKos()
+            UtilsHelper.showDialogYesNoCustomString(this, "", getString(R.string.msg_data_confirmation), getString(R.string.msg_yes), getString(R.string.msg_later), object :
+                    OnClickInterfaceObject<Int> {
+                override fun dataClicked(data: Int) {
+                    UtilsHelper.hideSoftInput(this@FormKostActivity)
+                    goSaveKos(data)
+                }
             }, 0)
         })
 
@@ -449,7 +458,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
 
     }
 
-    private fun goSaveKos() {
+    private fun goSaveKos(code: Int) {
 
         try {
 
@@ -457,8 +466,6 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
                 UtilsHelper.showSnackbar(contentSquareConstraintLayout, "titik lokasi kosong, mohon pilih kembali titik lokasi pada peta")
                 return
             }
-
-            loading.show()
 
             val saveKos = SaveKostEntity()
 
@@ -596,42 +603,47 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
             //saveKos.password = formKostStep11View.ownerPasswordEditText.text.toString()
             saveKos.inputAs = "agen"
 
-            val apiSave = SaveKosApi.SaveKost()
+            if (code == 1) {
+                val apiSave = SaveKosApi.SaveKost()
+                loading.show()
+                apiSave.postParam = GSONManager.toJson(saveKos)
+                UtilsHelper.log("wooooo " + apiSave.postParam)
 
-            apiSave.postParam = GSONManager.toJson(saveKos)
-            UtilsHelper.log("wooooo " + apiSave.postParam)
+                apiSave.exec(MessagesResponse::class.java) { response: MessagesResponse?, errorMessage: String? ->
 
-            apiSave.exec(MessagesResponse::class.java) { response: MessagesResponse?, errorMessage: String? ->
+                    var msg = ""
 
-                var msg = ""
-
-                if (response == null) {
-                    UtilsHelper.showDialogYes(this, "", "Server lagi error, hubungi pihak developer", Runnable {}, 0)
-                    loading.hide()
-                    return@exec
-                }
-
-                if (response?.status!!) {
-                    msg = "Berhasil tambah kos, bersihkan form?"
-                    UtilsHelper.showDialogYesNo(this, "", msg, Runnable {
-                        val intent = Intent(this, FormKostActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }, 0)
-                } else {
-                    for (i in 0 until response.messages?.size!!) {
-                        msg += response.messages[i] + " "
+                    if (response == null) {
+                        UtilsHelper.showDialogYes(this, "", "Server lagi error, hubungi pihak developer", Runnable {}, 0)
+                        loading.hide()
+                        return@exec
                     }
-                    UtilsHelper.showDialogYes(this, "", msg, Runnable {}, 0)
-                }
 
-                loading.hide()
+                    if (response?.status!!) {
+                        msg = "Berhasil tambah kos, bersihkan form?"
+                        UtilsHelper.showDialogYesNo(this, "", msg, Runnable {
+                            val intent = Intent(this, FormKostActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }, 0)
+                    } else {
+                        for (i in 0 until response.messages?.size!!) {
+                            msg += response.messages[i] + " "
+                        }
+                        UtilsHelper.showDialogYes(this, "", msg, Runnable {}, 0)
+                    }
+
+                    loading.hide()
+                }
+            } else {
+                SavingDataLocal().execute(saveKos)
             }
 
         } catch (e: Exception) {
             e.printStackTrace()
             MamiApp.instance?.sendEvent("errorAAA", e.toString())
             loading.hide()
+            sendReport(e.toString())
         }
     }
 
@@ -650,8 +662,8 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
         }, 0)
     }
 
-    override fun onRequestPermissionsResult(
-            requestCode: Int, @NonNull permissions: Array<String>, @NonNull grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, @NonNull permissions: Array<String>,
+                                            @NonNull grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         val booleanPermission = arrayListOf<Boolean>()
         for (i in permissions.indices) {
@@ -683,8 +695,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
 
     }
 
-    @Subscribe
-    fun onEvent(bundle: Bundle) {
+    @Subscribe fun onEvent(bundle: Bundle) {
 
     }
 
@@ -703,6 +714,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
                     } catch (e: Exception) {
                         toast("Gagal mengambil kamera")
                         e.printStackTrace()
+                        sendReport(e.toString())
                         return
                     }
                 } else if (requestCode == GlobalConst.CODE_GALLERY_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
@@ -715,6 +727,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
         } catch (e: Exception) {
             MamiApp.instance?.sendEvent("errorXXX", e.toString())
             e.printStackTrace()
+            sendReport(e.toString())
             return
         }
 
@@ -772,6 +785,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
             toast("coba lagi ${e}")
             MamiApp.instance?.sendEvent("errorX", e.toString())
             e.printStackTrace()
+            sendReport(e.toString())
             return
         }
 
@@ -792,6 +806,7 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
                 e.printStackTrace()
                 loading.hide()
                 MamiApp.instance?.sendEvent("errorA", e.toString())
+                sendReport(e.toString())
                 return
             }
             upload.formData = listOf(Pair("", ""))
@@ -808,10 +823,13 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
                         UtilsHelper.log("dataM ${response.media.id}")
                         if (requestCode == GlobalConst.CODE_CAMERA_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_BATHROOM) {
                             photoBathroomBuildingId = response.media.id
+                            photoBathroomBuildingDao = "${response.media.id},${file.path}"
                         } else if (requestCode == GlobalConst.CODE_CAMERA_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM) {
                             photoInsideBuildingId = response.media.id
+                            photoInsideBuildingDao = "${response.media.id},${file.path}"
                         } else if (requestCode == GlobalConst.CODE_CAMERA_BUILDING || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
                             photoKosBuildingId = response.media.id
+                            photoKosBuildingDao = "${response.media.id},${file.path}"
                         }
                         status.dataClicked(1)
                     }
@@ -823,8 +841,36 @@ class FormKostActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallback
             toast("coba lagix ${e}")
             MamiApp.instance?.sendEvent("errorAA", e.toString())
             e.printStackTrace()
+            sendReport(e.toString())
             return
         }
 
     }
+
+    @SuppressLint("StaticFieldLeak") private inner class SavingDataLocal :
+            AsyncTask<SaveKostEntity, Void, String>() {
+
+        var facRoomData = ""
+        var facBathRoomData = ""
+
+        override fun doInBackground(vararg data: SaveKostEntity): String? {
+            //for (x in 0 until 1000) {
+                val saveKos = data[0]
+                for (i in 0 until saveKos.facRoom.size) {
+                    facRoomData += "${saveKos.facRoom[i]},"
+                }
+                for (i in 0 until saveKos.facBath.size) {
+                    facBathRoomData = "${saveKos.facBath[i]}"
+                }
+                val formDataTable = FormDataTable(saveKos.province, saveKos.city, saveKos.subdistrict, saveKos.latitude, saveKos.longitude, saveKos.agentLat, saveKos.agentLong, saveKos.address, saveKos.name, saveKos.gender, "${saveKos.roomSize[0]},${saveKos.roomSize[1]}", saveKos.roomCount, saveKos.roomAvailable.toString(), saveKos.priceDaily.toString(), saveKos.priceWeekly.toString(), saveKos.priceMonthly.toString(), saveKos.roomCount.toString(), saveKos.minMonth, saveKos.roomCount.toString(), facRoomData, facBathRoomData, photoBathroomBuildingDao, photoInsideBuildingDao, photoKosBuildingDao, saveKos.ownerName, saveKos.ownerEmail, saveKos.ownerPhone)
+                MamiApp.instance?.appDatabase?.formDataDao()?.insert(formDataTable)
+            //}
+            return ""
+        }
+
+        override fun onPostExecute(z: String) {
+        }
+    }
+
+
 }

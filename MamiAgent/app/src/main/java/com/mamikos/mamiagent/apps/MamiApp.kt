@@ -13,10 +13,15 @@ import com.mamikos.mamiagent.BuildConfig
 import com.mamikos.mamiagent.interfaces.Constants
 import io.fabric.sdk.android.Fabric
 import java.util.*
+import android.arch.persistence.room.Room
+import com.git.dabang.helper.AppDatabase
+
 
 class MamiApp : MultiDexApplication() {
 
     private var firebaseAnalytics: FirebaseAnalytics? = null
+
+    var appDatabase: AppDatabase? = null
 
     companion object {
         lateinit var sessionManager: SessionManager
@@ -35,6 +40,9 @@ class MamiApp : MultiDexApplication() {
             Crashlytics.setUserIdentifier(MamiApp.sessionManager.agentPhoneNumber)
             firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         }
+
+        appDatabase = Room.databaseBuilder(this, AppDatabase::class.java, "mamiagen")
+                .allowMainThreadQueries().fallbackToDestructiveMigration().build()
 
     }
 

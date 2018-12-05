@@ -1,6 +1,7 @@
 package com.mamikos.mamiagent.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
@@ -27,6 +28,27 @@ public class ErrorReportActivity extends AppCompatActivity {
 
         String error = getIntent().getStringExtra("error");
         ((TextView) findViewById(R.id.txtViewCustom)).setText(error);
+
+
+
+    }
+
+    private class ReverseGeocodeTaskX extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(String... voids) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void z) {
+            super.onPostExecute(z);
+        }
     }
 
 

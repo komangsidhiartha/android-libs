@@ -31,6 +31,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.inputmethod.InputMethodManager
 import com.mamikos.mamiagent.apps.SessionManager
+import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
 import java.io.File
 import java.io.IOException
 
@@ -273,6 +274,32 @@ class UtilsHelper {
             context.supportActionBar?.setDisplayShowHomeEnabled(true)
 
             toolbar.setNavigationOnClickListener { actionClick.run() }
+
+        }
+
+        fun showDialogYesNoCustomString(context: Context, title: String, message: String,
+                                        yes: String, no: String, runnable: OnClickInterfaceObject<Int>?, icon: Int) {
+            val builder = AlertDialog.Builder(context)
+            builder.setMessage(message)
+
+            if (!title.isEmpty()) {
+                builder.setTitle(title)
+            }
+
+            if (icon != 0) {
+                builder.setIcon(icon)
+            }
+
+            builder.setCancelable(false)
+            builder.setPositiveButton(yes) { dialog, _ ->
+                runnable?.dataClicked(1)
+                dialog.dismiss()
+            }
+            builder.setNegativeButton(no) { dialog, _ ->
+                runnable?.dataClicked(0)
+                dialog.dismiss()
+            }
+            builder.show()
 
         }
 

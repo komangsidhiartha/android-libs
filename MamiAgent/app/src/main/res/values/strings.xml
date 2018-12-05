@@ -116,6 +116,7 @@
     <string name="msg_owner_email">Email (opsional)</string>
     <string name="msg_create_password">Buat password</string>
     <string name="msg_yes">Iya</string>
+    <string name="msg_later">Nanti, simpan dulu</string>
     <string name="msg_no">Tidak</string>
     <string name="msg_repeat_password">Ulangi password</string>
     <string name="msg_ex_image_landscape">Contoh foto landscape</string>
@@ -129,7 +130,7 @@
     <string name="msg_select_camera_2">Pilih dari kamera 2</string>
     <string name="msg_exit">Yakin kamu mau keluar?</string>
     <string name="msg_allow_this_feature">Aplikasi membutuhkan izin untuk bisa menggunakan fitur, izinkan?</string>
-    <string name="msg_data_confirmation">Apakah data yang kamu masukkan sudah benar?</string>
+    <string name="msg_data_confirmation">Kirim data sekarang?</string>
     <string name="msg_input_owner_data">Input data pemilik kos</string>
     <string name="msg_privacy">Dengan menampilkan kos Anda di Mamikos, <b><u>Anda menyatakan setuju</u></b> menerima review tentang kos Anda sendiri dari pengguna Mamikos.</string>
     <string name="msg_image_kos_landscape">Foto-foto Kos <font color='red'>(Harus landscape)</font></string>

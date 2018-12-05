@@ -11,7 +11,6 @@ import com.mamikos.mamiagent.views.CustomLoadingView
 import com.sidhiartha.libs.activities.BaseActivity
 import com.sidhiartha.libs.utils.GSONManager
 import kotlinx.android.synthetic.main.activity_pass_code.*
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.json.JSONObject
 
@@ -38,9 +37,11 @@ class PassCodeActivity : BaseActivity() {
                 goAuth(it)
             }
         }
+
         da?.setEmptyDrawable(R.drawable.bullet_border_green)
         da?.setFilledDrawable(R.drawable.bullet_full_green)
         passCodeLinearLayout.addView(da)
+
     }
 
     private fun goAuth(it: String) {
