@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.google.gms:google-services:4.0.1'
+        classpath 'com.google.gms:google-services:4.1.0'
     }
 }
 
@@ -55,6 +55,7 @@ dependencies {
     api "com.android.support:design:$support_version"
 
     api 'com.google.firebase:firebase-core:16.0.4'
+    implementation 'com.google.firebase:firebase-iid:17.0.4'
 
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
