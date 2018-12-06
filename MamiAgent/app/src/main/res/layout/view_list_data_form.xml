@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/listDataLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -28,27 +29,24 @@
 
                 <ImageView
                     android:id="@+id/picBuildingKosImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
+                    android:layout_width="250dp"
+                    android:layout_height="200dp"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerCrop" />
 
                 <ImageView
                     android:id="@+id/picBathRoomImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="250dp"
+                    android:layout_height="200dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:adjustViewBounds="true"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerCrop" />
 
                 <ImageView
                     android:id="@+id/picInsideKosImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
+                    android:layout_width="250dp"
+                    android:layout_height="200dp"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerCrop" />
             </LinearLayout>
@@ -82,7 +80,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
-                android:text="fw"
                 android:textColor="@color/black"
                 android:textSize="13sp" />
 
@@ -115,7 +112,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
-                android:text="fw"
                 android:textColor="@color/black"
                 android:textSize="13sp" />
 
@@ -148,12 +144,51 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
-                android:text="fw"
                 android:textColor="@color/black"
                 android:textSize="13sp" />
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/msg_complete_address"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/addressTextView"
+                style="@style/Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/sendListDataButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/accent"
+            android:lineSpacingExtra="5sp"
+            android:text="@string/msg_send"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

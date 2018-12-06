@@ -13,9 +13,8 @@ import com.mamikos.mamiagent.R
 import android.view.View
 import android.widget.ImageView
 import com.git.dabang.database.table.FormDataTable
-import com.mamikos.mamiagent.apps.MamiApp
 import kotlinx.android.synthetic.main.view_list_data_form.view.*
-import org.jetbrains.anko.imageView
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Dedi Dot on 10/9/2018.
@@ -42,19 +41,32 @@ class ListDataFormView : FrameLayout {
     }
 
     inner class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
-        var nameKosTextView = itemView?.nameKosTextView
-        var listDataLinearLayout = itemView?.listDataLinearLayout
-        var listDataHorizontalScrollView = itemView?.listDataHorizontalScrollView
 
         fun setData(data: FormDataTable?) {
-            nameKosTextView?.text = data?.provinceName
+            nameKosTextView?.text = data?.kosName
+            ownerNameTextView?.text = data?.ownerName
+            ownerPhoneTextView?.text = data?.ownerPhone
+            addressTextView?.text = data?.address
 
             data?.photoBathroomBuilding?.isNotEmpty().let {
                 val pathImage = data?.photoBathroomBuilding?.split(",")
-                LoadBitmap(picBuildingKosImageView).execute(pathImage?.get(1))
                 LoadBitmap(picBathRoomImageView).execute(pathImage?.get(1))
+            }
+
+            data?.photoInsideBuilding?.isNotEmpty().let {
+                val pathImage = data?.photoInsideBuilding?.split(",")
                 LoadBitmap(picInsideKosImageView).execute(pathImage?.get(1))
             }
+
+            data?.photoKosBuildingBuilding?.isNotEmpty().let {
+                val pathImage = data?.photoKosBuildingBuilding?.split(",")
+                LoadBitmap(picBuildingKosImageView).execute(pathImage?.get(1))
+            }
+
+            sendListDataButton.setOnClickListener {
+                EventBus.getDefault().post(data)
+            }
+
         }
     }
 

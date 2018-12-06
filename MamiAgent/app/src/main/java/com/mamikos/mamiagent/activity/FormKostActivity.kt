@@ -99,7 +99,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         setMap()
 
-        titleAddDataAds.setOnClickListener {
+        titleLocalDataTextView.setOnClickListener {
             val intent = Intent(this, ListDataFormActivity::class.java)
             startActivity(intent)
         }
@@ -292,19 +292,25 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     private fun updateMarkerMyLocation() {
         UtilsHelper.makeHandler(1000, Runnable {
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                UtilsHelper.log("cek kesini3")
-            } else {
-                UtilsHelper.log("cek kesini4")
-                val mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-                mFusedLocationClient.lastLocation.addOnSuccessListener(this) {
-                    val ltLng = LatLng(it.latitude, it.longitude)
-                    myLatLng = ltLng
-                    mMap?.addMarker(MarkerOptions().position(ltLng).title("Saya disini"))
-                    //.isDraggable = true
-                    mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(ltLng, 15.0f))
-                    UtilsHelper.log("my location ${it.latitude}, ${it.longitude}")
+            try {
+                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    UtilsHelper.log("cek kesini3")
+                } else {
+                    UtilsHelper.log("cek kesini4")
+                    val mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+                    mFusedLocationClient.lastLocation.addOnSuccessListener(this) {
+                        val ltLng = LatLng(it.latitude, it.longitude)
+                        myLatLng = ltLng
+                        mMap?.addMarker(MarkerOptions().position(ltLng).title("Saya disini"))
+                        //.isDraggable = true
+                        mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(ltLng, 15.0f))
+                        UtilsHelper.log("my location ${it.latitude}, ${it.longitude}")
+                    }
                 }
+            } catch (e: Exception) {
+                sendReport(e.toString())
+                MamiApp.instance?.sendEvent("errorAAAB", e.toString())
+                return@Runnable
             }
         })
     }
@@ -614,31 +620,34 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                 apiSave.exec(MessagesResponse::class.java) { response: MessagesResponse?, errorMessage: String? ->
 
+                    loading?.hide()
                     var msg = ""
 
                     if (response == null) {
                         UtilsHelper.showDialogYes(this, "", "Server lagi error, hubungi pihak developer", Runnable {}, 0)
-                        loading?.hide()
                         return@exec
                     }
 
-                    if (response?.status!!) {
+                    if (response.status) {
                         msg = "Berhasil tambah kos, bersihkan form?"
                         UtilsHelper.showDialogYesNo(this, "", msg, Runnable {
                             val intent = Intent(this, FormKostActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                             startActivity(intent)
                             finish()
                         }, 0)
                     } else {
-                        for (i in 0 until response.messages?.size!!) {
-                            msg += response.messages[i] + " "
+                        response.messages?.size?.let {
+                            for (i in 0 until it) {
+                                msg += response.messages[i] + " "
+                            }
                         }
-                        UtilsHelper.showDialogYes(this, "", msg, Runnable {}, 0)
+                        UtilsHelper.showDialogYes(this, "", "$msg gagal kirim", Runnable {}, 0)
                     }
 
-                    loading?.hide()
                 }
             } else {
+                UtilsHelper.log(GSONManager.toJson(saveKos))
                 SavingDataLocal().execute(saveKos)
             }
 
@@ -857,21 +866,26 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
         var facBathRoomData = ""
 
         override fun doInBackground(vararg data: SaveKostEntity): String? {
-            for (x in 0 until 1000) {
-                val saveKos = data[0]
-                for (i in 0 until saveKos.facRoom.size) {
-                    facRoomData += "${saveKos.facRoom[i]},"
-                }
-                for (i in 0 until saveKos.facBath.size) {
-                    facBathRoomData = "${saveKos.facBath[i]}"
-                }
-                val formDataTable = FormDataTable(saveKos.province, saveKos.city, saveKos.subdistrict, saveKos.latitude, saveKos.longitude, saveKos.agentLat, saveKos.agentLong, saveKos.address, saveKos.name, saveKos.gender, "${saveKos.roomSize[0]},${saveKos.roomSize[1]}", saveKos.roomCount, saveKos.roomAvailable.toString(), saveKos.priceDaily.toString(), saveKos.priceWeekly.toString(), saveKos.priceMonthly.toString(), saveKos.roomCount.toString(), saveKos.minMonth, saveKos.roomCount.toString(), facRoomData, facBathRoomData, photoBathroomBuildingDao, photoInsideBuildingDao, photoKosBuildingDao, saveKos.ownerName, saveKos.ownerEmail, saveKos.ownerPhone)
-                MamiApp.instance?.appDatabase?.formDataDao()?.insert(formDataTable)
+            val saveKos = data[0]
+            for (i in 0 until saveKos.facRoom.size) {
+                facRoomData += "${saveKos.facRoom[i]},"
             }
+            for (i in 0 until saveKos.facBath.size) {
+                facBathRoomData = "${saveKos.facBath[i]}"
+            }
+            val formDataTable = FormDataTable(saveKos.province, saveKos.city, saveKos.subdistrict, saveKos.latitude, saveKos.longitude, saveKos.agentLat, saveKos.agentLong, saveKos.address, saveKos.name, saveKos.gender, "${saveKos.roomSize[0]},${saveKos.roomSize[1]}", saveKos.roomCount, saveKos.roomAvailable, saveKos.priceDaily.toString(), saveKos.priceWeekly.toString(), saveKos.priceMonthly.toString(), saveKos.roomCount.toString(), saveKos.minMonth, saveKos.roomCount.toString(), facRoomData, facBathRoomData, photoBathroomBuildingDao, photoInsideBuildingDao, photoKosBuildingDao, saveKos.withListrik, saveKos.ownerName, saveKos.ownerEmail, saveKos.ownerPhone)
+            MamiApp.instance?.appDatabase?.formDataDao()?.insert(formDataTable)
             return ""
         }
 
         override fun onPostExecute(z: String) {
+            val msg = "Data berhasil simpan di lokal, bersihkan form?"
+            UtilsHelper.showDialogYesNo(this@FormKostActivity, "", msg, Runnable {
+                val intent = Intent(this@FormKostActivity, FormKostActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+                finish()
+            }, 0)
         }
     }
 

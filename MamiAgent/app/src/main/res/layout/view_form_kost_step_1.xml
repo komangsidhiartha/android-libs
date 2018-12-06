@@ -104,7 +104,6 @@
 
         <FrameLayout
             android:id="@+id/mapKostStep1FrameLayout"
-            android:name="com.mamikos.mamiagent.googleapi.DabangMapFragment"
             android:layout_width="match_parent"
             android:layout_height="250dp" />
 

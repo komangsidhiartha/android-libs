@@ -41,10 +41,10 @@
 
     <application
         android:name=".apps.MamiApp"
-        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
@@ -53,8 +53,8 @@
 
         <activity
             android:name=".activity.PassCodeActivity"
-            android:theme="@style/AppTheme.NoActionBar2"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -99,7 +99,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CameraActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar2" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -1,6 +1,7 @@
 package com.mamikos.mamiagent.apps
 
 import android.accounts.AccountManager
+import android.arch.persistence.db.SupportSQLiteDatabase
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -14,6 +15,7 @@ import com.mamikos.mamiagent.interfaces.Constants
 import io.fabric.sdk.android.Fabric
 import java.util.*
 import android.arch.persistence.room.Room
+import android.arch.persistence.room.migration.Migration
 import com.git.dabang.helper.AppDatabase
 
 
@@ -42,7 +44,7 @@ class MamiApp : MultiDexApplication() {
         }
 
         appDatabase = Room.databaseBuilder(this, AppDatabase::class.java, "mamiagen")
-                .allowMainThreadQueries().fallbackToDestructiveMigration().build()
+                .fallbackToDestructiveMigration().allowMainThreadQueries().build()
 
     }
 

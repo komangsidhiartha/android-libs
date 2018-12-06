@@ -19,6 +19,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 apply plugin: 'kotlin-kapt'
 
+int version_db = 1
+
 android {
     compileSdkVersion 27
     dexOptions {
@@ -28,12 +30,12 @@ android {
         applicationId "com.mamikos.mamiagent"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 3
-        versionName "0.0.3-beta"
+        versionCode 4
+        versionName "0.0.4-beta"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true // Enabling multidex support.
-
+        buildConfigField ("int", "DATABASE_VERSION", ""+version_db)
     }
 
     buildTypes {
@@ -58,7 +60,7 @@ android {
     productFlavors {
         devel {
             dimension "v1"
-            versionName "0.0.3-beta"
+            versionName "0.0.4-beta"
             buildConfigField("boolean", "SHOW_LOG", "true")
             buildConfigField("boolean", "SHOW_FABRIC", "false")
             buildConfigField("String", "BASE_URL_OLD", "\"http://songturu2.mamikos.com/api/agent/giant\"")
@@ -67,7 +69,7 @@ android {
         }
         mediaDevel {
             dimension "v1"
-            versionName "0.0.3-beta"
+            versionName "0.0.4-beta"
             buildConfigField("boolean", "SHOW_LOG", "true")
             buildConfigField("boolean", "SHOW_FABRIC", "false")
             buildConfigField("String", "BASE_URL_OLD", "\"http://songturu2.mamikos.com/api/agent/giant\"")
@@ -76,7 +78,7 @@ android {
         }
         rilis {
             dimension "v1"
-            versionName "0.0.3-beta"
+            versionName "0.0.4-beta"
             buildConfigField("boolean", "SHOW_LOG", "false")
             buildConfigField("boolean", "SHOW_FABRIC", "true")
             buildConfigField("String", "BASE_URL_OLD", "\"http://songturu2.mamikos.com/api/agent/giant\"")

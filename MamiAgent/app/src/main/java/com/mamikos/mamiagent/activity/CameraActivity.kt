@@ -3,15 +3,12 @@ package com.mamikos.mamiagent.activity
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import android.widget.SeekBar
 import com.mamikos.mamiagent.R
 import com.mamikos.mamiagent.helpers.UtilsHelper
+import com.sidhiartha.libs.activities.BaseActivity
 import io.fotoapparat.Fotoapparat
 import io.fotoapparat.configuration.CameraConfiguration
 import io.fotoapparat.configuration.UpdateConfiguration
@@ -29,7 +26,7 @@ import kotlin.math.roundToInt
  * Happy Coding!
  */
 
-class CameraActivity : AppCompatActivity() {
+class CameraActivity : BaseActivity() {
 
     private var activeCamera: Camera? = null
 
@@ -38,14 +35,9 @@ class CameraActivity : AppCompatActivity() {
     var isSupportAutoFocus1 = false
     var isSupportAutoFocus2 = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override val layoutResource: Int = R.layout.camera_activity
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-
-        setContentView(R.layout.camera_activity)
-
+    override fun viewDidLoad() {
         isSupportAutoFocus1 = packageManager.hasSystemFeature("android.hardware.camera.autofocus")
         isSupportAutoFocus2 = packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_AUTOFOCUS)
 
@@ -74,7 +66,6 @@ class CameraActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK, intent)
             finish()
         }
-
     }
 
     private fun cekCameraFocusSupport() {
@@ -103,12 +94,13 @@ class CameraActivity : AppCompatActivity() {
 
     private fun takePicture() {
 
+        loading?.show()
+
         val photoResult = fotoApparat.autoFocus().takePicture()
 
         photoResult.saveToFile(UtilsHelper.createImageFile(this))
 
         photoResult.toBitmap(scaled(scaleFactor = 0.25f)).whenAvailable { photo ->
-
             try {
                 if (photo != null) {
                     Log.i(LOGGING_TAG, "New photo captured. Bitmap length: ${photo.bitmap.byteCount}")
@@ -122,7 +114,9 @@ class CameraActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 toast("Coba lagi")
+                return@whenAvailable
             }
+            loading?.hide()
         }
     }
 
@@ -188,8 +182,7 @@ class CameraActivity : AppCompatActivity() {
     private fun adjustViewsVisibility() {
         fotoApparat.getCapabilities().whenAvailable { capabilities ->
             if (capabilities != null) {
-                (capabilities.zoom as? Zoom.VariableZoom)?.let { zoom -> setupZoom(zoom) }
-                        ?: run { zoomSeekBar.visibility = View.GONE }
+                (capabilities.zoom as? Zoom.VariableZoom)?.let { zoom -> setupZoom(zoom) } ?: run { zoomSeekBar.visibility = View.GONE }
                 torchSwitch.visibility = if (capabilities.flashModes.contains(Flash.Torch)) View.VISIBLE else View.GONE
             } else {
                 toast("kamera tidak support 3")

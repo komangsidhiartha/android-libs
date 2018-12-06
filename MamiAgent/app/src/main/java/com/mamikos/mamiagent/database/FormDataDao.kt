@@ -14,13 +14,15 @@ import com.git.dabang.database.table.FormDataTable
 
 @Dao interface FormDataDao {
 
-    @get:Query("SELECT * FROM form_data") val getAll: List<FormDataTable>
+    @get:Query("SELECT * FROM form_data ORDER BY id DESC") val getAll: List<FormDataTable>
 
-    @Query("SELECT * FROM form_data WHERE province_name" + " LIKE :query") fun getAllByName(
+    @Query("SELECT * FROM form_data WHERE province_name LIKE :query") fun getAllByName(
             query: String): List<FormDataTable>
 
-    @Query("SELECT * FROM form_data LIMIT :start,:end ") fun getDataByPage(start: String,
-                                                                           end: String): List<FormDataTable>?
+    @Query("SELECT * FROM form_data LIMIT :start,:end") fun getDataByPage(start: String,
+                                                                          end: String): List<FormDataTable>?
+
+    @Query(" DELETE FROM form_data WHERE id=:id") fun deleteById(id: String)
 
     @Insert fun insert(vararg insertData: FormDataTable)
 

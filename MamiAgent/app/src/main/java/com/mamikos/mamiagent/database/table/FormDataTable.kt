@@ -7,6 +7,7 @@ import android.arch.persistence.room.PrimaryKey
 /**
  * Created by Dedi Dot on 9/18/2018.
  * Happy Coding!
+ * ex migration: https://github.com/googlesamples/android-architecture-components/blob/master/PersistenceMigrationsSample/app/src/room3/java/com/example/android/persistence/migrations/UsersDatabase.java
  */
 
 @Entity(tableName = "form_data") data class FormDataTable(@ColumnInfo(name = "province_name")
@@ -34,7 +35,7 @@ import android.arch.persistence.room.PrimaryKey
                                                           @ColumnInfo(name = "room_count")
                                                           var roomCount: Int,
                                                           @ColumnInfo(name = "room_available")
-                                                          var roomAvailable: String,
+                                                          var roomAvailable: Int,
                                                           @ColumnInfo(name = "price_daily")
                                                           var priceDaily: String,
                                                           @ColumnInfo(name = "price_weekly")
@@ -56,7 +57,9 @@ import android.arch.persistence.room.PrimaryKey
                                                           @ColumnInfo(name = "photo_inside_building")
                                                           var photoInsideBuilding: String,
                                                           @ColumnInfo(name = "photo_kos_building")
-                                                          var photoKosBuildingId: String,
+                                                          var photoKosBuildingBuilding: String,
+                                                          @ColumnInfo(name = "is_electricity")
+                                                          var isElectricity: Int,
                                                           @ColumnInfo(name = "owner_name")
                                                           var ownerName: String,
                                                           @ColumnInfo(name = "owner_email")
