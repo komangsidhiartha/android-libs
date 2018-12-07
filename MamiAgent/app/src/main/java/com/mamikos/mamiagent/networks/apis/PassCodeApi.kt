@@ -8,6 +8,7 @@ open class PassCodeApi : MamikosAgentBaseApi() {
     class CodeApi : PassCodeApi()
 
     override val headers: Map<String, String>?
+
         get() = generateAuthHeader(path)
     override val method: APIMethod
         get() = APIMethod.POST

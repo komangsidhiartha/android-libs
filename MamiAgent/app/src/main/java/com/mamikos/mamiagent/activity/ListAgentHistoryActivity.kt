@@ -3,8 +3,8 @@ package com.mamikos.mamiagent.activity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.mamikos.mamiagent.R
-import com.mamikos.mamiagent.adapters.ListDataRoomAdapter
-import com.mamikos.mamiagent.entities.RoomEntity
+import com.mamikos.mamiagent.adapters.ListDataHistoryAdapter
+import com.mamikos.mamiagent.entities.HistoryEntity
 import com.mamikos.mamiagent.helpers.ExceptionHandler
 import com.mamikos.mamiagent.helpers.UtilsHelper
 import com.mamikos.mamiagent.networks.apis.AgentHistoryApi
@@ -21,8 +21,8 @@ import kotlinx.android.synthetic.main.activity_list_data_form.*
 
 class ListAgentHistoryActivity : BaseActivity() {
 
-    var adapter: ListDataRoomAdapter? = null
-    var data: ArrayList<RoomEntity> = ArrayList()
+    var adapter: ListDataHistoryAdapter? = null
+    var data: ArrayList<HistoryEntity> = ArrayList()
     var page = 1
 
     override val layoutResource: Int = R.layout.activity_list_data_form
@@ -31,8 +31,7 @@ class ListAgentHistoryActivity : BaseActivity() {
 
         Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler(this))
 
-        adapter = ListDataRoomAdapter(this, data, {
-
+        adapter = ListDataHistoryAdapter(this, data, {
             getData()
         }, {})
         dataFormRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -73,7 +72,7 @@ class ListAgentHistoryActivity : BaseActivity() {
 
             if (response == null) {
                 sendReport(errorMessage.toString())
-                UtilsHelper.showDialogYes(this, "", "Server lagi error, hubungi pihak developer", Runnable {
+                UtilsHelper.showDialogYes(this, "", "Server lagi error, hubungi developer", Runnable {
                     finish()
                 }, 0)
                 return@exec
@@ -83,10 +82,13 @@ class ListAgentHistoryActivity : BaseActivity() {
                 data.clear()
             }
 
-            if (response.status && response.rooms.isNotEmpty()) {
-                data.addAll(response.rooms)
+            if (response.status) {
+                data.addAll(response.data)
                 adapter?.notifyDataSetChanged()
-                page = response.nextPage
+                page += 1
+                if (response.data.size < 10) {
+                    adapter?.needToLoadMore = false
+                }
             } else {
                 sendReport(errorMessage.toString())
                 adapter?.needToLoadMore = false

@@ -304,12 +304,18 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     UtilsHelper.log("cek kesini4")
                     val mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
                     mFusedLocationClient.lastLocation.addOnSuccessListener(this) {
-                        val ltLng = LatLng(it.latitude, it.longitude)
-                        myLatLng = ltLng
-                        mMap?.addMarker(MarkerOptions().position(ltLng).title("Saya disini"))
-                        //.isDraggable = true
-                        mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(ltLng, 15.0f))
-                        UtilsHelper.log("my location ${it.latitude}, ${it.longitude}")
+                        try {
+                            val ltLng = LatLng(it.latitude, it.longitude)
+                            myLatLng = ltLng
+                            mMap?.addMarker(MarkerOptions().position(ltLng).title("Saya disini"))
+                            //.isDraggable = true
+                            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(ltLng, 15.0f))
+                            UtilsHelper.log("my location ${it.latitude}, ${it.longitude}")
+                        } catch (e: Exception) {
+                            sendReport(e.toString())
+                            MamiApp.instance?.sendEvent("XXxs", e.toString())
+                            return@addOnSuccessListener
+                        }
                     }
                 }
             } catch (e: Exception) {
@@ -637,7 +643,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                     if (response == null) {
                         sendReport(errorMessage.toString())
-                        UtilsHelper.showDialogYesNoCustomString(this, "", "Server lagi error, hubungi pihak developer", "Coba lagi", "Iya", object :
+                        UtilsHelper.showDialogYesNoCustomString(this, "", "Server lagi error, hubungi developer", "Coba lagi", "Iya", object :
                                 OnClickInterfaceObject<Int> {
                             override fun dataClicked(data: Int) {
                                 if (data == 1) {

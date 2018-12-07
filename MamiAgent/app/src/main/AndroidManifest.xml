@@ -52,7 +52,7 @@
             android:value="AIzaSyCQIkeKDefYAlUkmylMHnSL9EhbISYCHK0" />
 
         <activity
-            android:name=".activity.PassCodeActivity"
+            android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar2">
             <intent-filter>
@@ -120,8 +120,9 @@
             android:value="22309a803cf61bd054896081dc9aaf69787fe278" />
 
         <activity
-            android:name=".activity.SplashActivity"
-            android:screenOrientation="portrait" />
+            android:name=".activity.PassCodeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar2" />
 
     </application>
 

@@ -39,7 +39,7 @@ class SessionManager(context: Context)
         set(value) = editor.putBoolean(IS_LOGIN, value).apply()
 
     var agentPhoneNumber: String
-        get() = pref.getString(AGENT_PHONE_NUMBER, "087839439584")
+        get() = pref.getString(AGENT_PHONE_NUMBER, "")
         set(value) = editor.putString(AGENT_PHONE_NUMBER, value).apply()
 
     var pathCamera: String

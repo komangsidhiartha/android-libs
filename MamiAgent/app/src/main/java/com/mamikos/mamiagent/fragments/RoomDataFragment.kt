@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_room_data.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.toast
 
+@Deprecated("")
 class RoomDataFragment : BaseSupportFragment() {
     companion object {
         fun newInstance(type: String): RoomDataFragment {
@@ -110,7 +111,7 @@ class RoomDataFragment : BaseSupportFragment() {
     fun proccessResponse(response: ListRoomResponse) {
         if (nextPageData == 1)
             rooms.clear()
-        rooms.addAll(response.data.rooms)
+        //rooms.addAll(response.data.rooms)
         nextPageData = response.data.nextPage
         hasMoreData = response.data.hasMore
 

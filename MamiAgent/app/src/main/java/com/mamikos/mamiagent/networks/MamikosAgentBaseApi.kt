@@ -24,7 +24,7 @@ import javax.crypto.spec.SecretKeySpec
 
 abstract class MamikosAgentBaseApi : BaseAPI() {
     //override val basePath: String = "http://songturu2.mamikos.com/api/agent/giant"
-    override val basePath: String =  BuildConfig.BASE_URL
+    override val basePath: String = BuildConfig.BASE_URL
     var formData: List<Pair<String, Any?>>? = null
     var fileUpload: File? = null
     var postParam = ""
@@ -50,7 +50,11 @@ abstract class MamikosAgentBaseApi : BaseAPI() {
             header["Content-Type"] = "application/json"
         }
         header["X-GIT-Time"] = "" + timeStamp
-        header["Authorization"] = "GIT devel:${MamiApp.sessionManager.agentPhoneNumber}"
+        if (MamiApp.sessionManager.agentPhoneNumber.isNotEmpty()) {
+            header["Authorization"] = "GIT devel:${MamiApp.sessionManager.agentPhoneNumber}"
+        } else {
+            header["Authorization"] = "GIT devel:087839439584"//default dulu
+        }
         return header
     }
 
@@ -138,8 +142,7 @@ abstract class MamikosAgentBaseApi : BaseAPI() {
             return data.toString()
         }
 
-    @Throws(Exception::class)
-    fun encodeHeader(key: String, data: String): String {
+    @Throws(Exception::class) fun encodeHeader(key: String, data: String): String {
         val sha256HMAC = Mac.getInstance("HmacSHA256")
         val secretKey = SecretKeySpec(key.toByteArray(), "HmacSHA256")
         sha256HMAC.init(secretKey)

@@ -25,6 +25,7 @@ class PassCodeActivity : BaseActivity() {
     override val layoutResource: Int = R.layout.activity_pass_code
 
     override fun viewDidLoad() {
+
         da = PassCodeView(this)
         da?.digitLength = 6
         da?.setTypeFace(UtilsHelper.getFontRegular(this))
@@ -45,7 +46,7 @@ class PassCodeActivity : BaseActivity() {
         loading?.show()
         val api = PassCodeApi.CodeApi()
         val jsonData = JSONObject()
-        jsonData.put("code", it)
+        jsonData.put("code", it.toInt())
         api.postParam = jsonData.toString()
         api.exec(PassCodeResponse::class.java) { response: PassCodeResponse?, errorMessage: String? ->
             when (response) {
