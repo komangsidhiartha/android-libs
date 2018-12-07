@@ -104,6 +104,11 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             startActivity(intent)
         }
 
+        titleHistoryDataTextView.setOnClickListener {
+            val intent = Intent(this, ListAgentHistoryActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun checkError(): Boolean {
@@ -623,8 +628,23 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     loading?.hide()
                     var msg = ""
 
+                    if (!UtilsHelper.isNetworkConnected(this@FormKostActivity)) {
+                        UtilsHelper.showDialogYes(this, "", "Koneksi tidak stabil, simpan dilokal dulu ya?", Runnable {
+                            SavingDataLocal().execute(saveKos)
+                        }, 0)
+                        return@exec
+                    }
+
                     if (response == null) {
-                        UtilsHelper.showDialogYes(this, "", "Server lagi error, hubungi pihak developer", Runnable {}, 0)
+                        sendReport(errorMessage.toString())
+                        UtilsHelper.showDialogYesNoCustomString(this, "", "Server lagi error, hubungi pihak developer", "Coba lagi", "Iya", object :
+                                OnClickInterfaceObject<Int> {
+                            override fun dataClicked(data: Int) {
+                                if (data == 1) {
+                                    goSaveKos(1)
+                                }
+                            }
+                        }, 0)
                         return@exec
                     }
 

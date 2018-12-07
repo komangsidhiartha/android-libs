@@ -50,6 +50,7 @@
     <string name="facility">Fasilitas</string>
     <string name="msg_add_data_ads">Tambah data iklan</string>
     <string name="msg_see_data_local">Lihat data lokal</string>
+    <string name="msg_see_data_history">Lihat data histori</string>
     <string name="msg_data_location">Data lokasi</string>
     <string name="msg_data_kos">Data kos</string>
     <string name="msg_data_facility_kos">Fasilitas kos</string>
@@ -64,6 +65,7 @@
     <string name="msg_input_data_location">Input data lokasi</string>
     <string name="msg_input_data_kos">Input data kos</string>
     <string name="msg_input_facility_data_kos">Input fasilitas kos</string>
+    <string name="msg_data_history_agen">Data histori</string>
     <string name="msg_complete_address_star">Alamat lengkap*</string>
     <string name="msg_complete_address">Alamat lengkap</string>
     <string name="msg_map_location_start">Peta lokasi kos*</string>

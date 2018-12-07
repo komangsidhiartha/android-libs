@@ -98,6 +98,9 @@
             android:name=".activity.StatisticActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.ListAgentHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.CameraActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar2" />

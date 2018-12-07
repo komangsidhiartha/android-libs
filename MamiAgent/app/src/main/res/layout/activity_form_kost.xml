@@ -55,6 +55,25 @@
                         android:textColor="@color/dove_gray_approx"
                         android:textSize="14sp" />
 
+                    <TextView
+                        style="@style/Semibold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:text="|"
+                        android:textColor="@color/dove_gray_approx"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/titleHistoryDataTextView"
+                        style="@style/Semibold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/msg_see_data_history"
+                        android:textColor="@color/dove_gray_approx"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
             </HorizontalScrollView>
 

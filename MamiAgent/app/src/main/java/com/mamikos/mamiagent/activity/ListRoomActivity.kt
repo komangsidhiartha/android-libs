@@ -30,8 +30,9 @@ import kotlinx.android.synthetic.main.activity_list_room.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.startActivity
 
-
-class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+@Deprecated("move to ListAgentHistoryActivity") class ListRoomActivity : BaseActivity(),
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        LocationListener {
 
     override val layoutResource: Int = R.layout.activity_list_room
 
@@ -65,15 +66,13 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
 
     var currentLoad = ""
 
-    override fun viewDidLoad()
-    {
+    override fun viewDidLoad() {
         setTitle("Agen Kost Mamikos")
         tabListRoom.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 currentTabSelected = tab.position
                 vpListRoom.currentItem = tab.position
-                if (fragmentPagerAdapter != null)
-                    fragmentPagerAdapter?.fragments?.get(tab.position)?.reload()
+                if (fragmentPagerAdapter != null) fragmentPagerAdapter?.fragments?.get(tab.position)?.reload()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -87,11 +86,8 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
 
         btnStatistic.onClick { this.openStatistic() }
 
-        mGoogleApiClient = GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build()
+        mGoogleApiClient = GoogleApiClient.Builder(this).addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this).addApi(LocationServices.API).build()
 
         mLocationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         checkLocation()
@@ -99,22 +95,19 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
         deleteFolderPictures()
     }
 
-    private fun deleteFolderPictures() {//
+    private fun deleteFolderPictures() { //
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         storageDir.deleteRecursively()
     }
 
-    fun setAdapter()
-    {
+    fun setAdapter() {
         val availFragment = RoomDataFragment.newInstance(TYPE_AVAIL)
         val editedFragment = RoomDataFragment.newInstance(TYPE_EDITED)
-        fragmentPagerAdapter = ListRoomPagerAdapter(supportFragmentManager,
-                arrayListOf(availFragment, editedFragment))
+        fragmentPagerAdapter = ListRoomPagerAdapter(supportFragmentManager, arrayListOf(availFragment, editedFragment))
         vpListRoom.adapter = fragmentPagerAdapter
         vpListRoom.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabListRoom))
 
-        if (intent.hasExtra(SUCCESS_INPUT))
-            tabListRoom.getTabAt(1)?.select()
+        if (intent.hasExtra(SUCCESS_INPUT)) tabListRoom.getTabAt(1)?.select()
     }
 
     override fun onStart() {
@@ -136,8 +129,7 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
     }
 
     override fun onConnected(p0: Bundle?) {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             showAlertLocation()
             return
         }
@@ -154,13 +146,13 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
+                                            grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             SETTING_LOCATION -> {
                 if (grantResults.count() > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(this,
-                                    android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                         startLocationUpdates()
                     }
 
@@ -172,11 +164,10 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
         }
     }
 
-    @SuppressLint("MissingPermission")
-    protected fun startLocationUpdates() {
+    @SuppressLint("MissingPermission") protected fun startLocationUpdates() {
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-//                .setInterval(UPDATE_INTERVAL).setFastestInterval(FASTEST_INTERVAL)
+        //                .setInterval(UPDATE_INTERVAL).setFastestInterval(FASTEST_INTERVAL)
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             showAlertLocation()
@@ -192,8 +183,7 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
     }
 
     private fun checkLocation(): Boolean {
-        if (!isLocationEnabled)
-            showAlertLocation()
+        if (!isLocationEnabled) showAlertLocation()
         return isLocationEnabled
     }
 
@@ -202,12 +192,8 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
         dialog.setTitle("Enable Location")
                 .setMessage("Untuk menggunakan App ini silahkan hidupkan GPS Anda dan beri akses untuk App ini")
                 .setPositiveButton("OKE") { paramDialogInterface, paramInt ->
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                        ActivityCompat.requestPermissions(this,
-                            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION,
-                                android.Manifest.permission.ACCESS_COARSE_LOCATION), SETTING_LOCATION);
-                    else
-                        showSettingLocationDialog()
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION), SETTING_LOCATION);
+                    else showSettingLocationDialog()
                 }.setCancelable(false)
         dialog.show()
     }
@@ -220,20 +206,17 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
     override fun onBackPressed() {
         if (isNeedToShowCloseWarning()) {
             Toast.makeText(this, R.string.msg_back_pressed, Toast.LENGTH_SHORT).show()
-        }
-        else
-        {
+        } else {
             super.onBackPressed()
         }
         lastBackPressedTimeInMillis = System.currentTimeMillis()
     }
 
     private fun showSettingLocationDialog() {
-        if (mLocationRequest == null)
-            mLocationRequest = LocationRequest.create().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+        if (mLocationRequest == null) mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
 
-        val builder = LocationSettingsRequest.Builder()
-                .addLocationRequest(mLocationRequest!!)
+        val builder = LocationSettingsRequest.Builder().addLocationRequest(mLocationRequest!!)
         builder.setAlwaysShow(true)
         val result = LocationServices.getSettingsClient(this).checkLocationSettings(builder.build())
         result.addOnCompleteListener { task ->
@@ -264,13 +247,10 @@ class ListRoomActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Go
                 return
             }
             startLocationUpdates()
-        }
-        else
-            super.onActivityResult(requestCode, resultCode, data)
+        } else super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun openStatistic()
-    {
+    private fun openStatistic() {
         startActivity<StatisticActivity>()
     }
 }

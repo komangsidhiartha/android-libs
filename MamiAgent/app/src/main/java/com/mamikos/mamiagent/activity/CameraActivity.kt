@@ -103,10 +103,22 @@ class CameraActivity : BaseActivity() {
         photoResult.toBitmap(scaled(scaleFactor = 0.25f)).whenAvailable { photo ->
             try {
                 if (photo != null) {
-                    Log.i(LOGGING_TAG, "New photo captured. Bitmap length: ${photo.bitmap.byteCount}")
-                    capturedResultImageView.setImageBitmap(photo.bitmap)
-                    capturedResultImageView.rotation = (-photo.rotationDegrees).toFloat()
-                    capturedResultImageView.visibility = View.VISIBLE
+
+                    UtilsHelper.log("$LOGGING_TAG New photo captured. Bitmap length: ${photo.bitmap.byteCount}")
+                    UtilsHelper.log("$LOGGING_TAG New photo captured. width: ${photo.bitmap.width}")
+                    UtilsHelper.log("$LOGGING_TAG New photo captured. height: ${photo.bitmap.height}")
+                    UtilsHelper.log("$LOGGING_TAG New photo captured. density: ${photo.bitmap.density}")
+                    UtilsHelper.log("$LOGGING_TAG New photo captured. config: ${photo.bitmap.config}")
+                    UtilsHelper.log("$LOGGING_TAG New photo captured. rotationDegrees: ${photo.rotationDegrees}")
+
+                    if (photo.rotationDegrees == 0) {
+                        capturedResultImageView.setImageBitmap(photo.bitmap)
+                        capturedResultImageView.rotation = (-photo.rotationDegrees).toFloat()
+                        capturedResultImageView.visibility = View.VISIBLE
+                    } else {
+                        capturedResultImageView.visibility = View.GONE
+                        toast("Foto harus landscape")
+                    }
                 } else {
                     mainLooper.quit()
                     toast("kamera tidak support 2")

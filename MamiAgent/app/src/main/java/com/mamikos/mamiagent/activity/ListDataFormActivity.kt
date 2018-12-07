@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager
 import com.git.dabang.database.table.FormDataTable
 import com.mamikos.mamiagent.entities.PhotoFormEntity
 import com.mamikos.mamiagent.entities.SaveKostEntity
+import com.mamikos.mamiagent.helpers.ExceptionHandler
 import com.mamikos.mamiagent.networks.apis.SaveKosApi
 import com.mamikos.mamiagent.networks.responses.MessagesResponse
 import com.sidhiartha.libs.utils.GSONManager
@@ -31,6 +32,8 @@ class ListDataFormActivity : BaseActivity() {
     override val layoutResource: Int = R.layout.activity_list_data_form
 
     override fun viewDidLoad() {
+
+        Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler(this))
 
         EventBus.getDefault().register(this)
 

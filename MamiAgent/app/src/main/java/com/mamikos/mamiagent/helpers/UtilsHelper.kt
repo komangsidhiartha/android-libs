@@ -24,6 +24,8 @@ import kotlin.experimental.and
 import android.content.DialogInterface
 import android.R.string.yes
 import android.app.Activity
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Build
 import android.os.Environment
 import android.support.v4.content.ContextCompat
@@ -243,8 +245,7 @@ class UtilsHelper {
         }
 
 
-        @Throws(IOException::class)
-        fun createImageFile(context: Context): File {
+        @Throws(IOException::class) fun createImageFile(context: Context): File {
             // Create an image file name
             val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
             val storageDir: File = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -278,7 +279,8 @@ class UtilsHelper {
         }
 
         fun showDialogYesNoCustomString(context: Context, title: String, message: String,
-                                        yes: String, no: String, runnable: OnClickInterfaceObject<Int>?, icon: Int) {
+                                        yes: String, no: String,
+                                        runnable: OnClickInterfaceObject<Int>?, icon: Int) {
             val builder = AlertDialog.Builder(context)
             builder.setMessage(message)
 
@@ -301,6 +303,14 @@ class UtilsHelper {
             }
             builder.show()
 
+        }
+
+        fun isNetworkConnected(context: Context?): Boolean {
+            val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE)
+            return if (connectivityManager is ConnectivityManager) {
+                val networkInfo: NetworkInfo? = connectivityManager.activeNetworkInfo
+                networkInfo?.isConnected ?: false
+            } else false
         }
 
     }
