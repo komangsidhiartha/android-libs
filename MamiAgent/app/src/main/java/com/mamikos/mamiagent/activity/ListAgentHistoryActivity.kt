@@ -13,6 +13,9 @@ import com.mamikos.mamiagent.networks.responses.MessagesResponse
 import com.mamikos.mamiagent.networks.responses.RoomResponse
 import com.sidhiartha.libs.activities.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_data_form.*
+import android.view.Menu
+import android.view.MenuItem
+
 
 /**
  * Created by Dedi Dot on 12/7/2018.
@@ -99,6 +102,19 @@ class ListAgentHistoryActivity : BaseActivity() {
             adapter?.isLoading = false
 
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.activity_agen_history_menu, menu)
+        return true
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.filterMenu) {
+            return false
+        }
+        return true
     }
 
     private fun sendReport(s: String) {

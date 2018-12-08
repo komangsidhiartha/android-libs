@@ -75,7 +75,7 @@ abstract class MamikosAgentBaseApi : BaseAPI() {
                     if (method == APIMethod.UPLOAD) {
                         decode = json!!.obj().toString()
                     } else {
-                        decode = GITStringBuilder.de(NetworkEntity().stringUrl(), json!!.obj().get("data").toString())
+                        decode = GITStringBuilder.de(NetworkEntity().stringUrl(),  json!!.obj().get("data").toString())
                     }
 
                     UtilsHelper.log("resposepath ${basePath}")

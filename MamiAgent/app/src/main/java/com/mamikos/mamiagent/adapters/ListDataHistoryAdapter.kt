@@ -1,6 +1,7 @@
 package com.mamikos.mamiagent.adapters
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.ViewGroup
 import com.mamikos.mamiagent.*
@@ -29,6 +30,14 @@ class ListDataHistoryAdapter(context: Context, items: ArrayList<HistoryEntity>,
             itemView.onClick { itemClickListener(item) }
             itemView.roomNameTextView.text = item.name
             itemView.ownerPhoneTextView.text = item.ownerPhone
+            itemView.statusTextView.text = item.status
+
+            if (item.status.equals("verified", true)) {
+                itemView.statusTextView.setTextColor(ContextCompat.getColor(context, R.color.accent))
+            } else {
+                itemView.statusTextView.setTextColor(ContextCompat.getColor(context, R.color.dark_gray))
+            }
+
             if (item.reason.isNotEmpty()) {
                 itemView.rejectTextView.visibility = View.VISIBLE
                 itemView.rejectTextView.text = item.reason

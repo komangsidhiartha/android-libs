@@ -30,8 +30,8 @@ android {
         applicationId "com.mamikos.mamiagent"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 4
-        versionName "0.0.4-beta"
+        versionCode 5
+        versionName "0.0.5-beta"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true // Enabling multidex support.
@@ -137,5 +137,7 @@ dependencies {
 
     implementation "android.arch.persistence.room:runtime:1.1.1"
     kapt "android.arch.persistence.room:compiler:1.1.1"
+
+    implementation 'com.amitshekhar.android:android-networking:1.0.2'
 
 }
