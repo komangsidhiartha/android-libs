@@ -30,7 +30,7 @@ class ListDataHistoryAdapter(context: Context, items: ArrayList<HistoryEntity>,
             itemView.onClick { itemClickListener(item) }
             itemView.roomNameTextView.text = item.name
             itemView.ownerPhoneTextView.text = item.ownerPhone
-            itemView.statusTextView.text = item.status
+            itemView.statusTextView.text = item.status//
 
             if (item.status.equals("verified", true)) {
                 itemView.statusTextView.setTextColor(ContextCompat.getColor(context, R.color.accent))
