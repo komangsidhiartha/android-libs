@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import com.mamikos.mamiagent.R
+import com.mamikos.mamiagent.helpers.ExceptionHandler
 import com.mamikos.mamiagent.helpers.UtilsHelper
 import com.sidhiartha.libs.activities.BaseActivity
 import io.fotoapparat.Fotoapparat
@@ -40,6 +41,8 @@ class CameraActivity : BaseActivity() {
     override fun viewDidLoad() {
         isSupportAutoFocus1 = packageManager.hasSystemFeature("android.hardware.camera.autofocus")
         isSupportAutoFocus2 = packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_AUTOFOCUS)
+
+        Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler(this))
 
         cekCameraFocusSupport()
 
