@@ -12,7 +12,7 @@ class SessionManager(context: Context)
     private val TOKEN = "user_token"
     private val USER_ID = "user_id"
     private val IS_LOGIN = "is_login"
-    private val AGENT_PHONE_NUMBER = "agent_phone_number"
+    private val AGENT_PHONE_NUMBERS = "agent_phone_numbers"
     private val PATH_CAMERA = "path_camera"
 
     val pref: SharedPreferences = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
@@ -39,8 +39,8 @@ class SessionManager(context: Context)
         set(value) = editor.putBoolean(IS_LOGIN, value).apply()
 
     var agentPhoneNumber: String
-        get() = pref.getString(AGENT_PHONE_NUMBER, "")
-        set(value) = editor.putString(AGENT_PHONE_NUMBER, value).apply()
+        get() = pref.getString(AGENT_PHONE_NUMBERS, "")
+        set(value) = editor.putString(AGENT_PHONE_NUMBERS, value).apply()
 
     var pathCamera: String
         get() = pref.getString(PATH_CAMERA, "")
