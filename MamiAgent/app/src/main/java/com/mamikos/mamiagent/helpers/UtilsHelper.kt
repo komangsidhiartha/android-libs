@@ -36,6 +36,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.DatePicker
 import com.mamikos.mamiagent.apps.SessionManager
 import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
+import org.jetbrains.anko.appcompat.v7.navigationIconResource
 import java.io.File
 import java.io.IOException
 
@@ -270,7 +271,7 @@ class UtilsHelper {
             }
 
             if (icon != 0) {
-                toolbar.navigationIcon = ContextCompat.getDrawable(context, icon)
+                toolbar.navigationIconResource = icon
             }
 
             context.setSupportActionBar(toolbar)

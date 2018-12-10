@@ -696,10 +696,8 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             val intent = Intent()
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             setResult(0, intent)
-            finish()
             android.os.Process.killProcess(android.os.Process.myPid())
             System.exit(10)
-            return@Runnable
         }, 0)
     }
 
