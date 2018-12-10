@@ -99,6 +99,7 @@ class ListAgentHistoryActivity : BaseActivity() {
 
             if (response.data == null) {
                 toast("tidak ada data")
+                adapter?.needToLoadMore = false
                 return@exec
             }
 
