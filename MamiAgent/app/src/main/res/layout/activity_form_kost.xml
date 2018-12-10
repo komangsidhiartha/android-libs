@@ -245,13 +245,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <com.mamikos.mamiagent.views.FormKostOwnerView
                 android:id="@+id/formKostOwnerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:visibility="visible" />
 
             <com.mamikos.mamiagent.views.FormKostLocationView
@@ -276,5 +276,11 @@
         </LinearLayout>
     </com.mamikos.mamiagent.views.LockableScrollView>
 
+    <include
+        android:id="@+id/btnBackNextOwnerView"
+        layout="@layout/view_btn_back_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 
 </LinearLayout>
