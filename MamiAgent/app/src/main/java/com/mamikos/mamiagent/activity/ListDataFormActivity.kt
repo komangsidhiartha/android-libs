@@ -46,6 +46,8 @@ class ListDataFormActivity : BaseActivity() {
         UtilsHelper.setupToolbar(this, dataFormToolbar, getString(R.string.msg_local_data), "", R.drawable.ic_arrow_back_white_24dp, Runnable {
             onBackPressed()
         })
+
+        swipeRefreshLayout.isEnabled = false
     }
 
     @SuppressLint("StaticFieldLeak") private inner class LoadDataLocal :

@@ -24,6 +24,7 @@ import kotlin.experimental.and
 import android.content.DialogInterface
 import android.R.string.yes
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Build
@@ -32,6 +33,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.inputmethod.InputMethodManager
+import android.widget.DatePicker
 import com.mamikos.mamiagent.apps.SessionManager
 import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
 import java.io.File
@@ -311,6 +313,22 @@ class UtilsHelper {
                 val networkInfo: NetworkInfo? = connectivityManager.activeNetworkInfo
                 networkInfo?.isConnected ?: false
             } else false
+        }
+
+        fun showDateDialog(context: Context, clicked: OnClickInterfaceObject<String>) {
+            try {
+                val newCalendar = Calendar.getInstance()
+                val datePickerDialog = DatePickerDialog(context, R.style.DialogDateTheme, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                    val newDate = Calendar.getInstance()
+                    newDate.set(year, month, dayOfMonth)
+                    val formatAPI = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                    val birthday = formatAPI.format(newDate.time)
+                    clicked.dataClicked(birthday)
+                }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH))
+                datePickerDialog.show()
+            } catch (e: Exception) {
+                clicked.dataClicked("")
+            }
         }
 
     }

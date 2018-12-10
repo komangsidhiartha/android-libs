@@ -53,7 +53,7 @@ abstract class MamikosAgentBaseApi : BaseAPI() {
         if (MamiApp.sessionManager.agentPhoneNumber.isNotEmpty()) {
             header["Authorization"] = "GIT devel:${MamiApp.sessionManager.agentPhoneNumber}"
         } else {
-            header["Authorization"] = "GIT devel:087839439584"//default dulu
+            header["Authorization"] = "GIT devel:087839439584" //default dulu
         }
         return header
     }
@@ -75,7 +75,7 @@ abstract class MamikosAgentBaseApi : BaseAPI() {
                     if (method == APIMethod.UPLOAD) {
                         decode = json!!.obj().toString()
                     } else {
-                        decode = GITStringBuilder.de(NetworkEntity().stringUrl(),  json!!.obj().get("data").toString())
+                        decode = GITStringBuilder.de(NetworkEntity().stringUrl(), json!!.obj().get("data").toString())
                     }
 
                     UtilsHelper.log("resposepath ${basePath}")

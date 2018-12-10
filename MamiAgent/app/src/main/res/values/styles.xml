@@ -44,4 +44,8 @@
         <item name="colorAccent">@color/orange</item>
     </style>
 
+    <style name="DialogDateTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
 </resources>

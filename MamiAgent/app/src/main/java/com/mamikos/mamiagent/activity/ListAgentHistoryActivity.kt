@@ -1,5 +1,6 @@
 package com.mamikos.mamiagent.activity
 
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.mamikos.mamiagent.R
@@ -15,6 +16,9 @@ import com.sidhiartha.libs.activities.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_data_form.*
 import android.view.Menu
 import android.view.MenuItem
+import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
+import com.mamikos.mamiagent.views.DialogFilterDateView
+import org.jetbrains.anko.toast
 
 
 /**
@@ -27,6 +31,8 @@ class ListAgentHistoryActivity : BaseActivity() {
     var adapter: ListDataHistoryAdapter? = null
     var data: ArrayList<HistoryEntity> = ArrayList()
     var page = 1
+    var startDate = ""
+    var endDate = ""
 
     override val layoutResource: Int = R.layout.activity_list_data_form
 
@@ -70,14 +76,29 @@ class ListAgentHistoryActivity : BaseActivity() {
         loadingFrameLayout.visibility = View.VISIBLE
 
         val historyApi = AgentHistoryApi.GetAgentHistory()
-        historyApi.queryParam = mapOf(Pair("page", page.toString())).toList()
+
+        if (startDate.isNotEmpty() && endDate.isNotEmpty()) {
+            historyApi.queryParam = mapOf(Pair("page", page.toString()), Pair("start_date", startDate), Pair("end_date", endDate)).toList()
+        } else {
+            historyApi.queryParam = mapOf(Pair("page", page.toString())).toList()
+        }
+
         historyApi.exec(RoomResponse::class.java) { response: RoomResponse?, errorMessage: String? ->
+
+            loadingFrameLayout.visibility = View.GONE
+            swipeRefreshLayout.isRefreshing = false
+            adapter?.isLoading = false
 
             if (response == null) {
                 sendReport(errorMessage.toString())
                 UtilsHelper.showDialogYes(this, "", "Server lagi error, hubungi developer", Runnable {
                     finish()
                 }, 0)
+                return@exec
+            }
+
+            if (response.data == null) {
+                toast("tidak ada data")
                 return@exec
             }
 
@@ -96,11 +117,6 @@ class ListAgentHistoryActivity : BaseActivity() {
                 sendReport(errorMessage.toString())
                 adapter?.needToLoadMore = false
             }
-
-            loadingFrameLayout.visibility = View.GONE
-            swipeRefreshLayout.isRefreshing = false
-            adapter?.isLoading = false
-
         }
     }
 
@@ -112,6 +128,21 @@ class ListAgentHistoryActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == R.id.filterMenu) {
+            val dialogView = DialogFilterDateView(this@ListAgentHistoryActivity)
+            val builder = AlertDialog.Builder(this@ListAgentHistoryActivity)
+            builder.setView(dialogView)
+            val dialog = builder.create()
+            dialogView.setClicked(object : OnClickInterfaceObject<String> {
+                override fun dataClicked(data: String) {
+                    val splitStr = data.split(",")
+                    startDate = splitStr[0]
+                    endDate = splitStr[1]
+                    page = 1
+                    getData()
+                    dialog.dismiss()
+                }
+            })
+            dialog.show()
             return false
         }
         return true
