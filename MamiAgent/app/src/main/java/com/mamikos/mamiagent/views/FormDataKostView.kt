@@ -14,7 +14,7 @@ import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
 import com.mamikos.mamiagent.networks.responses.AreaResponse
 import kotlinx.android.synthetic.main.activity_form_kost.*
 import kotlinx.android.synthetic.main.view_btn_back_next.view.*
-import kotlinx.android.synthetic.main.view_form_kost_step_2.view.*
+import kotlinx.android.synthetic.main.view_form_data_kost.view.*
 import org.jetbrains.anko.onCheckedChange
 
 /**
@@ -22,7 +22,7 @@ import org.jetbrains.anko.onCheckedChange
  * Happy Coding!
  */
 
-class FormKostStep33View : FrameLayout {
+class FormDataKostView : FrameLayout {
 
     private lateinit var nextClick: Runnable
     private lateinit var backClick: Runnable
@@ -41,7 +41,7 @@ class FormKostStep33View : FrameLayout {
     }
 
     private fun init(context: Context) {
-        inflate(context, R.layout.view_form_kost_step_2, this)
+        inflate(context, R.layout.view_form_data_kost, this)
         ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
         setupGender()
@@ -54,7 +54,7 @@ class FormKostStep33View : FrameLayout {
 
         setupElectricity()
 
-        viewBtnBackNextStep2.nextLinearLayout.setOnClickListener {
+        btnBackNextDataKostView.nextLinearLayout.setOnClickListener {
             if (scrollView == null) {
                 scrollView = (context as Activity).formKostScrollView
             }
@@ -62,7 +62,7 @@ class FormKostStep33View : FrameLayout {
             //nextClick.run()
         }
 
-        viewBtnBackNextStep2.backLinearLayout.setOnClickListener {
+        btnBackNextDataKostView.backLinearLayout.setOnClickListener {
             backClick.run()
         }
 

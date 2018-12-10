@@ -26,8 +26,8 @@ import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
 import com.mamikos.mamiagent.networks.apis.LocationApi
 import com.mamikos.mamiagent.networks.responses.AreaResponse
 import kotlinx.android.synthetic.main.activity_form_kost.*
-import kotlinx.android.synthetic.main.view_form_kost_step_1.*
-import kotlinx.android.synthetic.main.view_form_kost_step_1.view.*
+import kotlinx.android.synthetic.main.view_form_kost_location.*
+import kotlinx.android.synthetic.main.view_form_kost_location.view.*
 import org.jetbrains.anko.toast
 
 import android.support.annotation.NonNull
@@ -45,10 +45,10 @@ import com.mamikos.mamiagent.networks.responses.MediaResponse
 import com.mamikos.mamiagent.networks.responses.MessagesResponse
 import com.sidhiartha.libs.activities.BaseActivity
 import com.sidhiartha.libs.utils.GSONManager
-import kotlinx.android.synthetic.main.view_form_kost_step_2.view.*
-import kotlinx.android.synthetic.main.view_form_kost_step_3.*
-import kotlinx.android.synthetic.main.view_form_kost_step_3.view.*
-import kotlinx.android.synthetic.main.view_form_kost_step_4.view.*
+import kotlinx.android.synthetic.main.view_form_data_kost.view.*
+import kotlinx.android.synthetic.main.view_form_kost_facility.*
+import kotlinx.android.synthetic.main.view_form_kost_facility.view.*
+import kotlinx.android.synthetic.main.view_form_kost_owner.view.*
 import kotlinx.android.synthetic.main.view_grey_square.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -143,17 +143,17 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 }
                 else -> {
                     if (response.status) {
-                        formKostStep22View.setProvince(response, object :
+                        formKostLocationView.setProvince(response, object :
                                 OnClickInterfaceObject<AreaEntity> {
                             override fun dataClicked(data: AreaEntity) {
                                 loading?.show()
-                                formKostStep22View.provinceSpinnerCustomView.setName("${data.name}")
+                                formKostLocationView.provinceSpinnerCustomView.setName("${data.name}")
                                 requestCityApi(data.id)
 
-                                formKostStep22View.citySpinnerCustomView.setName("")
-                                formKostStep22View.citySpinnerCustomView.setData(null)
-                                formKostStep22View.districtSpinnerCustomView.setName("")
-                                formKostStep22View.districtSpinnerCustomView.setData(null)
+                                formKostLocationView.citySpinnerCustomView.setName("")
+                                formKostLocationView.citySpinnerCustomView.setData(null)
+                                formKostLocationView.districtSpinnerCustomView.setName("")
+                                formKostLocationView.districtSpinnerCustomView.setData(null)
 
                             }
                         })
@@ -162,7 +162,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     }
                 }
             }
-            formKostStep22View.provinceSpinnerCustomView.setName("")
+            formKostLocationView.provinceSpinnerCustomView.setName("")
             loading?.hide()
         }
     }
@@ -177,12 +177,12 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 }
                 else -> {
                     if (response.status) {
-                        formKostStep22View.setCity(response, object :
+                        formKostLocationView.setCity(response, object :
                                 OnClickInterfaceObject<AreaEntity> {
                             override fun dataClicked(data: AreaEntity) {
                                 loading?.show()
                                 requestSubDistrictApi(data.id)
-                                formKostStep22View.citySpinnerCustomView.setName("${data.name}")
+                                formKostLocationView.citySpinnerCustomView.setName("${data.name}")
                             }
                         })
                     } else {
@@ -190,8 +190,8 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     }
                 }
             }
-            formKostStep22View.citySpinnerCustomView.setName("")
-            formKostStep22View.districtSpinnerCustomView.setName("")
+            formKostLocationView.citySpinnerCustomView.setName("")
+            formKostLocationView.districtSpinnerCustomView.setName("")
             loading?.hide()
         }
     }
@@ -206,10 +206,10 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 }
                 else -> {
                     if (response.status) {
-                        formKostStep22View.setSubdistrict(response, object :
+                        formKostLocationView.setSubdistrict(response, object :
                                 OnClickInterfaceObject<AreaEntity> {
                             override fun dataClicked(data: AreaEntity) {
-                                formKostStep22View.districtSpinnerCustomView.setName("${data.name}")
+                                formKostLocationView.districtSpinnerCustomView.setName("${data.name}")
                             }
                         })
                     } else {
@@ -217,7 +217,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     }
                 }
             }
-            formKostStep22View.districtSpinnerCustomView.setName("")
+            formKostLocationView.districtSpinnerCustomView.setName("")
             loading?.hide()
         }
     }
@@ -365,9 +365,9 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
     private fun setLayoutNextBack() {
 
-        formKostStep11View.setNextOnClick(Runnable {
-            formKostStep11View.visibility = View.GONE
-            formKostStep22View.visibility = View.VISIBLE
+        formKostOwnerView.setNextOnClick(Runnable {
+            formKostOwnerView.visibility = View.GONE
+            formKostLocationView.visibility = View.VISIBLE
             scrollUp()
 
             imageOneView.setImageResource(R.drawable.ic_check_circle_done)
@@ -379,9 +379,9 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         })
 
-        formKostStep22View.setNextOnClick(Runnable {
-            formKostStep22View.visibility = View.GONE
-            formKostStep33View.visibility = View.VISIBLE
+        formKostLocationView.setNextOnClick(Runnable {
+            formKostLocationView.visibility = View.GONE
+            formDataKostView.visibility = View.VISIBLE
             scrollUp()
 
             imageOneView.setImageResource(R.drawable.ic_check_circle_done)
@@ -396,9 +396,9 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         })
 
-        formKostStep33View.setNextOnClick(Runnable {
-            formKostStep33View.visibility = View.GONE
-            formKostStep44View.visibility = View.VISIBLE
+        formDataKostView.setNextOnClick(Runnable {
+            formDataKostView.visibility = View.GONE
+            formKostFacilityView.visibility = View.VISIBLE
             scrollUp()
 
             imageTwoView.setImageResource(R.drawable.ic_check_circle_done)
@@ -411,7 +411,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         })
 
-        formKostStep44View.setNextOnClick(Runnable {
+        formKostFacilityView.setNextOnClick(Runnable {
             UtilsHelper.showDialogYesNoCustomString(this, "", getString(R.string.msg_data_confirmation), getString(R.string.msg_yes), getString(R.string.msg_later), object :
                     OnClickInterfaceObject<Int> {
                 override fun dataClicked(data: Int) {
@@ -423,16 +423,16 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
 
 
-        formKostStep11View.setBackOnClick(Runnable {
+        formKostOwnerView.setBackOnClick(Runnable {
             UtilsHelper.showDialogYesNo(this, "", getString(R.string.msg_exit), Runnable {
                 UtilsHelper.hideSoftInput(this)
                 onBackPressed()
             }, 0)
         })
 
-        formKostStep22View.setBackOnClick(Runnable {
-            formKostStep11View.visibility = View.VISIBLE
-            formKostStep22View.visibility = View.GONE
+        formKostLocationView.setBackOnClick(Runnable {
+            formKostOwnerView.visibility = View.VISIBLE
+            formKostLocationView.visibility = View.GONE
             scrollUp()
 
             imageOneView.setImageResource(R.drawable.ic_check_circle_done)
@@ -445,9 +445,9 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         })
 
-        formKostStep33View.setBackOnClick(Runnable {
-            formKostStep22View.visibility = View.VISIBLE
-            formKostStep33View.visibility = View.GONE
+        formDataKostView.setBackOnClick(Runnable {
+            formKostLocationView.visibility = View.VISIBLE
+            formDataKostView.visibility = View.GONE
             scrollUp()
 
             imageOneView.setImageResource(R.drawable.ic_check_circle_done)
@@ -461,9 +461,9 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             UtilsHelper.hideSoftInput(this)
         })
 
-        formKostStep44View.setBackOnClick(Runnable {
-            formKostStep44View.visibility = View.GONE
-            formKostStep33View.visibility = View.VISIBLE
+        formKostFacilityView.setBackOnClick(Runnable {
+            formKostFacilityView.visibility = View.GONE
+            formDataKostView.visibility = View.VISIBLE
             scrollUp()
 
             imageTwoView.setImageResource(R.drawable.ic_check_circle_done)
@@ -489,102 +489,102 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             val saveKos = SaveKostEntity()
 
-            saveKos.province = formKostStep22View.provinceSpinnerCustomView.getName()
-            saveKos.areaCity = formKostStep22View.citySpinnerCustomView.getName()
-            saveKos.city = formKostStep22View.citySpinnerCustomView.getName()
-            saveKos.subdistrict = formKostStep22View.districtSpinnerCustomView.getName()
+            saveKos.province = formKostLocationView.provinceSpinnerCustomView.getName()
+            saveKos.areaCity = formKostLocationView.citySpinnerCustomView.getName()
+            saveKos.city = formKostLocationView.citySpinnerCustomView.getName()
+            saveKos.subdistrict = formKostLocationView.districtSpinnerCustomView.getName()
             saveKos.latitude = fullAddressLatLng?.latitude!!
             saveKos.longitude = fullAddressLatLng?.longitude!!
             saveKos.agentLat = myLatLng?.latitude!!
             saveKos.agentLong = myLatLng?.longitude!!
-            saveKos.address = formKostStep22View.fullAddressEditText.text.toString()
+            saveKos.address = formKostLocationView.fullAddressEditText.text.toString()
 
-            saveKos.name = formKostStep33View.kosNameEditText.text.toString()
-            saveKos.gender = formKostStep33View.typeGender.toInt()
+            saveKos.name = formDataKostView.kosNameEditText.text.toString()
+            saveKos.gender = formDataKostView.typeGender.toInt()
 
             val roomSize: ArrayList<String> = arrayListOf()
-            roomSize.add(formKostStep33View.roomSize.split(",")[0])
-            roomSize.add(formKostStep33View.roomSize.split(",")[1])
+            roomSize.add(formDataKostView.roomSize.split(",")[0])
+            roomSize.add(formDataKostView.roomSize.split(",")[1])
             saveKos.roomSize = roomSize
 
-            saveKos.roomCount = formKostStep33View.roomTotalEditText.text.toString().toInt()
-            saveKos.roomAvailable = formKostStep33View.roomTotalNowEditText.text.toString().toInt()
-            if (!formKostStep33View.dayPayEditText.text.isEmpty()) {
-                saveKos.priceDaily = formKostStep33View.dayPayEditText.text.toString()
+            saveKos.roomCount = formDataKostView.roomTotalEditText.text.toString().toInt()
+            saveKos.roomAvailable = formDataKostView.roomTotalNowEditText.text.toString().toInt()
+            if (!formDataKostView.dayPayEditText.text.isEmpty()) {
+                saveKos.priceDaily = formDataKostView.dayPayEditText.text.toString()
                         .replace(".", "").toInt()
             }
-            if (!formKostStep33View.weekPayEditText.text.isEmpty()) {
-                saveKos.priceWeekly = formKostStep33View.weekPayEditText.text.toString()
+            if (!formDataKostView.weekPayEditText.text.isEmpty()) {
+                saveKos.priceWeekly = formDataKostView.weekPayEditText.text.toString()
                         .replace(".", "").toInt()
             }
-            if (!formKostStep33View.monthPayEditText.text.isEmpty()) {
-                saveKos.priceMonthly = formKostStep33View.monthPayEditText.text.toString()
+            if (!formDataKostView.monthPayEditText.text.isEmpty()) {
+                saveKos.priceMonthly = formDataKostView.monthPayEditText.text.toString()
                         .replace(".", "").toInt()
             }
-            if (!formKostStep33View.yearPayEditText.text.isEmpty()) {
-                saveKos.priceYearly = formKostStep33View.yearPayEditText.text.toString()
+            if (!formDataKostView.yearPayEditText.text.isEmpty()) {
+                saveKos.priceYearly = formDataKostView.yearPayEditText.text.toString()
                         .replace(".", "").toLong()
             }
 
-            saveKos.minMonth = formKostStep33View.minPaySelected.toInt()
+            saveKos.minMonth = formDataKostView.minPaySelected.toInt()
 
             val selectedFacRoom = arrayListOf<Int>()
             val selectedFacBathRoom = arrayListOf<Int>()
 
-            if (formKostStep44View.mattressSquareGreyView.isChecked) {
+            if (formKostFacilityView.mattressSquareGreyView.isChecked) {
                 selectedFacRoom.add(10)
             }
-            if (formKostStep44View.cupboardSquareGreyView.isChecked) {
+            if (formKostFacilityView.cupboardSquareGreyView.isChecked) {
                 selectedFacRoom.add(11)
             }
-            if (formKostStep44View.tableSquareGreyView.isChecked) {
+            if (formKostFacilityView.tableSquareGreyView.isChecked) {
                 selectedFacRoom.add(14)
             }
-            if (formKostStep44View.chairSquareGreyView.isChecked) {
+            if (formKostFacilityView.chairSquareGreyView.isChecked) {
                 selectedFacRoom.add(17)
             }
-            if (formKostStep44View.acSquareGreyView.isChecked) {
+            if (formKostFacilityView.acSquareGreyView.isChecked) {
                 selectedFacRoom.add(13)
             }
-            if (formKostStep44View.tvSquareGreyView.isChecked) {
+            if (formKostFacilityView.tvSquareGreyView.isChecked) {
                 selectedFacRoom.add(12)
             }
-            if (formKostStep44View.fanSquareGreyView.isChecked) {
+            if (formKostFacilityView.fanSquareGreyView.isChecked) {
                 selectedFacRoom.add(58)
             }
-            if (formKostStep44View.facRoom == "0") {
+            if (formKostFacilityView.facRoom == "0") {
                 selectedFacRoom.add(62)
             }
 
-            if (!formKostStep44View.speedTestEditText.text.isEmpty()) {
-                saveKos.wifiSpeed = formKostStep44View.speedTestEditText.text.toString()
+            if (!formKostFacilityView.speedTestEditText.text.isEmpty()) {
+                saveKos.wifiSpeed = formKostFacilityView.speedTestEditText.text.toString()
                 selectedFacRoom.add(15)
             }
 
-            if (formKostStep44View.twentyFourSquareGreyView.isChecked) {
+            if (formKostFacilityView.twentyFourSquareGreyView.isChecked) {
                 selectedFacRoom.add(59)
             }
 
-            if (formKostStep44View.coupleSquareGreyView.isChecked) {
+            if (formKostFacilityView.coupleSquareGreyView.isChecked) {
                 selectedFacRoom.add(60)
             }
 
-            if (formKostStep44View.parkSquareGreyView.isChecked) {
+            if (formKostFacilityView.parkSquareGreyView.isChecked) {
                 selectedFacRoom.add(22)
             }
 
             saveKos.facRoom = selectedFacRoom
 
-            if (formKostStep44View.showerSquareGreyView.isChecked) {
+            if (formKostFacilityView.showerSquareGreyView.isChecked) {
                 selectedFacRoom.add(3)
             }
-            if (formKostStep44View.toiletSeatSquareGreyView.isChecked) {
+            if (formKostFacilityView.toiletSeatSquareGreyView.isChecked) {
                 selectedFacRoom.add(2)
             }
-            if (formKostStep44View.squatToiletSquareGreyView.isChecked) {
+            if (formKostFacilityView.squatToiletSquareGreyView.isChecked) {
                 selectedFacRoom.add(5)
             }
-            if (formKostStep44View.hotWaterSquareGreyView.isChecked) {
+            if (formKostFacilityView.hotWaterSquareGreyView.isChecked) {
                 selectedFacRoom.add(8)
             }
 
@@ -601,7 +601,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 saveKos.photos.cover = photoKosBuildingId
             }
 
-            if (formKostStep44View.facBathRoom == "0") {
+            if (formKostFacilityView.facBathRoom == "0") {
                 selectedFacBathRoom.add(1)
             } else {
                 selectedFacBathRoom.add(4)
@@ -609,7 +609,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
             saveKos.facBath = selectedFacBathRoom
 
-            if (formKostStep33View.isElectricity == "0") {
+            if (formDataKostView.isElectricity == "0") {
                 saveKos.withListrik = 1
                 saveKos.withoutListrik = 0
             } else {
@@ -617,10 +617,10 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 saveKos.withoutListrik = 1
             }
 
-            saveKos.ownerName = formKostStep11View.ownerNameEditText.text.toString()
-            saveKos.ownerEmail = formKostStep11View.ownerEmailEditText.text.toString()
-            saveKos.ownerPhone = formKostStep11View.ownerPhoneEditText.text.toString()
-            //saveKos.password = formKostStep11View.ownerPasswordEditText.text.toString()
+            saveKos.ownerName = formKostOwnerView.ownerNameEditText.text.toString()
+            saveKos.ownerEmail = formKostOwnerView.ownerEmailEditText.text.toString()
+            saveKos.ownerPhone = formKostOwnerView.ownerPhoneEditText.text.toString()
+            //saveKos.password = formKostOwnerView.ownerPasswordEditText.text.toString()
             saveKos.inputAs = "agen"
 
             if (code == 1) {

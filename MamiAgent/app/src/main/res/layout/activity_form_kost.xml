@@ -248,26 +248,26 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.mamikos.mamiagent.views.FormKostStep11View
-                android:id="@+id/formKostStep11View"
+            <com.mamikos.mamiagent.views.FormKostOwnerView
+                android:id="@+id/formKostOwnerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible" />
 
-            <com.mamikos.mamiagent.views.FormKostStep22View
-                android:id="@+id/formKostStep22View"
+            <com.mamikos.mamiagent.views.FormKostLocationView
+                android:id="@+id/formKostLocationView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
 
-            <com.mamikos.mamiagent.views.FormKostStep33View
-                android:id="@+id/formKostStep33View"
+            <com.mamikos.mamiagent.views.FormDataKostView
+                android:id="@+id/formDataKostView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
 
-            <com.mamikos.mamiagent.views.FormKostStep44View
-                android:id="@+id/formKostStep44View"
+            <com.mamikos.mamiagent.views.FormKostFacilityView
+                android:id="@+id/formKostFacilityView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />

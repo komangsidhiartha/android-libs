@@ -12,14 +12,14 @@ import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
 import com.mamikos.mamiagent.networks.responses.AreaResponse
 import kotlinx.android.synthetic.main.activity_form_kost.*
 import kotlinx.android.synthetic.main.view_btn_back_next.view.*
-import kotlinx.android.synthetic.main.view_form_kost_step_1.view.*
+import kotlinx.android.synthetic.main.view_form_kost_location.view.*
 
 /**
  * Created by Dedi Dot on 10/9/2018.
  * Happy Coding!
  */
 
-class FormKostStep22View : FrameLayout {
+class FormKostLocationView : FrameLayout {
 
     private lateinit var nextClick: Runnable
     private lateinit var backClick: Runnable
@@ -34,12 +34,12 @@ class FormKostStep22View : FrameLayout {
     }
 
     private fun init(context: Context) {
-        inflate(context, R.layout.view_form_kost_step_1, this)
+        inflate(context, R.layout.view_form_kost_location, this)
         ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         citySpinnerCustomView.setHint(context.getString(R.string.msg_city_star))
         districtSpinnerCustomView.setHint(context.getString(R.string.msg_district_star))
 
-        viewBtnBackNextStep1.nextLinearLayout.setOnClickListener {
+        btnBackNextLocationView.nextLinearLayout.setOnClickListener {
             if (scrollView == null) {
                 scrollView = (context as Activity).formKostScrollView
             }
@@ -47,7 +47,7 @@ class FormKostStep22View : FrameLayout {
             //nextClick.run()
         }
 
-        viewBtnBackNextStep1.backLinearLayout.setOnClickListener {
+        btnBackNextLocationView.backLinearLayout.setOnClickListener {
             backClick.run()
         }
     }

@@ -9,14 +9,14 @@ import com.mamikos.mamiagent.R
 import com.mamikos.mamiagent.helpers.UtilsHelper
 import kotlinx.android.synthetic.main.activity_form_kost.*
 import kotlinx.android.synthetic.main.view_btn_back_next.view.*
-import kotlinx.android.synthetic.main.view_form_kost_step_4.view.*
+import kotlinx.android.synthetic.main.view_form_kost_owner.view.*
 
 /**
  * Created by Dedi Dot on 10/9/2018.
  * Happy Coding!
  */
 
-class FormKostStep11View : FrameLayout {
+class FormKostOwnerView : FrameLayout {
 
     private lateinit var nextClick: Runnable
     private lateinit var backClick: Runnable
@@ -31,10 +31,10 @@ class FormKostStep11View : FrameLayout {
     }
 
     private fun init(context: Context) {
-        inflate(context, R.layout.view_form_kost_step_4, this)
+        inflate(context, R.layout.view_form_kost_owner, this)
         ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
-        viewBtnBackNextStep4.nextLinearLayout.setOnClickListener {
+        btnBackNextOwnerView.nextLinearLayout.setOnClickListener {
             if (scrollView == null) {
                 scrollView = (context as Activity).formKostScrollView
             }
@@ -43,7 +43,7 @@ class FormKostStep11View : FrameLayout {
             //nextClick.run()
         }
 
-        viewBtnBackNextStep4.backLinearLayout.setOnClickListener {
+        btnBackNextOwnerView.backLinearLayout.setOnClickListener {
             backClick.run()
         }
 

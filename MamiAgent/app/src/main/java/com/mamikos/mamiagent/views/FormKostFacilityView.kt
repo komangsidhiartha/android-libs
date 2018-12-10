@@ -18,7 +18,7 @@ import com.mamikos.mamiagent.helpers.UtilsHelper
 import com.mamikos.mamiagent.interfaces.OnClickInterfaceObject
 import kotlinx.android.synthetic.main.activity_form_kost.*
 import kotlinx.android.synthetic.main.view_btn_back_next.view.*
-import kotlinx.android.synthetic.main.view_form_kost_step_3.view.*
+import kotlinx.android.synthetic.main.view_form_kost_facility.view.*
 import org.greenrobot.eventbus.EventBus
 import org.jetbrains.anko.onCheckedChange
 
@@ -27,7 +27,7 @@ import org.jetbrains.anko.onCheckedChange
  * Happy Coding!
  */
 
-class FormKostStep44View : FrameLayout {
+class FormKostFacilityView : FrameLayout {
 
     private lateinit var nextClick: Runnable
     private lateinit var backClick: Runnable
@@ -44,14 +44,14 @@ class FormKostStep44View : FrameLayout {
     }
 
     private fun init(context: Context) {
-        inflate(context, R.layout.view_form_kost_step_3, this)
+        inflate(context, R.layout.view_form_kost_facility, this)
         ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
         setupRoomFacility()
         setupRoomOtherFacility()
         setupBathRoomFacility()
 
-        viewBtnBackNextStep3.nextLinearLayout.setOnClickListener {
+        btnBackNextKostFacilityView.nextLinearLayout.setOnClickListener {
             if (scrollView == null) {
                 scrollView = (context as Activity).formKostScrollView
             }
@@ -60,7 +60,7 @@ class FormKostStep44View : FrameLayout {
             //nextClick.run()
         }
 
-        viewBtnBackNextStep3.backLinearLayout.setOnClickListener {
+        btnBackNextKostFacilityView.backLinearLayout.setOnClickListener {
             backClick.run()
         }
 

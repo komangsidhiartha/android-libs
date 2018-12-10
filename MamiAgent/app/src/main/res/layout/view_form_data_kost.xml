@@ -431,7 +431,7 @@
     </RadioGroup>
 
     <include
-        android:id="@+id/viewBtnBackNextStep2"
+        android:id="@+id/btnBackNextDataKostView"
         layout="@layout/view_btn_back_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

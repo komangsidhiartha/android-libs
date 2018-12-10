@@ -489,7 +489,7 @@
     </LinearLayout>
 
     <include
-        android:id="@+id/viewBtnBackNextStep3"
+        android:id="@+id/btnBackNextKostFacilityView"
         layout="@layout/view_btn_back_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
