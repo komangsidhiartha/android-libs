@@ -296,7 +296,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
     }
 
     private fun updateMarkerMyLocation() {
-        UtilsHelper.makeHandler(1000, Runnable {
+        UtilsHelper.makeHandler(10000, Runnable {
             try {
                 if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     UtilsHelper.log("cek kesini3")
