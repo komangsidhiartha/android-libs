@@ -906,7 +906,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
                     "${saveKos.roomSize[0]},${saveKos.roomSize[1]}", saveKos.roomCount,
                     saveKos.roomAvailable, saveKos.priceDaily.toString(), saveKos.priceWeekly.toString(),
                     saveKos.priceMonthly.toString(), saveKos.priceYearly.toString(),
-                    saveKos.minMonth, saveKos.wifiSpeed.toString(), facRoomData, facBathRoomData,
+                    saveKos.minMonth, saveKos.wifiSpeed, facRoomData, facBathRoomData,
                     photoBathroomBuildingDao, photoInsideBuildingDao, photoKosBuildingDao,
                     saveKos.withListrik, saveKos.ownerName, saveKos.ownerEmail, saveKos.ownerPhone)
             MamiApp.instance?.appDatabase?.formDataDao()?.insert(formDataTable)
