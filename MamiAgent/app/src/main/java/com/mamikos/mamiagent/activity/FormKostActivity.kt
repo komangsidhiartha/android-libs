@@ -900,7 +900,15 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             for (i in 0 until saveKos.facBath.size) {
                 facBathRoomData = "${saveKos.facBath[i]}"
             }
-            val formDataTable = FormDataTable(saveKos.province, saveKos.city, saveKos.subdistrict, saveKos.latitude, saveKos.longitude, saveKos.agentLat, saveKos.agentLong, saveKos.address, saveKos.name, saveKos.gender, "${saveKos.roomSize[0]},${saveKos.roomSize[1]}", saveKos.roomCount, saveKos.roomAvailable, saveKos.priceDaily.toString(), saveKos.priceWeekly.toString(), saveKos.priceMonthly.toString(), saveKos.roomCount.toString(), saveKos.minMonth, saveKos.roomCount.toString(), facRoomData, facBathRoomData, photoBathroomBuildingDao, photoInsideBuildingDao, photoKosBuildingDao, saveKos.withListrik, saveKos.ownerName, saveKos.ownerEmail, saveKos.ownerPhone)
+            val formDataTable = FormDataTable(saveKos.province,
+                    saveKos.city, saveKos.subdistrict, saveKos.latitude, saveKos.longitude, saveKos.agentLat,
+                    saveKos.agentLong, saveKos.address, saveKos.name, saveKos.gender,
+                    "${saveKos.roomSize[0]},${saveKos.roomSize[1]}", saveKos.roomCount,
+                    saveKos.roomAvailable, saveKos.priceDaily.toString(), saveKos.priceWeekly.toString(),
+                    saveKos.priceMonthly.toString(), saveKos.priceYearly.toString(),
+                    saveKos.minMonth, saveKos.wifiSpeed.toString(), facRoomData, facBathRoomData,
+                    photoBathroomBuildingDao, photoInsideBuildingDao, photoKosBuildingDao,
+                    saveKos.withListrik, saveKos.ownerName, saveKos.ownerEmail, saveKos.ownerPhone)
             MamiApp.instance?.appDatabase?.formDataDao()?.insert(formDataTable)
             return ""
         }
