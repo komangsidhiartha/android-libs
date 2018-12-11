@@ -783,6 +783,11 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                 if (requestCode == GlobalConst.CODE_GALLERY_BATHROOM || requestCode == GlobalConst.CODE_GALLERY_INSIDEROOM || requestCode == GlobalConst.CODE_GALLERY_BUILDING) {
                     file = File(MediaHelper.setImageResourceFromGallery(this, uri))
+                    if(checkLandscape(file)){
+                        toast("Gambar harus landscape")
+                        loading?.hide()
+                        return
+                    }
                 } else {
                     file = File(uri.path)
                 }
@@ -828,6 +833,16 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             return
         }
 
+    }
+
+    private fun checkLandscape(file: File) : Boolean {
+        val options = BitmapFactory.Options()
+        options.inSampleSize = 4
+        val path = file.path
+        val bitmap = BitmapFactory.decodeFile(path, options)
+        UtilsHelper.log("${bitmap.width}")
+        UtilsHelper.log("${bitmap.height}")
+        return bitmap.width < bitmap.height
     }
 
     private fun uploadImage(file: File, requestCode: Int, status: OnClickInterfaceObject<Int>) {
@@ -900,15 +915,7 @@ class FormKostActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks,
             for (i in 0 until saveKos.facBath.size) {
                 facBathRoomData = "${saveKos.facBath[i]}"
             }
-            val formDataTable = FormDataTable(saveKos.province,
-                    saveKos.city, saveKos.subdistrict, saveKos.latitude, saveKos.longitude, saveKos.agentLat,
-                    saveKos.agentLong, saveKos.address, saveKos.name, saveKos.gender,
-                    "${saveKos.roomSize[0]},${saveKos.roomSize[1]}", saveKos.roomCount,
-                    saveKos.roomAvailable, saveKos.priceDaily.toString(), saveKos.priceWeekly.toString(),
-                    saveKos.priceMonthly.toString(), saveKos.priceYearly.toString(),
-                    saveKos.minMonth, saveKos.wifiSpeed, facRoomData, facBathRoomData,
-                    photoBathroomBuildingDao, photoInsideBuildingDao, photoKosBuildingDao,
-                    saveKos.withListrik, saveKos.ownerName, saveKos.ownerEmail, saveKos.ownerPhone)
+            val formDataTable = FormDataTable(saveKos.province, saveKos.city, saveKos.subdistrict, saveKos.latitude, saveKos.longitude, saveKos.agentLat, saveKos.agentLong, saveKos.address, saveKos.name, saveKos.gender, "${saveKos.roomSize[0]},${saveKos.roomSize[1]}", saveKos.roomCount, saveKos.roomAvailable, saveKos.priceDaily.toString(), saveKos.priceWeekly.toString(), saveKos.priceMonthly.toString(), saveKos.priceYearly.toString(), saveKos.minMonth, saveKos.wifiSpeed, facRoomData, facBathRoomData, photoBathroomBuildingDao, photoInsideBuildingDao, photoKosBuildingDao, saveKos.withListrik, saveKos.ownerName, saveKos.ownerEmail, saveKos.ownerPhone)
             MamiApp.instance?.appDatabase?.formDataDao()?.insert(formDataTable)
             return ""
         }
