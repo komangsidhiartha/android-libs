@@ -24,7 +24,7 @@ public class SaveKostEntity implements Parcelable {
             facShare, facShareOther, facNear, facNearOther, facParking, paymentDuration,
             remarks, description, agentName, agentEmail, agentPhone, agentStatus, floor, deposit,
             roomTitle, priceTitleTime, areaCity, areaSubdistrict, statusKost, youtubeLink;
-    private String subdistrict, city, province, inputAs,  ownerEmail, password, wifiSpeed;
+    private String subdistrict, city, province, inputAs,  ownerEmail, password, wifiSpeed="";
 
     private String inputSource;
 

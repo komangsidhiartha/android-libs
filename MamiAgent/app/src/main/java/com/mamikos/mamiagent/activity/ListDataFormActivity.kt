@@ -9,6 +9,8 @@ import com.mamikos.mamiagent.helpers.UtilsHelper
 import com.sidhiartha.libs.activities.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_data_form.*
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
+import android.view.MenuItem
 import com.git.dabang.database.table.FormDataTable
 import com.mamikos.mamiagent.entities.PhotoFormEntity
 import com.mamikos.mamiagent.entities.SaveKostEntity
@@ -214,7 +216,7 @@ class ListDataFormActivity : BaseActivity() {
                 MamiApp.instance?.appDatabase?.formDataDao()?.deleteById(formId.toString())
                 LoadDataLocal().execute()
                 msg = "Berhasil kirim kos, terima kasih!"
-                UtilsHelper.showDialogYesNo(this, "", msg, Runnable {}, 0)
+                UtilsHelper.showDialogYes(this, "", msg, Runnable {}, 0)
             } else {
                 response.messages?.size?.let {
                     for (i in 0 until it) {
@@ -231,5 +233,18 @@ class ListDataFormActivity : BaseActivity() {
         super.onDestroy()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.activity_list_data_form_menu, menu)
+        return true
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.clearMenu) {
+            MamiApp.instance?.appDatabase?.formDataDao()?.clearAll()
+            LoadDataLocal().execute()
+        }
+        return true
+    }
 
 }

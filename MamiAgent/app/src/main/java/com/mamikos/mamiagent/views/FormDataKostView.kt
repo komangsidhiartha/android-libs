@@ -118,6 +118,34 @@ class FormDataKostView : FrameLayout {
             return
         }
 
+        if(dayPayEditText.text.toString().isNotEmpty()){
+            if(dayPayEditText.text.toString().length  < 5){
+                UtilsHelper.showSnackbar(this, "Harga minimal 4 angka")
+                return
+            }
+        }
+
+        if(weekPayEditText.text.toString().isNotEmpty()){
+            if(weekPayEditText.text.toString().length  < 5){
+                UtilsHelper.showSnackbar(this, "Harga minimal 4 angka")
+                return
+            }
+        }
+
+        if(monthPayEditText.text.toString().isNotEmpty()){
+            if(monthPayEditText.text.toString().length  < 5){
+                UtilsHelper.showSnackbar(this, "Harga minimal 4 angka")
+                return
+            }
+        }
+
+        if(yearPayEditText.text.toString().isNotEmpty()){
+            if(yearPayEditText.text.toString().length  < 5){
+                UtilsHelper.showSnackbar(this, "Harga minimal 4 angka")
+                return
+            }
+        }
+
         if (roomSize.isEmpty() || !roomSize.contains(",")) {
             UtilsHelper.showSnackbar(this, "Data ukuran kamar tidak boleh kosong")
             UtilsHelper.autoFocusScroll(threeThreeRoomSizeView, scrollView)

@@ -141,7 +141,7 @@ class UtilsHelper {
 
         }
 
-        fun autoFocusScroll(view: View, scrollView: LockableScrollView? = null) {
+        fun autoFocusScroll(view: View, scrollView: View? = null) {
             scrollView?.post {
                 scrollView.scrollTo(0, view.top - 100)
             }

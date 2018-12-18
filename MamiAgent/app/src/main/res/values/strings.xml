@@ -54,6 +54,7 @@
     <string name="msg_data_location">Data lokasi</string>
     <string name="msg_data_kos">Data kos</string>
     <string name="msg_filter">Filter</string>
+    <string name="msg_clear_data">Bersihkan data</string>
     <string name="msg_data_facility_kos">Fasilitas kos</string>
     <string name="msg_data_owner_kos">Data pemilik</string>
     <string name="msg_province_star">Provinsi*</string>
@@ -73,7 +74,7 @@
     <string name="msg_map_location">Peta lokasi kos</string>
     <string name="msg_map_back">Kembali</string>
     <string name="msg_map_next">Selanjutnya</string>
-    <string name="msg_kos_name_star">Nama kos*</string>
+    <string name="msg_kos_name_star">Nama kos* (Harus unik, bisa ditambah alamat lengkap)</string>
     <string name="msg_kos_name">Nama kos</string>
     <string name="msg_please_wait">Mohon tunggu...</string>
     <string name="msg_man">Putra</string>

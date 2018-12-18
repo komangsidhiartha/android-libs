@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mamikos.mamiagent.R
 import com.mamikos.mamiagent.helpers.UtilsHelper
+import com.mamikos.mamiagent.helpers.isValidPhone
 import kotlinx.android.synthetic.main.activity_form_kost.*
 import kotlinx.android.synthetic.main.view_btn_back_next.view.*
 import kotlinx.android.synthetic.main.view_form_kost_owner.view.*
@@ -56,11 +57,18 @@ class FormKostOwnerView : FrameLayout {
             return
         }
 
+        if (ownerNameEditText.text.toString().length < 6) {
+            UtilsHelper.showSnackbar(this, "Nama pemilik minimal 6 karakter")
+            UtilsHelper.autoFocusScroll(ownerNameEditText, scrollView)
+            return
+        }
+
         if (ownerPhoneEditText.text.toString().isEmpty()) {
             UtilsHelper.showSnackbar(this, "Data nomor telepon pemilik kos tidak boleh kosong")
             UtilsHelper.autoFocusScroll(ownerPhoneEditText, scrollView)
             return
         }
+
 
         /*if (ownerPasswordEditText.text.toString().isEmpty()) {
             UtilsHelper.showSnackbar(this, "Password tidak boleh kosong")
