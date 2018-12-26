@@ -1,8 +1,10 @@
 package com.sidhiartha.libs.activities
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
@@ -31,6 +33,9 @@ abstract class BaseActivity : AppCompatActivity()
         setContentView(layoutResource)
         progressBar = findViewById(R.id.progressBar)
         toolbar = findViewById(R.id.toolbar)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+        }
 
         if (toolbar != null) setSupportActionBar(toolbar)
 
