@@ -1,5 +1,6 @@
 def fuel_version = '1.12.1'
 def support_version = '28.0.0'
+def anko_version = '0.10.8'
 
 buildscript {
     repositories {
@@ -46,25 +47,25 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "com.github.kittinunf.fuel:fuel-android:$fuel_version"
-    implementation "com.github.kittinunf.fuel:fuel-gson:$fuel_version"
+    api "com.github.kittinunf.fuel:fuel-android:$fuel_version"
+    api "com.github.kittinunf.fuel:fuel-gson:$fuel_version"
 
     api "com.android.support:appcompat-v7:$support_version"
     api "com.android.support:recyclerview-v7:$support_version"
     api "com.android.support:support-v4:$support_version"
     api "com.android.support:design:$support_version"
 
-    api 'com.google.firebase:firebase-core:16.0.4'
+    api 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-iid:17.0.4'
 
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // sdk19, sdk21, sdk23 are also available
-    api 'org.jetbrains.anko:anko-sdk23:0.9'
+    api "org.jetbrains.anko:anko-sdk23:$anko_version"
     // In case you need support-v4 bindings
-    api 'org.jetbrains.anko:anko-support-v4:0.9'
+    api "org.jetbrains.anko:anko-support-v4:$anko_version"
     // For appcompat-v7 bindings
-    api 'org.jetbrains.anko:anko-appcompat-v7:0.9'
+    api "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
 }
 repositories {
     mavenCentral()
