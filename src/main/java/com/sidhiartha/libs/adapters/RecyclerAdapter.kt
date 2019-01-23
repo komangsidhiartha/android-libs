@@ -43,10 +43,7 @@ abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(prot
             return
         }
 
-        val tempItem = arrayListOf<E>()
-        tempItem.addAll(items)
-        tempItem.addAll(newItems)
-        items = tempItem
+        items.addAll(newItems)
         notifyDataSetChanged()
     }
 
@@ -83,6 +80,6 @@ abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(prot
 
     abstract inner class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
-        abstract fun bind(item: E);
+        abstract fun bind(item: E)
     }
 }
