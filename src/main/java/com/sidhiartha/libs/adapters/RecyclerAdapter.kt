@@ -9,7 +9,7 @@ import android.view.View
 /**
  * Created by sidhiartha on 28/02/18.
  */
-abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(protected val context: Context, protected var items: List<E>) : RecyclerView.Adapter<V>()
+abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(protected val context: Context, protected var items: MutableList<E>) : RecyclerView.Adapter<V>()
 {
     var isLoading = false
     var needToLoadMore = true
@@ -30,6 +30,11 @@ abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(prot
         holder.bind(items[position])
     }
 
+    open fun addItem(item: E) {
+        items.add(item)
+        notifyDataSetChanged()
+    }
+
     open fun addItems(newItems : List<E>)
     {
         if (newItems.isEmpty())
@@ -38,10 +43,7 @@ abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(prot
             return
         }
 
-        val tempItem = arrayListOf<E>()
-        tempItem.addAll(items)
-        tempItem.addAll(newItems)
-        items = tempItem
+        items.addAll(newItems)
         notifyDataSetChanged()
     }
 
@@ -78,6 +80,6 @@ abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(prot
 
     abstract inner class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
-        abstract fun bind(item: E);
+        abstract fun bind(item: E)
     }
 }
