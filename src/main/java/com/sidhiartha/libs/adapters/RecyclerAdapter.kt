@@ -9,7 +9,7 @@ import android.view.View
 /**
  * Created by sidhiartha on 28/02/18.
  */
-abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(protected val context: Context, protected var items: List<E>) : RecyclerView.Adapter<V>()
+abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(protected val context: Context, protected var items: MutableList<E>) : RecyclerView.Adapter<V>()
 {
     var isLoading = false
     var needToLoadMore = true
@@ -28,6 +28,11 @@ abstract class RecyclerAdapter<E, V : RecyclerAdapter<E, V>.BaseViewHolder>(prot
     override fun onBindViewHolder(holder: V, position: Int)
     {
         holder.bind(items[position])
+    }
+
+    open fun addItem(item: E) {
+        items.add(item)
+        notifyDataSetChanged()
     }
 
     open fun addItems(newItems : List<E>)
