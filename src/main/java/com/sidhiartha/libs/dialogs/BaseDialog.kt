@@ -1,7 +1,7 @@
 package com.sidhiartha.libs.dialogs
 
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
+import androidx.fragment.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 /**
  * Created by sidhiartha on 12/02/18.
  */
-abstract class BaseDialog : DialogFragment()
+abstract class BaseDialog :DialogFragment()
 {
     protected abstract val layoutResource: Int
 

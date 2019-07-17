@@ -1,12 +1,12 @@
 package com.sidhiartha.libs.activities
 
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.view.GravityCompat
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
+import com.google.android.material.navigation.NavigationView
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.drawerlayout.widget.DrawerLayout
 import com.sidhiartha.libs.R
 
 abstract class BaseDrawerActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener
