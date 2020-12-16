@@ -23,6 +23,7 @@ enum class APIMethod
 
 abstract class BaseAPI
 {
+    private val timeoutMillis = 30000
 
     abstract val headers: Map<String, String>?
 
@@ -82,28 +83,39 @@ abstract class BaseAPI
 
     fun get(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
-        "$basePath/$path".httpGet().header(generateHeader()).responseJson(handler)
+        "$basePath/$path".httpGet()
+                .timeout(timeoutMillis).timeoutRead(timeoutMillis)
+                .header(generateHeader()).responseJson(handler)
     }
 
     fun delete(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
-        "$basePath/$path".httpDelete().body(params).header(generateHeader()).responseJson(handler)
+        "$basePath/$path".httpDelete()
+                .timeout(timeoutMillis).timeoutRead(timeoutMillis)
+                .body(params).header(generateHeader()).responseJson(handler)
     }
 
     fun post(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
-        "$basePath/$path".httpPost().body(params).header(generateHeader()).responseJson(handler)
+        "$basePath/$path".httpPost()
+                .timeout(timeoutMillis).timeoutRead(timeoutMillis)
+                .body(params).header(generateHeader()).responseJson(handler)
     }
 
     fun put(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
-        "$basePath/$path".httpPut().body(params).header(generateHeader()).responseJson(handler)
+        "$basePath/$path".httpPut()
+                .timeout(timeoutMillis).timeoutRead(timeoutMillis)
+                .body(params).header(generateHeader()).responseJson(handler)
     }
 
     fun upload(handler: (request: Request, response: Response, result: Result<Json, FuelError>) -> Unit)
     {
-        "$basePath/$path".httpUpload(Method.POST, formData).header(generateHeader()).
-                dataParts { _, _ -> filesToUpload }
+        "$basePath/$path".httpUpload(Method.POST, formData)
+                .timeout(timeoutMillis).timeoutRead(timeoutMillis)
+                .header(generateHeader()).dataParts { _, _ ->
+                    filesToUpload
+                }
                 .responseJson(handler)
     }
 
