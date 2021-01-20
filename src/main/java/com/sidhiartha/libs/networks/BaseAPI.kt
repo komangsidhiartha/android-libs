@@ -7,7 +7,6 @@ import com.github.kittinunf.fuel.android.core.Json
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.core.*
 import com.github.kittinunf.result.Result
-import com.sidhiartha.libs.BuildConfig
 import com.sidhiartha.libs.apps.logIfDebug
 import com.sidhiartha.libs.utils.GSONManager
 import java.io.File
@@ -53,8 +52,6 @@ abstract class BaseAPI
 
     fun <T> execute(kelas: Class<T>, handler: (response: T?, errorMessage: String?) -> Unit)
     {
-        if (isRunningOnTestEnvironment()) return
-        
         val localHandler = { request: Request, response: Response, result: Result<Json, FuelError> ->
             val (json, error) = result
 
@@ -158,21 +155,5 @@ abstract class BaseAPI
     {
         val multipartFormSpecificMap = mapOf("Content-Type" to "multipart/form-data; boundary=${System.currentTimeMillis()}")
         return headers?.plus(multipartFormSpecificMap) ?: multipartFormSpecificMap
-    }
-    
-    companion object {
-        @Synchronized
-        fun isRunningOnTestEnvironment(): Boolean {
-            if (!BuildConfig.DEBUG) {
-                return true;
-            }
-
-            return try {
-                Class.forName("androidx.test.espresso.Espresso")
-                true
-            } catch (e: ClassNotFoundException) {
-                false
-            }
-        }
     }
 }
